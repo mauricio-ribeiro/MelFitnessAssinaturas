@@ -1,0 +1,8 @@
+D:\Sistemas\MelFitnessAssinaturas\MelFitnessAssinaturas\bin\Debug\MelFitnessAssinaturas.exe.config
+D:\Sistemas\MelFitnessAssinaturas\MelFitnessAssinaturas\bin\Debug\MelFitnessAssinaturas.exe
+D:\Sistemas\MelFitnessAssinaturas\MelFitnessAssinaturas\bin\Debug\MelFitnessAssinaturas.pdb
+D:\Sistemas\MelFitnessAssinaturas\MelFitnessAssinaturas\obj\Debug\MelFitnessAssinaturas.Properties.Resources.resources
+D:\Sistemas\MelFitnessAssinaturas\MelFitnessAssinaturas\obj\Debug\MelFitnessAssinaturas.csproj.GenerateResource.cache
+D:\Sistemas\MelFitnessAssinaturas\MelFitnessAssinaturas\obj\Debug\MelFitnessAssinaturas.csproj.CoreCompileInputs.cache
+D:\Sistemas\MelFitnessAssinaturas\MelFitnessAssinaturas\obj\Debug\MelFitnessAssinaturas.exe
+D:\Sistemas\MelFitnessAssinaturas\MelFitnessAssinaturas\obj\Debug\MelFitnessAssinaturas.pdb
