@@ -2,12 +2,15 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using MelFitnessAssinaturas.InfraEstruturas;
 using MelFitnessAssinaturas.Models;
+using Microsoft.SqlServer.Server;
 using MundiAPI.PCL;
 using MundiAPI.PCL.Models;
 
@@ -27,7 +30,7 @@ namespace MelFitnessAssinaturas
             notifyIcon1.ContextMenu = new ContextMenu();
             notifyIcon1.ContextMenu.MenuItems.Add("Abrir", abrir_Click);
             notifyIcon1.ContextMenu.MenuItems.Add("Sair", sair_Click);
-            ExecutarTarefas();
+            //ExecutarTarefas();
         }
 
         protected override void SetVisibleCore(bool value)
@@ -69,6 +72,26 @@ namespace MelFitnessAssinaturas
         private void Form1_Load(object sender, EventArgs e)
         {
             _timer.Start();
+
+
+            var sql = new StringBuilder();
+            var ds = new DataSet();
+
+            sql.Append("SELECT * FROM cad_clientes;");
+
+            using (var conn = ConexaoBd.GetConnection())
+            {
+                using (var cmd = new SqlCommand(sql.ToString(),conn))
+                {
+                    using (var da = new SqlDataAdapter(cmd))
+                    {
+                        da.TableMappings.Add("Table","Clientes");
+                        da.Fill(ds);
+                    }
+                }
+            }
+
+
         }
 
         private void abrir_Click(object sender, EventArgs e)
