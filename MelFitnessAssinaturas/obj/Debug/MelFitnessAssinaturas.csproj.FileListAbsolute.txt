@@ -45,3 +45,10 @@ D:\Sistemas\MelFitnessAssinaturas\MelFitnessAssinaturas\bin\Debug\System.Net.Htt
 D:\Sistemas\MelFitnessAssinaturas\MelFitnessAssinaturas\bin\Debug\System.Net.Http.Primitives.xml
 D:\Sistemas\MelFitnessAssinaturas\MelFitnessAssinaturas\obj\Debug\MelFitnessAssinaturas.Form1.resources
 D:\Sistemas\MelFitnessAssinaturas\MelFitnessAssinaturas\obj\Debug\MelFitnessAssinaturas.csproj.CopyComplete
+F:\Projetos Freela\MelFitnessAssinaturas\MelFitnessAssinaturas\obj\Debug\MelFitnessAssinaturas.csprojAssemblyReference.cache
+F:\Projetos Freela\MelFitnessAssinaturas\MelFitnessAssinaturas\obj\Debug\MelFitnessAssinaturas.Form1.resources
+F:\Projetos Freela\MelFitnessAssinaturas\MelFitnessAssinaturas\obj\Debug\MelFitnessAssinaturas.Properties.Resources.resources
+F:\Projetos Freela\MelFitnessAssinaturas\MelFitnessAssinaturas\obj\Debug\MelFitnessAssinaturas.csproj.GenerateResource.cache
+F:\Projetos Freela\MelFitnessAssinaturas\MelFitnessAssinaturas\obj\Debug\MelFitnessAssinaturas.csproj.CoreCompileInputs.cache
+F:\Projetos Freela\MelFitnessAssinaturas\MelFitnessAssinaturas\obj\Debug\MelFitnessAssinaturas.exe
+F:\Projetos Freela\MelFitnessAssinaturas\MelFitnessAssinaturas\obj\Debug\MelFitnessAssinaturas.pdb
