@@ -2,6 +2,7 @@
 using System.Data.SqlClient;
 using MundiAPI.PCL.Models;
 using System.Collections.Generic;
+using System;
 
 namespace MelFitnessAssinaturas.DAL
 {
@@ -83,6 +84,11 @@ namespace MelFitnessAssinaturas.DAL
                 return listaCliApi;
 
             }
+            catch (Exception ex)
+            {
+
+                throw new Exception(ex.Message);
+            }
             finally
             {
                 if (reader != null)
@@ -91,6 +97,41 @@ namespace MelFitnessAssinaturas.DAL
                 }
 
                 if ( conn != null)
+                {
+                    conn.Close();
+                }
+            }
+        }
+
+        public int ClienteGravado(string _code)
+        {            
+            try
+            {
+                List<CreateCustomerRequest> listaCliApi = new List<CreateCustomerRequest>();
+
+                SqlCommand cmd = new SqlCommand("update cad_clientes " +
+                " set status_api = 'F' " +
+                " where cod_cli = @codigo ", conn);
+
+                SqlParameter param = new SqlParameter();
+                param.ParameterName = "@codigo";
+                param.Value = _code;
+
+                cmd.Parameters.Add(param);
+
+                var rowsAffected = cmd.ExecuteNonQuery();
+
+                return rowsAffected;
+
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exception(ex.Message);
+            }
+            finally
+            {
+                if (conn != null)
                 {
                     conn.Close();
                 }
