@@ -8,8 +8,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using MelFitnessAssinaturas.DAL;
 using MelFitnessAssinaturas.InfraEstruturas;
 using MelFitnessAssinaturas.Models;
+using MelFitnessAssinaturas.Util;
 using Microsoft.SqlServer.Server;
 using MundiAPI.PCL;
 using MundiAPI.PCL.Models;
@@ -229,7 +231,7 @@ namespace MelFitnessAssinaturas
         {
 
             // Secret key fornecida pela Mundipagg
-            string basicAuthUserName = "sk_test_J3xVZJPUBTWOnj6v";
+            string basicAuthUserName = ConfigIniUtil.Read("MUNDIPAGG","basicAuthUserName");
             // Senha em branco. Passando apenas a secret key
             string basicAuthPassword = "";
 
@@ -283,6 +285,10 @@ namespace MelFitnessAssinaturas
             }
         }
 
-       
+        private void button6_Click(object sender, EventArgs e)
+        {
+            var clienteDAL = new ClienteDal();
+            var listaClientes = clienteDAL.ListaClientes("A");
+        }
     }
 }

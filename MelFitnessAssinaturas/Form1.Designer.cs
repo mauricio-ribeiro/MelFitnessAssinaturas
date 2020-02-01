@@ -40,6 +40,7 @@
             this.txtClienteId = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
+            this.button6 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // button1
@@ -134,11 +135,22 @@
             this.notifyIcon1.Text = "notifyIcon1";
             this.notifyIcon1.Visible = true;
             // 
+            // button6
+            // 
+            this.button6.Location = new System.Drawing.Point(12, 173);
+            this.button6.Name = "button6";
+            this.button6.Size = new System.Drawing.Size(114, 23);
+            this.button6.TabIndex = 9;
+            this.button6.Text = "Sincronizar Clientes";
+            this.button6.UseVisualStyleBackColor = true;
+            this.button6.Click += new System.EventHandler(this.button6_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(677, 294);
+            this.Controls.Add(this.button6);
             this.Controls.Add(this.txtClienteId);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.txtChaveSecreta);
@@ -172,6 +184,7 @@
         private System.Windows.Forms.TextBox txtClienteId;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.NotifyIcon notifyIcon1;
+        private System.Windows.Forms.Button button6;
     }
 }
 
