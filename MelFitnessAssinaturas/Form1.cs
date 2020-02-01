@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
-using System.Drawing;
-using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -12,7 +9,6 @@ using MelFitnessAssinaturas.DAL;
 using MelFitnessAssinaturas.InfraEstruturas;
 using MelFitnessAssinaturas.Models;
 using MelFitnessAssinaturas.Util;
-using Microsoft.SqlServer.Server;
 using MundiAPI.PCL;
 using MundiAPI.PCL.Models;
 
@@ -289,6 +285,18 @@ namespace MelFitnessAssinaturas
         {
             var clienteDAL = new ClienteDal();
             var listaClientes = clienteDAL.ListaClientes("A");
+        }
+
+        private void button7_Click(object sender, EventArgs e)
+        {
+            Scheduler tarefa = new Scheduler(tempo =>
+           {
+               Console.WriteLine("Rodando...");
+           });
+
+            tarefa.ID = "xptoTeste";
+            tarefa.Frequencia = new TimeSpan(0, 0, 10);
+            tarefa.StartWithDelay(null, new TimeSpan(0, 0, 10));
         }
     }
 }
