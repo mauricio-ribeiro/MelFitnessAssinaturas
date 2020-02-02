@@ -165,7 +165,7 @@ namespace MelFitnessAssinaturas
             {
                 var response = client.Customers.CreateCustomer(customer);
                 Console.WriteLine(String.Format("Cliente {0} registrado", response.Name));
-                clienteDAL.ClienteGravado(response.Code);
+                clienteDAL.ClienteGravado(response.Code, response.Id);
             }
 
         }

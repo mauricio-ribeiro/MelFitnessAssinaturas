@@ -8,7 +8,7 @@ namespace MelFitnessAssinaturas.DAL
 {
     public class ClienteDal
     {
-        private SqlConnection conn = ConexaoBd.GetConnection();
+        private SqlConnection conn;
         private SqlDataReader reader = null;
         private CreateCustomerRequest cliApi;
 
@@ -16,6 +16,7 @@ namespace MelFitnessAssinaturas.DAL
         {
             try
             {
+                conn = ConexaoBd.GetConnection();
                 List<CreateCustomerRequest> listaCliApi = new List<CreateCustomerRequest>();
 
                 SqlCommand cmd = new SqlCommand("select cli.cod_cli, cli.nome, cli.email, cli.cpf, " + 
@@ -39,6 +40,7 @@ namespace MelFitnessAssinaturas.DAL
                 {
                         var metadata = new Dictionary<string, string>();
                         metadata.Add("id", reader["cod_cli"].ToString());
+                        metadata.Add("id_api", reader["id_api"].ToString());
 
                         var address = new CreateAddressRequest
                         {
@@ -103,21 +105,32 @@ namespace MelFitnessAssinaturas.DAL
             }
         }
 
-        public int ClienteGravado(string _code)
+        public int ClienteGravado(string _code, string _id_api)
         {            
             try
             {
+                conn = ConexaoBd.GetConnection();
                 List<CreateCustomerRequest> listaCliApi = new List<CreateCustomerRequest>();
 
                 SqlCommand cmd = new SqlCommand("update cad_clientes " +
-                " set status_api = 'F' " +
+                " set status_api = 'F', id_api = @_id_api " +
                 " where cod_cli = @codigo ", conn);
 
-                SqlParameter param = new SqlParameter();
-                param.ParameterName = "@codigo";
-                param.Value = _code;
+                SqlParameter param1 = new SqlParameter
+                {
+                    ParameterName = "@codigo",
+                    Value = _code
+                };
 
-                cmd.Parameters.Add(param);
+                cmd.Parameters.Add(param1);
+
+                SqlParameter param2 = new SqlParameter
+                {
+                    ParameterName = "@_id_api",
+                    Value = _id_api
+                };
+
+                cmd.Parameters.Add(param2);
 
                 var rowsAffected = cmd.ExecuteNonQuery();
 
