@@ -43,6 +43,10 @@ namespace MelFitnessAssinaturas.Util
 
             switch (number)
             {
+                case 102: msg = "Erro de sintaxe no SQL."; break;
+                case 207: msg = "Coluna desconhecida na tabela."; break;
+                case 208: msg = "Tabela não existe no banco de dados."; break;
+                case 8152: msg = "Dado muito longo para a coluna."; break;
                 default: msg = "Ocorreu um erro no Banco de Dados."; break;
             }
 

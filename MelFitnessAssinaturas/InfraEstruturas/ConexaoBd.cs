@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using MelFitnessAssinaturas.Util;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using MelFitnessAssinaturas.Util;
 
 namespace MelFitnessAssinaturas.InfraEstruturas
 {
@@ -20,14 +15,9 @@ namespace MelFitnessAssinaturas.InfraEstruturas
             _connectionStringBuilder.IntegratedSecurity = true;
 
             var conn = new SqlConnection(_connectionStringBuilder.ConnectionString);
-
             conn.Open();
-
             return conn;
-
         }
-
-
 
     }
 }

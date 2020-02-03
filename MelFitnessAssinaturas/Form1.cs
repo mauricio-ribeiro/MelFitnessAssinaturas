@@ -8,6 +8,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using MelFitnessAssinaturas.Controllers;
+using MelFitnessAssinaturas.Enums;
 using MelFitnessAssinaturas.InfraEstruturas;
 using MelFitnessAssinaturas.Models;
 using Microsoft.SqlServer.Server;
@@ -72,23 +74,47 @@ namespace MelFitnessAssinaturas
         private void Form1_Load(object sender, EventArgs e)
         {
             _timer.Start();
+            
+            //var sql = new StringBuilder();
+            //var ds = new DataSet();
 
+            //sql.Append("SELECT * FROM cad_clientes;");
 
-            var sql = new StringBuilder();
-            var ds = new DataSet();
+            //using (var conn = ConexaoBd.GetConnection())
+            //{
+            //    using (var cmd = new SqlCommand(sql.ToString(),conn))
+            //    {
+            //        using (var da = new SqlDataAdapter(cmd))
+            //        {
+            //            da.TableMappings.Add("Table","Clientes");
+            //            da.Fill(ds);
+            //        }
+            //    }
+            //}
 
-            sql.Append("SELECT * FROM cad_clientes;");
+            var logApiMundipaggController = new LogApiMundipaggController();
 
-            using (var conn = ConexaoBd.GetConnection())
+            var logApiMundipagg = new LogApiMundipagg
             {
-                using (var cmd = new SqlCommand(sql.ToString(),conn))
-                {
-                    using (var da = new SqlDataAdapter(cmd))
-                    {
-                        da.TableMappings.Add("Table","Clientes");
-                        da.Fill(ds);
-                    }
-                }
+                DtEvento = DateTime.Now,
+                Tipo = TipoEnum.Cl,
+                Descricao = "Novo cadastro de cliente",
+                CodCliente = "12",
+                IdApi = "xxxx",
+                Valor = 120.00M,
+                DtDocumento = DateTime.Now
+            };
+
+            try
+            {
+
+                logApiMundipaggController.Incluir(logApiMundipagg);
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Data["MensagemCustomizada"] + Environment.NewLine + Environment.NewLine +
+                                @"Mensagem original: " + ex.Message, @"Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
 
