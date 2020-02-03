@@ -1,11 +1,3 @@
-D:\Sistemas\MelFitnessAssinaturas\MelFitnessAssinaturas\bin\Debug\MelFitnessAssinaturas.exe.config
-D:\Sistemas\MelFitnessAssinaturas\MelFitnessAssinaturas\bin\Debug\MelFitnessAssinaturas.exe
-D:\Sistemas\MelFitnessAssinaturas\MelFitnessAssinaturas\bin\Debug\MelFitnessAssinaturas.pdb
-D:\Sistemas\MelFitnessAssinaturas\MelFitnessAssinaturas\obj\Debug\MelFitnessAssinaturas.Properties.Resources.resources
-D:\Sistemas\MelFitnessAssinaturas\MelFitnessAssinaturas\obj\Debug\MelFitnessAssinaturas.csproj.GenerateResource.cache
-D:\Sistemas\MelFitnessAssinaturas\MelFitnessAssinaturas\obj\Debug\MelFitnessAssinaturas.csproj.CoreCompileInputs.cache
-D:\Sistemas\MelFitnessAssinaturas\MelFitnessAssinaturas\obj\Debug\MelFitnessAssinaturas.exe
-D:\Sistemas\MelFitnessAssinaturas\MelFitnessAssinaturas\obj\Debug\MelFitnessAssinaturas.pdb
 C:\Users\CARLOS\tetradev\MelFitnessAssinaturas\MelFitnessAssinaturas\bin\Debug\MelFitnessAssinaturas.exe.config
 C:\Users\CARLOS\tetradev\MelFitnessAssinaturas\MelFitnessAssinaturas\bin\Debug\MelFitnessAssinaturas.exe
 C:\Users\CARLOS\tetradev\MelFitnessAssinaturas\MelFitnessAssinaturas\bin\Debug\MelFitnessAssinaturas.pdb
@@ -30,21 +22,6 @@ C:\Users\CARLOS\tetradev\MelFitnessAssinaturas\MelFitnessAssinaturas\obj\Debug\M
 C:\Users\CARLOS\tetradev\MelFitnessAssinaturas\MelFitnessAssinaturas\obj\Debug\MelFitnessAssinaturas.csproj.CopyComplete
 C:\Users\CARLOS\tetradev\MelFitnessAssinaturas\MelFitnessAssinaturas\obj\Debug\MelFitnessAssinaturas.exe
 C:\Users\CARLOS\tetradev\MelFitnessAssinaturas\MelFitnessAssinaturas\obj\Debug\MelFitnessAssinaturas.pdb
-D:\Sistemas\MelFitnessAssinaturas\MelFitnessAssinaturas\bin\Debug\Microsoft.Threading.Tasks.dll
-D:\Sistemas\MelFitnessAssinaturas\MelFitnessAssinaturas\bin\Debug\Microsoft.Threading.Tasks.Extensions.Desktop.dll
-D:\Sistemas\MelFitnessAssinaturas\MelFitnessAssinaturas\bin\Debug\Microsoft.Threading.Tasks.Extensions.dll
-D:\Sistemas\MelFitnessAssinaturas\MelFitnessAssinaturas\bin\Debug\MundiAPI.PCL.dll
-D:\Sistemas\MelFitnessAssinaturas\MelFitnessAssinaturas\bin\Debug\Newtonsoft.Json.dll
-D:\Sistemas\MelFitnessAssinaturas\MelFitnessAssinaturas\bin\Debug\System.Net.Http.Extensions.dll
-D:\Sistemas\MelFitnessAssinaturas\MelFitnessAssinaturas\bin\Debug\System.Net.Http.Primitives.dll
-D:\Sistemas\MelFitnessAssinaturas\MelFitnessAssinaturas\bin\Debug\Microsoft.Threading.Tasks.xml
-D:\Sistemas\MelFitnessAssinaturas\MelFitnessAssinaturas\bin\Debug\Microsoft.Threading.Tasks.Extensions.xml
-D:\Sistemas\MelFitnessAssinaturas\MelFitnessAssinaturas\bin\Debug\Microsoft.Threading.Tasks.Extensions.Desktop.xml
-D:\Sistemas\MelFitnessAssinaturas\MelFitnessAssinaturas\bin\Debug\Newtonsoft.Json.xml
-D:\Sistemas\MelFitnessAssinaturas\MelFitnessAssinaturas\bin\Debug\System.Net.Http.Extensions.xml
-D:\Sistemas\MelFitnessAssinaturas\MelFitnessAssinaturas\bin\Debug\System.Net.Http.Primitives.xml
-D:\Sistemas\MelFitnessAssinaturas\MelFitnessAssinaturas\obj\Debug\MelFitnessAssinaturas.Form1.resources
-D:\Sistemas\MelFitnessAssinaturas\MelFitnessAssinaturas\obj\Debug\MelFitnessAssinaturas.csproj.CopyComplete
 F:\Projetos Freela\MelFitnessAssinaturas\MelFitnessAssinaturas\obj\Debug\MelFitnessAssinaturas.csprojAssemblyReference.cache
 F:\Projetos Freela\MelFitnessAssinaturas\MelFitnessAssinaturas\obj\Debug\MelFitnessAssinaturas.Form1.resources
 F:\Projetos Freela\MelFitnessAssinaturas\MelFitnessAssinaturas\obj\Debug\MelFitnessAssinaturas.Properties.Resources.resources
@@ -69,3 +46,26 @@ F:\Projetos Freela\MelFitnessAssinaturas\MelFitnessAssinaturas\bin\Debug\Newtons
 F:\Projetos Freela\MelFitnessAssinaturas\MelFitnessAssinaturas\bin\Debug\System.Net.Http.Extensions.xml
 F:\Projetos Freela\MelFitnessAssinaturas\MelFitnessAssinaturas\bin\Debug\System.Net.Http.Primitives.xml
 F:\Projetos Freela\MelFitnessAssinaturas\MelFitnessAssinaturas\obj\Debug\MelFitnessAssinaturas.csproj.CopyComplete
+D:\Sistemas\MelFitnessAssinaturas\MelFitnessAssinaturas\bin\Debug\MelFitnessAssinaturas.exe.config
+D:\Sistemas\MelFitnessAssinaturas\MelFitnessAssinaturas\bin\Debug\MelFitnessAssinaturas.exe
+D:\Sistemas\MelFitnessAssinaturas\MelFitnessAssinaturas\bin\Debug\MelFitnessAssinaturas.pdb
+D:\Sistemas\MelFitnessAssinaturas\MelFitnessAssinaturas\bin\Debug\Microsoft.Threading.Tasks.dll
+D:\Sistemas\MelFitnessAssinaturas\MelFitnessAssinaturas\bin\Debug\Microsoft.Threading.Tasks.Extensions.Desktop.dll
+D:\Sistemas\MelFitnessAssinaturas\MelFitnessAssinaturas\bin\Debug\Microsoft.Threading.Tasks.Extensions.dll
+D:\Sistemas\MelFitnessAssinaturas\MelFitnessAssinaturas\bin\Debug\MundiAPI.PCL.dll
+D:\Sistemas\MelFitnessAssinaturas\MelFitnessAssinaturas\bin\Debug\Newtonsoft.Json.dll
+D:\Sistemas\MelFitnessAssinaturas\MelFitnessAssinaturas\bin\Debug\System.Net.Http.Extensions.dll
+D:\Sistemas\MelFitnessAssinaturas\MelFitnessAssinaturas\bin\Debug\System.Net.Http.Primitives.dll
+D:\Sistemas\MelFitnessAssinaturas\MelFitnessAssinaturas\bin\Debug\Microsoft.Threading.Tasks.xml
+D:\Sistemas\MelFitnessAssinaturas\MelFitnessAssinaturas\bin\Debug\Microsoft.Threading.Tasks.Extensions.xml
+D:\Sistemas\MelFitnessAssinaturas\MelFitnessAssinaturas\bin\Debug\Microsoft.Threading.Tasks.Extensions.Desktop.xml
+D:\Sistemas\MelFitnessAssinaturas\MelFitnessAssinaturas\bin\Debug\Newtonsoft.Json.xml
+D:\Sistemas\MelFitnessAssinaturas\MelFitnessAssinaturas\bin\Debug\System.Net.Http.Extensions.xml
+D:\Sistemas\MelFitnessAssinaturas\MelFitnessAssinaturas\bin\Debug\System.Net.Http.Primitives.xml
+D:\Sistemas\MelFitnessAssinaturas\MelFitnessAssinaturas\obj\Debug\MelFitnessAssinaturas.Form1.resources
+D:\Sistemas\MelFitnessAssinaturas\MelFitnessAssinaturas\obj\Debug\MelFitnessAssinaturas.Properties.Resources.resources
+D:\Sistemas\MelFitnessAssinaturas\MelFitnessAssinaturas\obj\Debug\MelFitnessAssinaturas.csproj.GenerateResource.cache
+D:\Sistemas\MelFitnessAssinaturas\MelFitnessAssinaturas\obj\Debug\MelFitnessAssinaturas.csproj.CoreCompileInputs.cache
+D:\Sistemas\MelFitnessAssinaturas\MelFitnessAssinaturas\obj\Debug\MelFitnessAssinaturas.csproj.CopyComplete
+D:\Sistemas\MelFitnessAssinaturas\MelFitnessAssinaturas\obj\Debug\MelFitnessAssinaturas.exe
+D:\Sistemas\MelFitnessAssinaturas\MelFitnessAssinaturas\obj\Debug\MelFitnessAssinaturas.pdb

@@ -2,23 +2,19 @@
 using System.Data.SqlClient;
 using MundiAPI.PCL.Models;
 using System.Collections.Generic;
-<<<<<<< HEAD
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MelFitnessAssinaturas.Interfaces;
 using MelFitnessAssinaturas.Models;
-=======
 using System;
->>>>>>> c8e039d160009ebd71ea264ba24cf64614f132e6
+
 
 namespace MelFitnessAssinaturas.DAL
 {
     public class ClienteDal
     {
-<<<<<<< HEAD
-        
-=======
+
         private SqlConnection conn;
         private SqlDataReader reader = null;
         private CreateCustomerRequest cliApi;
@@ -30,12 +26,12 @@ namespace MelFitnessAssinaturas.DAL
                 conn = ConexaoBd.GetConnection();
                 List<CreateCustomerRequest> listaCliApi = new List<CreateCustomerRequest>();
 
-                SqlCommand cmd = new SqlCommand("select cli.cod_cli, cli.nome, cli.email, cli.cpf, " + 
+                SqlCommand cmd = new SqlCommand("select cli.cod_cli, cli.nome, cli.email, cli.cpf, " +
                 " case when cli.sexo = 1 then 'male' else 'famale' end as sexo, cli.data_nasc, " +
-                " cli.endereco as address_1, cli.bairro as address_2, cli.cep, cid.cid_nome as cidade, " + 
+                " cli.endereco as address_1, cli.bairro as address_2, cli.cep, cid.cid_nome as cidade, " +
                 " cid.uf_sigla as uf, cli.fone1, cli.fone2, cli.id_api, cli.status_api " +
-                " from cad_clientes cli " + 
-                " left join cad_cidade cid on cid.cid_codigo = cli.cid_codigo " + 
+                " from cad_clientes cli " +
+                " left join cad_cidade cid on cid.cid_codigo = cli.cid_codigo " +
                 " where cli.status_api = @StatusCli ", conn);
 
                 SqlParameter param = new SqlParameter();
@@ -47,53 +43,53 @@ namespace MelFitnessAssinaturas.DAL
                 reader = cmd.ExecuteReader();
 
 
-                while(reader.Read())
+                while (reader.Read())
                 {
-                        var metadata = new Dictionary<string, string>();
-                        metadata.Add("id", reader["cod_cli"].ToString());
-                        metadata.Add("id_api", reader["id_api"].ToString());
+                    var metadata = new Dictionary<string, string>();
+                    metadata.Add("id", reader["cod_cli"].ToString());
+                    metadata.Add("id_api", reader["id_api"].ToString());
 
-                        var address = new CreateAddressRequest
+                    var address = new CreateAddressRequest
+                    {
+                        Line1 = reader["address_1"].ToString(),
+                        Line2 = reader["address_2"].ToString(),
+                        ZipCode = reader["cep"].ToString(),
+                        City = reader["cidade"].ToString(),
+                        State = reader["uf"].ToString(),
+                        Country = "BR"
+                    };
+
+                    var phones = new CreatePhonesRequest
+                    {
+                        HomePhone = new CreatePhoneRequest
                         {
-                            Line1 = reader["address_1"].ToString(),
-                            Line2 = reader["address_2"].ToString(),
-                            ZipCode = reader["cep"].ToString(),
-                            City = reader["cidade"].ToString(),
-                            State = reader["uf"].ToString(),
-                            Country = "BR"
-                        };
-
-                        var phones = new CreatePhonesRequest
+                            AreaCode = reader["fone1"].ToString().Substring(0, 2),
+                            CountryCode = "55",
+                            Number = reader["fone1"].ToString().Substring(2, reader["fone1"].ToString().Length - 3)
+                        },
+                        MobilePhone = new CreatePhoneRequest
                         {
-                            HomePhone = new CreatePhoneRequest
-                            {
-                                AreaCode = reader["fone1"].ToString().Substring(0, 2),
-                                CountryCode = "55",
-                                Number = reader["fone1"].ToString().Substring(2, reader["fone1"].ToString().Length - 3)
-                            },
-                            MobilePhone = new CreatePhoneRequest
-                            {
-                                AreaCode = reader["fone2"].ToString().Substring(0, 2),
-                                CountryCode = "55",
-                                Number = reader["fone2"].ToString().Substring(2, reader["fone2"].ToString().Length - 3)
-                            },
-                        };
+                            AreaCode = reader["fone2"].ToString().Substring(0, 2),
+                            CountryCode = "55",
+                            Number = reader["fone2"].ToString().Substring(2, reader["fone2"].ToString().Length - 3)
+                        },
+                    };
 
 
-                        cliApi = new CreateCustomerRequest
-                        {
-                            Name = reader["nome"].ToString(),
-                            Email = reader["email"].ToString(),
-                            Type = "individual",
-                            Document = reader["cpf"].ToString(),
-                            Gender = reader["sexo"].ToString(),
-                            Code = reader["cod_cli"].ToString(),
-                            Phones = phones,
-                            Address = address,
-                            Metadata = metadata
-                        };
+                    cliApi = new CreateCustomerRequest
+                    {
+                        Name = reader["nome"].ToString(),
+                        Email = reader["email"].ToString(),
+                        Type = "individual",
+                        Document = reader["cpf"].ToString(),
+                        Gender = reader["sexo"].ToString(),
+                        Code = reader["cod_cli"].ToString(),
+                        Phones = phones,
+                        Address = address,
+                        Metadata = metadata
+                    };
                     listaCliApi.Add(cliApi);
-                    }
+                }
                 return listaCliApi;
 
             }
@@ -109,7 +105,7 @@ namespace MelFitnessAssinaturas.DAL
                     reader.Close();
                 }
 
-                if ( conn != null)
+                if (conn != null)
                 {
                     conn.Close();
                 }
@@ -117,7 +113,7 @@ namespace MelFitnessAssinaturas.DAL
         }
 
         public int ClienteGravado(string _code, string _id_api)
-        {            
+        {
             try
             {
                 conn = ConexaoBd.GetConnection();
@@ -161,6 +157,6 @@ namespace MelFitnessAssinaturas.DAL
                 }
             }
         }
->>>>>>> c8e039d160009ebd71ea264ba24cf64614f132e6
+
     }
 }

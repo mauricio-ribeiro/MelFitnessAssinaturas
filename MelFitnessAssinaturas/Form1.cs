@@ -1,16 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
+using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-<<<<<<< HEAD
 using MelFitnessAssinaturas.Controllers;
 using MelFitnessAssinaturas.Enums;
-=======
 using MelFitnessAssinaturas.DAL;
->>>>>>> c8e039d160009ebd71ea264ba24cf64614f132e6
 using MelFitnessAssinaturas.InfraEstruturas;
 using MelFitnessAssinaturas.Models;
 using MelFitnessAssinaturas.Util;
@@ -74,8 +74,12 @@ namespace MelFitnessAssinaturas
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            dgvDadosLog.AutoGenerateColumns = false;
+            CarregaComboTipo();
+
             _timer.Start();
             
+
             //var sql = new StringBuilder();
             //var ds = new DataSet();
 
@@ -176,7 +180,26 @@ namespace MelFitnessAssinaturas
         {
             notifyIcon1.ShowBalloonTip(20, @"Atenção !!", @"Tarefa 2.", ToolTipIcon.Info);
         }
+
+        private void CarregaComboTipo()
+        {
+
+            cbTipo.DisplayMember = "Description";
+            cbTipo.ValueMember = "Value";
+            cbTipo.DataSource = Enum.GetValues(typeof(TipoEnum))
+                .Cast<Enum>()
+                .Select(value => new
+                    {
+                        (Attribute.GetCustomAttribute(value.GetType().GetField(value.ToString()), typeof(DescriptionAttribute)) as DescriptionAttribute).Description,
+                        value
+                    }
+                )
+                .OrderBy(item => item.value)
+                .ToList();
+
+        }
         
+
         private void button1_Click(object sender, EventArgs e)
         {
             // Secret key fornecida pela Mundipagg
@@ -292,5 +315,59 @@ namespace MelFitnessAssinaturas
             tarefa.Frequencia = new TimeSpan(0, 0, 10);
             tarefa.StartWithDelay(null, new TimeSpan(0, 0, 10));
         }
+
+        private void dgvDadosLog_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+        {
+            try
+            {
+
+                if (dgvDadosLog.Rows[e.RowIndex].DataBoundItem != null && (dgvDadosLog.Columns[e.ColumnIndex].DataPropertyName.Contains(".")))
+                {
+                    e.Value = BindProperty(dgvDadosLog.Rows[e.RowIndex].DataBoundItem, dgvDadosLog.Columns[e.ColumnIndex].DataPropertyName);
+                }
+
+            }
+            catch
+            { }
+        }
+
+        private string BindProperty(object property, string propertyName)
+        {
+            string retValue = "";
+
+            if (propertyName.Contains("."))
+            {
+                PropertyInfo[] arrayProperties;
+                string leftPropertyName;
+
+                leftPropertyName = propertyName.Substring(0, propertyName.IndexOf("."));
+                arrayProperties = property.GetType().GetProperties();
+
+                foreach (PropertyInfo propertyInfo in arrayProperties)
+                {
+                    if (propertyInfo.Name == leftPropertyName)
+                    {
+                        retValue = BindProperty(
+                            propertyInfo.GetValue(property, null),
+                            propertyName.Substring(propertyName.IndexOf(".") + 1));
+                        break;
+                    }
+                }
+            }
+            else
+            {
+                Type propertyType;
+                PropertyInfo propertyInfo;
+
+                propertyType = property.GetType();
+                propertyInfo = propertyType.GetProperty(propertyName);
+                retValue = propertyInfo.GetValue(property, null).ToString();
+            }
+
+            return retValue;
+        }
+
+
+
     }
 }

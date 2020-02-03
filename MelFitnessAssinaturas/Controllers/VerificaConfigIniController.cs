@@ -1,8 +1,6 @@
-﻿using System;
+﻿using MelFitnessAssinaturas.Util;
 using System.IO;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using MelFitnessAssinaturas.Util;
 
 namespace MelFitnessAssinaturas.Controllers
 {
