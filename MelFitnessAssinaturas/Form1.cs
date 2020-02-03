@@ -187,7 +187,8 @@ namespace MelFitnessAssinaturas
             cbTipo.DisplayMember = "Description";
             cbTipo.ValueMember = "Value";
             cbTipo.DataSource = Enum.GetValues(typeof(TipoEnum))
-                .Cast<Enum>()
+                .Cast<TipoEnum>()
+                .Where(x=>x != TipoEnum.Cl)
                 .Select(value => new
                     {
                         (Attribute.GetCustomAttribute(value.GetType().GetField(value.ToString()), typeof(DescriptionAttribute)) as DescriptionAttribute).Description,
