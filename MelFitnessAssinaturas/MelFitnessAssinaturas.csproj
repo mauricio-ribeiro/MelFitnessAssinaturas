@@ -98,6 +98,7 @@
     <Compile Include="Util\ConfigIniUtil.cs" />
     <Compile Include="Util\EnumHelpersUtil.cs" />
     <Compile Include="Util\LogDatabaseErrorUtil.cs" />
+    <Compile Include="Util\Sheduler.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
