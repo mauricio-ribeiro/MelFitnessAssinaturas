@@ -1,4 +1,5 @@
-﻿using MelFitnessAssinaturas.DAL;
+﻿using System.Collections.Generic;
+using MelFitnessAssinaturas.DAL;
 using MelFitnessAssinaturas.Interfaces;
 using MelFitnessAssinaturas.Models;
 
@@ -18,6 +19,13 @@ namespace MelFitnessAssinaturas.Controllers
         {
             _logApiMundipagg.Incluir(logApiMundipagg);
         }
+
+        public IEnumerable<LogApiMundipagg> ObterTodos(params object[] parametros)
+        {
+            return _logApiMundipagg.ObterTodos(parametros);
+        }
+
+
 
     }
 }

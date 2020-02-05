@@ -104,9 +104,9 @@ namespace MelFitnessAssinaturas
                 DtEvento = DateTime.Now,
                 Tipo = TipoEnum.Cl,
                 Descricao = "Novo cadastro de cliente",
-                CodCliente = "12",
+                NomeCliente = "Bianca Milena Maria Gomes",
                 IdApi = "xxxx",
-                Valor = 120.00M,
+                Valor = 250.50M,
                 DtDocumento = DateTime.Now
             };
 
@@ -316,6 +316,42 @@ namespace MelFitnessAssinaturas
             tarefa.Frequencia = new TimeSpan(0, 0, 10);
             tarefa.StartWithDelay(null, new TimeSpan(0, 0, 10));
         }
+        
+        private void btnPesquisaLog_Click(object sender, EventArgs e)
+        {
+
+            var datasValida = RotinasDataUtil.CompareDatas(dtInicial.Value, dtFinal.Value);
+            var logApiMundipaggController = new LogApiMundipaggController();
+
+            object[] parametros = { txtNomeCliente.Text, dtInicial.Value, dtFinal.Value, (TipoEnum)cbTipo.SelectedValue };
+
+            if (datasValida)
+            {
+
+                try
+                {
+
+                    var logApiMundipaggs = logApiMundipaggController.ObterTodos(parametros);
+                    dgvDadosLog.DataSource = null;
+                    dgvDadosLog.DataSource = logApiMundipaggs.ToList();
+
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Data["MensagemCustomizada"] + Environment.NewLine + Environment.NewLine +
+                                    @"Mensagem original: " + ex.Message, @"Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+
+
+            }
+            else
+            {
+                MessageBox.Show(@"A data final tem que ser maior ou igual a data inicial.",
+                    @"Atenção !!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+
+        }
+
 
         private void dgvDadosLog_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
         {
@@ -368,7 +404,6 @@ namespace MelFitnessAssinaturas
             return retValue;
         }
 
-
-
+      
     }
 }

@@ -4,6 +4,8 @@ namespace MelFitnessAssinaturas.Enums
 {
     public enum TipoEnum
     {
+        [Description("TODOS")]
+        To,
         [Description("CLIENTE")]
         Cl,
         [Description("MEIO DE PAGAMENTO")]
