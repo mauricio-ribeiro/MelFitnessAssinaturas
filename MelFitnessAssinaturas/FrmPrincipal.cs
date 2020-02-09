@@ -19,7 +19,7 @@ using MundiAPI.PCL.Models;
 
 namespace MelFitnessAssinaturas
 {
-    public partial class Form1 : Form
+    public partial class FrmPrincipal : Form
     {
 
         private Timer _timer = new Timer();
@@ -27,7 +27,7 @@ namespace MelFitnessAssinaturas
         private bool _allowClose;
 
 
-        public Form1()
+        public FrmPrincipal()
         {
             InitializeComponent();
             notifyIcon1.ContextMenu = new ContextMenu();

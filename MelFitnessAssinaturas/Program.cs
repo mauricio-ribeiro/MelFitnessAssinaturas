@@ -23,7 +23,7 @@ namespace MelFitnessAssinaturas
             _verificaConfigIni.SetProximaVerificacao(_verificaDiretorioLogError);
             _verificaConfigIni.ProcessaVerificacao();
             
-            Application.Run(new Form1());
+            Application.Run(new FrmPrincipal());
         }
     }
 }
