@@ -1,17 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
-using System.Data.SqlClient;
 using System.Linq;
 using System.Reflection;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using MelFitnessAssinaturas.Controllers;
 using MelFitnessAssinaturas.Enums;
 using MelFitnessAssinaturas.DAL;
-using MelFitnessAssinaturas.InfraEstruturas;
 using MelFitnessAssinaturas.Models;
 using MelFitnessAssinaturas.Util;
 using MundiAPI.PCL;
@@ -102,7 +98,7 @@ namespace MelFitnessAssinaturas
             var logApiMundipagg = new LogApiMundipagg
             {
                 DtEvento = DateTime.Now,
-                Tipo = TipoEnum.Cl,
+                Tipo = TipoLogEnum.Cl,
                 Descricao = "Novo cadastro de cliente",
                 NomeCliente = "Bianca Milena Maria Gomes",
                 IdApi = "xxxx",
@@ -186,9 +182,9 @@ namespace MelFitnessAssinaturas
 
             cbTipo.DisplayMember = "Description";
             cbTipo.ValueMember = "Value";
-            cbTipo.DataSource = Enum.GetValues(typeof(TipoEnum))
-                .Cast<TipoEnum>()
-                .Where(x=>x != TipoEnum.Cl)
+            cbTipo.DataSource = Enum.GetValues(typeof(TipoLogEnum))
+                .Cast<TipoLogEnum>()
+                .Where(x=>x != TipoLogEnum.Cl)
                 .Select(value => new
                     {
                         (Attribute.GetCustomAttribute(value.GetType().GetField(value.ToString()), typeof(DescriptionAttribute)) as DescriptionAttribute).Description,
@@ -323,7 +319,7 @@ namespace MelFitnessAssinaturas
             var datasValida = RotinasDataUtil.CompareDatas(dtInicial.Value, dtFinal.Value);
             var logApiMundipaggController = new LogApiMundipaggController();
 
-            object[] parametros = { txtNomeCliente.Text, dtInicial.Value, dtFinal.Value, (TipoEnum)cbTipo.SelectedValue };
+            object[] parametros = { txtNomeCliente.Text, dtInicial.Value, dtFinal.Value, (TipoLogEnum)cbTipo.SelectedValue };
 
             if (datasValida)
             {

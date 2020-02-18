@@ -2,7 +2,7 @@
 
 namespace MelFitnessAssinaturas.Enums
 {
-    public enum TipoEnum
+    public enum TipoLogEnum
     {
         [Description("TODOS")]
         To,

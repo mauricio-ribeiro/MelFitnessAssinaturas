@@ -7,7 +7,7 @@ using MundiAPI.PCL.Models;
 
 namespace MelFitnessAssinaturas.Models
 {
-    public class Cliente
+    public class ClienteDb
     {
 
         public string Nome { get; }
@@ -19,21 +19,7 @@ namespace MelFitnessAssinaturas.Models
         public Dictionary<string,string> Metadata { get; }
         public CreateAddressRequest Endereco { get; }
         public CreatePhonesRequest Telefones { get; }
-        
-        public Cliente(string nome, string email, string tipo, string documento, string sexo, string codigo, Dictionary<string, string> metadata, CreateAddressRequest endereco, CreatePhonesRequest telefones)
-        {
-            //Nome = nome;
-            //Email = email;
-            //Tipo = tipo;
-            //Documento = documento;
-            //Sexo = sexo;
-            //Codigo = codigo;
-            //Metadata = metadata;
-            //Endereco = endereco;
-            //Telefones = telefones;
-
-        }
-
+        public String id_Api { get; set; }
 
 
 

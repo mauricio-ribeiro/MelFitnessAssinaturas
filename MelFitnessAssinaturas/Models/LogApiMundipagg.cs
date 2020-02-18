@@ -10,7 +10,7 @@ namespace MelFitnessAssinaturas.Models
 
         public DateTime DtEvento { get; set; }
 
-        public TipoEnum Tipo { get; set; }
+        public TipoLogEnum Tipo { get; set; }
 
         public string DescricaoTipo => EnumHelpersUtil.GetDescriptionValue(Tipo);
 

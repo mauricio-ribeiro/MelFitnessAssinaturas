@@ -81,7 +81,7 @@
     <Compile Include="Controllers\VerificaDiretorioLogErrorController.cs" />
     <Compile Include="DAL\ClienteDal.cs" />
     <Compile Include="DAL\LoApiMundipaggDal.cs" />
-    <Compile Include="Enums\TipoEnum.cs" />
+    <Compile Include="Enums\TipoLogEnum.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>

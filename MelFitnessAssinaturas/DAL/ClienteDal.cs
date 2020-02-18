@@ -12,11 +12,8 @@ using System;
 
 namespace MelFitnessAssinaturas.DAL
 {
-    public class ClienteDal
+    public class ClienteDal : BaseDAL
     {
-
-        private SqlConnection conn;
-        private SqlDataReader reader = null;
         private CreateCustomerRequest cliApi;
 
         public List<CreateCustomerRequest> ListaClientes(string _statusCli)
@@ -117,7 +114,6 @@ namespace MelFitnessAssinaturas.DAL
             try
             {
                 conn = ConexaoBd.GetConnection();
-                List<CreateCustomerRequest> listaCliApi = new List<CreateCustomerRequest>();
 
                 SqlCommand cmd = new SqlCommand("update cad_clientes " +
                 " set status_api = 'F', id_api = @_id_api " +
@@ -159,4 +155,5 @@ namespace MelFitnessAssinaturas.DAL
         }
 
     }
+
 }
