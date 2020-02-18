@@ -35,7 +35,7 @@ namespace MelFitnessAssinaturas.DAL
                     {
                         cmd.Parameters.Clear();
                         cmd.Parameters.AddWithValue("@dt_evento",entidade.DtEvento);
-                        cmd.Parameters.AddWithValue("@tipo",Enum.GetName(typeof(TipoEnum),entidade.Tipo));
+                        cmd.Parameters.AddWithValue("@tipo",Enum.GetName(typeof(TipoLogEnum),entidade.Tipo));
                         cmd.Parameters.AddWithValue("@descricao", entidade.Descricao);
                         cmd.Parameters.AddWithValue("@cliente", entidade.NomeCliente);
                         cmd.Parameters.AddWithValue("@id_api", entidade.IdApi);
@@ -88,7 +88,7 @@ namespace MelFitnessAssinaturas.DAL
             var nomeCliente = Convert.ToString(parametros[0]);
             var strDtInicial = $"{Convert.ToDateTime(parametros[1]):yyyy-MM-dd}";
             var strDtFinal = $"{Convert.ToDateTime(parametros[2]):yyyy-MM-dd}";
-            var tipo = (TipoEnum)parametros[3] == TipoEnum.To ? (object)"%" : Enum.GetName(typeof(TipoEnum),(TipoEnum) parametros[3]);
+            var tipo = (TipoLogEnum)parametros[3] == TipoLogEnum.To ? (object)"%" : Enum.GetName(typeof(TipoLogEnum),(TipoLogEnum) parametros[3]);
 
 
             try
@@ -120,7 +120,7 @@ namespace MelFitnessAssinaturas.DAL
                                     var logApiMundipagg = new LogApiMundipagg
                                     {
                                         DtEvento = Convert.ToDateTime(dr["dt_evento"]),
-                                        Tipo = (TipoEnum) Enum.Parse(typeof(TipoEnum),Convert.ToString(dr["tipo"])),
+                                        Tipo = (TipoLogEnum) Enum.Parse(typeof(TipoLogEnum),Convert.ToString(dr["tipo"])),
                                         Descricao = Convert.ToString(dr["descricao"]),
                                         NomeCliente = Convert.ToString(dr["cliente"]),
                                         IdApi = Convert.ToString(dr["id_api"]),

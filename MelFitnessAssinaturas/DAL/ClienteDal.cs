@@ -2,22 +2,55 @@
 using System.Data.SqlClient;
 using MundiAPI.PCL.Models;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using MelFitnessAssinaturas.Interfaces;
 using MelFitnessAssinaturas.Models;
 using System;
 
 
 namespace MelFitnessAssinaturas.DAL
 {
-    public class ClienteDal
+    public class ClienteDAL : BaseDAL
     {
-
-        private SqlConnection conn;
-        private SqlDataReader reader = null;
         private CreateCustomerRequest cliApi;
+
+        public ClienteDb GetClienteDb(string codCli)
+        {
+            SqlCommand cmd = new SqlCommand("select cli.cod_cli, cli.nome, cli.email, cli.cpf, " +
+                  " case when cli.sexo = 1 then 'male' else 'famale' end as sexo, cli.data_nasc, " +
+                  " cli.endereco as address_1, cli.bairro as address_2, cli.cep, cid.cid_nome as cidade, " +
+                  " cid.uf_sigla as uf, cli.fone1, cli.fone2, cli.id_api, cli.status_api " +
+                  " from cad_clientes cli " +
+                  " left join cad_cidade cid on cid.cid_codigo = cli.cid_codigo " +
+                  " where cli.cod_cli = @codCli", conn);
+
+            SqlParameter param = new SqlParameter();
+            param.ParameterName = "@codCli";
+            param.Value = reader["cod_cli"].ToString();
+
+            cmd.Parameters.Add(param);
+
+            reader = cmd.ExecuteReader();
+
+            var cliente = new ClienteDb();
+
+            cliente.Codigo = reader["cod_cli"].ToString();
+            cliente.Nome = reader["nome"].ToString();
+            cliente.Email = reader["email"].ToString();
+            cliente.Documento = reader["cpf"].ToString();
+            cliente.Sexo = reader["sexo"].ToString();
+            cliente.Dt_Nascimento = reader["data_nasc"].ToString();
+            cliente.Endereco_1 = reader["address_1"].ToString();
+            cliente.Endereco_2 = reader["bairro"].ToString();
+            cliente.Cep = reader["cep"].ToString();
+            cliente.Cidade = reader["cidade"].ToString();
+            cliente.Uf = reader["uf"].ToString();
+            cliente.Fone1 = reader["fone1"].ToString();
+            cliente.Fone2 = reader["fone2"].ToString();
+            cliente.Id_Api = reader["id_api"].ToString();
+            cliente.Status_Api = reader["status_api"].ToString();
+
+
+            return cliente;
+        }
 
         public List<CreateCustomerRequest> ListaClientes(string _statusCli)
         {
@@ -117,7 +150,6 @@ namespace MelFitnessAssinaturas.DAL
             try
             {
                 conn = ConexaoBd.GetConnection();
-                List<CreateCustomerRequest> listaCliApi = new List<CreateCustomerRequest>();
 
                 SqlCommand cmd = new SqlCommand("update cad_clientes " +
                 " set status_api = 'F', id_api = @_id_api " +
@@ -159,4 +191,5 @@ namespace MelFitnessAssinaturas.DAL
         }
 
     }
+
 }
