@@ -75,10 +75,17 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\AcessoBaseController.cs" />
+    <Compile Include="Controllers\AssinaturaController.cs" />
     <Compile Include="Controllers\ClienteController.cs" />
+    <Compile Include="Controllers\FaturaController.cs" />
     <Compile Include="Controllers\LogApiMundipaggController.cs" />
+    <Compile Include="Controllers\MainController.cs" />
+    <Compile Include="Controllers\MeioPagamentoController.cs" />
+    <Compile Include="Controllers\PlanoController.cs" />
     <Compile Include="Controllers\VerificaConfigIniController.cs" />
     <Compile Include="Controllers\VerificaDiretorioLogErrorController.cs" />
+    <Compile Include="DAL\AssinaturaDAL.cs" />
+    <Compile Include="DAL\BaseDAL.cs" />
     <Compile Include="DAL\ClienteDal.cs" />
     <Compile Include="DAL\LoApiMundipaggDal.cs" />
     <Compile Include="Enums\TipoLogEnum.cs" />
@@ -91,8 +98,11 @@
     <Compile Include="InfraEstruturas\ConexaoBd.cs" />
     <Compile Include="Interfaces\ICrud.cs" />
     <Compile Include="Interfaces\ILogApiMundipagg.cs" />
-    <Compile Include="Models\Cliente.cs" />
+    <Compile Include="Models\AssinaturaDb.cs" />
+    <Compile Include="Models\AssinaturaItemDb.cs" />
+    <Compile Include="Models\ClienteDb.cs" />
     <Compile Include="Models\LogApiMundipagg.cs" />
+    <Compile Include="Models\MeioPagamentoDb.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Util\ConfigIniUtil.cs" />
