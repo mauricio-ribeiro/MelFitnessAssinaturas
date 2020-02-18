@@ -86,10 +86,10 @@
     <Compile Include="Controllers\VerificaDiretorioLogErrorController.cs" />
     <Compile Include="DAL\AssinaturaDAL.cs" />
     <Compile Include="DAL\BaseDAL.cs" />
-    <Compile Include="DAL\ClienteDal.cs" />
+    <Compile Include="DAL\ClienteDAL.cs" />
     <Compile Include="DAL\LoApiMundipaggDal.cs" />
+    <Compile Include="DAL\MeioPagamentoDAL.cs" />
     <Compile Include="Enums\TipoLogEnum.cs" />
-    <Compile Include="Enums\TipoEnum.cs" />
     <Compile Include="FrmPrincipal.cs">
       <SubType>Form</SubType>
     </Compile>

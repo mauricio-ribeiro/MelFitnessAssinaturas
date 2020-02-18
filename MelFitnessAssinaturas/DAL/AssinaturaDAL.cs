@@ -21,10 +21,14 @@ namespace MelFitnessAssinaturas.DAL
             try
             {
                 conn = ConexaoBd.GetConnection();
+                ClienteDAL clienteDal = new ClienteDAL();
+                MeioPagamentoDAL meioPagamentoDal = new MeioPagamentoDAL();
+
                 List<AssinaturaDb> listaAssinaturaDb = new List<AssinaturaDb>();
 
                 SqlCommand cmd = new SqlCommand("select a.id, a.dt_inicio, a.intervalo_quantidade, " + 
                     " a.dia_cobranca, a.quant_parcelas, a.texto_fatura, a.valor_minimo, a.status, " +
+                    " a.id_cliente, a.id_cartao " +
                     " from rec_assinatura a " +
                     " where a.status = @Status ", conn);
 
@@ -39,7 +43,25 @@ namespace MelFitnessAssinaturas.DAL
 
                 while (reader.Read())
                 {
-                 // popular o model com os itens da assinatura . Pode colocar aqui ou em um método privado
+
+                    var assinatura = new AssinaturaDb();
+
+                    assinatura.Id = reader.GetInt32(reader.GetOrdinal("id"));
+                    assinatura.Dt_Inicio = reader.GetDateTime(reader.GetOrdinal("dt_inicio"));
+                    assinatura.Intervalo = reader["intervalo"].ToString();
+                    assinatura.Intervalo_Quantidade = reader.GetInt32(reader.GetOrdinal("intervalo_quantidade"));
+                    assinatura.Dia_Cobranca = reader.GetInt32(reader.GetOrdinal("dia_cobranca"));
+                    assinatura.Quant_Parcelas = reader.GetInt32(reader.GetOrdinal("quant_parcelas"));
+                    assinatura.Texto_Fatura = reader["texto_fatura"].ToString();
+                    assinatura.Valor_Minimo = reader.GetDouble(reader.GetOrdinal("valor_minimo"));
+                    assinatura.Status = reader["status"].ToString();
+
+                    // popular o model com os itens da assinatura . Pode colocar aqui ou em um método privado
+
+
+                    assinatura.Cliente = clienteDal.GetClienteDb(reader["id_cliente"].ToString());
+                    assinatura.MeioPagamento = meioPagamentoDal.GetCartaoDb(reader["id_cartao"].ToString());
+
                 }
                 return listaAssinaturaDb;
 

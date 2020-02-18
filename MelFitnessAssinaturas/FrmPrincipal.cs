@@ -207,7 +207,7 @@ namespace MelFitnessAssinaturas
 
             var client = new MundiAPIClient(basicAuthUserName, basicAuthPassword);
 
-            var clienteDAL = new ClienteDal();
+            var clienteDAL = new ClienteDAL();
             var listaClientes = clienteDAL.ListaClientes("N");
 
             foreach (var customer in listaClientes)
@@ -297,7 +297,7 @@ namespace MelFitnessAssinaturas
 
         private void button6_Click(object sender, EventArgs e)
         {
-            var clienteDAL = new ClienteDal();
+            var clienteDAL = new ClienteDAL();
             var listaClientes = clienteDAL.ListaClientes("A");
         }
 

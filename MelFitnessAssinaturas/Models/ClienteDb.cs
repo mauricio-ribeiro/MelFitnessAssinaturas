@@ -1,27 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using MundiAPI.PCL.Models;
-
-namespace MelFitnessAssinaturas.Models
+﻿namespace MelFitnessAssinaturas.Models
 {
     public class ClienteDb
     {
-
-        public string Nome { get; }
-        public string Email { get; }
-        public string Tipo { get; }
-        public string Documento { get; }
-        public string Sexo { get; }
         public string Codigo { get; set; }
-        public Dictionary<string,string> Metadata { get; }
-        public CreateAddressRequest Endereco { get; }
-        public CreatePhonesRequest Telefones { get; }
-        public String id_Api { get; set; }
-
-
-
+        public string Nome { get; set; }
+        public string Email { get; set;  }
+        public string Documento { get; set; }
+        public string Sexo { get; set; }
+        public string Dt_Nascimento { get; set; }
+        public string Endereco_1 { get; set; }
+        public string Endereco_2 { get; set; }
+        public string Cep { get; set; }
+        public string Cidade { get; set; }
+        public string Uf { get; set; }
+        public string Fone1 { get; set; }
+        public string Fone2 { get; set; }
+        public string Id_Api { get; set; }
+        public string Status_Api { get; set; }
     }
 }
