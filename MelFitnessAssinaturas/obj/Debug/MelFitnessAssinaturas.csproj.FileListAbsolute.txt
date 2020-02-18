@@ -23,7 +23,6 @@ C:\Users\CARLOS\tetradev\MelFitnessAssinaturas\MelFitnessAssinaturas\obj\Debug\M
 C:\Users\CARLOS\tetradev\MelFitnessAssinaturas\MelFitnessAssinaturas\obj\Debug\MelFitnessAssinaturas.exe
 C:\Users\CARLOS\tetradev\MelFitnessAssinaturas\MelFitnessAssinaturas\obj\Debug\MelFitnessAssinaturas.pdb
 F:\Projetos Freela\MelFitnessAssinaturas\MelFitnessAssinaturas\obj\Debug\MelFitnessAssinaturas.csprojAssemblyReference.cache
-F:\Projetos Freela\MelFitnessAssinaturas\MelFitnessAssinaturas\obj\Debug\MelFitnessAssinaturas.Form1.resources
 F:\Projetos Freela\MelFitnessAssinaturas\MelFitnessAssinaturas\obj\Debug\MelFitnessAssinaturas.Properties.Resources.resources
 F:\Projetos Freela\MelFitnessAssinaturas\MelFitnessAssinaturas\obj\Debug\MelFitnessAssinaturas.csproj.GenerateResource.cache
 F:\Projetos Freela\MelFitnessAssinaturas\MelFitnessAssinaturas\obj\Debug\MelFitnessAssinaturas.csproj.CoreCompileInputs.cache
@@ -69,3 +68,4 @@ D:\Sistemas\MelFitnessAssinaturas\MelFitnessAssinaturas\obj\Debug\MelFitnessAssi
 D:\Sistemas\MelFitnessAssinaturas\MelFitnessAssinaturas\obj\Debug\MelFitnessAssinaturas.exe
 D:\Sistemas\MelFitnessAssinaturas\MelFitnessAssinaturas\obj\Debug\MelFitnessAssinaturas.pdb
 D:\Sistemas\MelFitnessAssinaturas\MelFitnessAssinaturas\obj\Debug\MelFitnessAssinaturas.FrmPrincipal.resources
+F:\Projetos Freela\MelFitnessAssinaturas\MelFitnessAssinaturas\obj\Debug\MelFitnessAssinaturas.FrmPrincipal.resources
