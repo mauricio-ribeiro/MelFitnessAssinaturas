@@ -62,10 +62,10 @@ D:\Sistemas\MelFitnessAssinaturas\MelFitnessAssinaturas\bin\Debug\Microsoft.Thre
 D:\Sistemas\MelFitnessAssinaturas\MelFitnessAssinaturas\bin\Debug\Newtonsoft.Json.xml
 D:\Sistemas\MelFitnessAssinaturas\MelFitnessAssinaturas\bin\Debug\System.Net.Http.Extensions.xml
 D:\Sistemas\MelFitnessAssinaturas\MelFitnessAssinaturas\bin\Debug\System.Net.Http.Primitives.xml
-D:\Sistemas\MelFitnessAssinaturas\MelFitnessAssinaturas\obj\Debug\MelFitnessAssinaturas.Form1.resources
 D:\Sistemas\MelFitnessAssinaturas\MelFitnessAssinaturas\obj\Debug\MelFitnessAssinaturas.Properties.Resources.resources
 D:\Sistemas\MelFitnessAssinaturas\MelFitnessAssinaturas\obj\Debug\MelFitnessAssinaturas.csproj.GenerateResource.cache
 D:\Sistemas\MelFitnessAssinaturas\MelFitnessAssinaturas\obj\Debug\MelFitnessAssinaturas.csproj.CoreCompileInputs.cache
 D:\Sistemas\MelFitnessAssinaturas\MelFitnessAssinaturas\obj\Debug\MelFitnessAssinaturas.csproj.CopyComplete
 D:\Sistemas\MelFitnessAssinaturas\MelFitnessAssinaturas\obj\Debug\MelFitnessAssinaturas.exe
 D:\Sistemas\MelFitnessAssinaturas\MelFitnessAssinaturas\obj\Debug\MelFitnessAssinaturas.pdb
+D:\Sistemas\MelFitnessAssinaturas\MelFitnessAssinaturas\obj\Debug\MelFitnessAssinaturas.FrmPrincipal.resources
