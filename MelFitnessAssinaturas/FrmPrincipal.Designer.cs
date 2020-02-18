@@ -363,8 +363,9 @@
             this.menuItemConfiguracao.Name = "menuItemConfiguracao";
             this.menuItemConfiguracao.Size = new System.Drawing.Size(180, 22);
             this.menuItemConfiguracao.Text = "Configuração";
+            this.menuItemConfiguracao.Click += new System.EventHandler(this.menuItemConfiguracao_Click);
             // 
-            // Form1
+            // FrmPrincipal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -394,7 +395,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.KeyPreview = true;
             this.MainMenuStrip = this.menuStrip1;
-            this.Name = "Form1";
+            this.Name = "FrmPrincipal";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Tela Principal";
             this.Load += new System.EventHandler(this.Form1_Load);
