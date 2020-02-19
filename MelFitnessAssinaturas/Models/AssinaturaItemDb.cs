@@ -13,5 +13,11 @@ namespace MelFitnessAssinaturas.Models
         public int Ciclos { get; set; }
         public int Quant { get; set; }
         public string Status { get; set; }
+        public double Valor { private get; set; }
+
+        public int? GetValor()
+        {
+            return Convert.ToInt32(this.Valor * 100);
+        }
     }
 }

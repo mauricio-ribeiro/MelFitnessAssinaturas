@@ -61,6 +61,9 @@ namespace MelFitnessAssinaturas.DAL
 
                     assinatura.Cliente = clienteDal.GetClienteDb(reader["id_cliente"].ToString());
                     assinatura.MeioPagamento = meioPagamentoDal.GetCartaoDb(reader["id_cartao"].ToString());
+                    assinatura.ItensAssinatura = GetItensAssinatura(assinatura.Id);
+
+                    listaAssinaturaDb.Add(assinatura);
 
                 }
                 return listaAssinaturaDb;
@@ -68,7 +71,6 @@ namespace MelFitnessAssinaturas.DAL
             }
             catch (Exception ex)
             {
-
                 throw new Exception(ex.Message);
             }
             finally
@@ -84,6 +86,63 @@ namespace MelFitnessAssinaturas.DAL
                 }
             }
         }
+
+        /// <summary>
+        /// Monta os itens de assinatura
+        /// </summary>
+        /// <param name="id">id da assinatura</param>
+        /// <returns></returns>
+        private List<AssinaturaItemDb> GetItensAssinatura(int id)
+        {
+            try
+            {
+
+                SqlCommand cmd = new SqlCommand("select i.id_assinatura, i.descricao, i.ciclos, i.quant, i.status " +
+                    " from rec_assinatura_item i " +
+                    " where i.status = 'A' and i.id_assinatura = @id", conn);
+
+                SqlParameter param = new SqlParameter();
+                param.ParameterName = "@id";
+                param.Value = id;
+
+                cmd.Parameters.Add(param);
+
+                reader = cmd.ExecuteReader();
+
+                var listaItens = new List<AssinaturaItemDb>();
+
+                while (reader.Read())
+                {
+                    var item = new AssinaturaItemDb();
+                    item.Id_Assinatura = reader.GetInt32(reader.GetOrdinal("id_assinatura"));
+                    item.Descricao = reader["descricao"].ToString();
+                    item.Ciclos = reader.GetInt32(reader.GetOrdinal("ciclos"));
+                    item.Quant = reader.GetInt32(reader.GetOrdinal("quant"));
+                    item.Status = reader["status"].ToString();
+
+                    listaItens.Add(item);
+                }
+
+                return listaItens;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+            finally
+            {
+                if (reader != null)
+                {
+                    reader.Close();
+                }
+
+                if (conn != null)
+                {
+                    conn.Close();
+                }
+            }
+        }
+    
 
         /// <summary>
         /// Ao gravar/atualizar uma assinatura na API atualizar o status e a referência do id da API no banco de dados

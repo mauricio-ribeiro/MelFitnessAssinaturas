@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using MelFitnessAssinaturas.Models;
 
 namespace MelFitnessAssinaturas.DAL
@@ -12,35 +8,55 @@ namespace MelFitnessAssinaturas.DAL
     {
         public MeioPagamentoDb GetCartaoDb(string id)
         {
-            SqlCommand cmd = new SqlCommand("select c.cod_cli, c.numero_cartao, c.bandeira, c.cpf, " +
-                 " c.cvc, c.val_mes, c.val_ano, c.status, c.id, c.id_api " +
-                 " from cad_clientes_cartao c " +
-                 " where cli.cod_cli = @codCartao", conn);
+            try
+            {
 
-            SqlParameter param = new SqlParameter();
-            param.ParameterName = "@codCartao";
-            param.Value = id;
+                SqlCommand cmd = new SqlCommand("select c.cod_cli, c.numero_cartao, c.bandeira, c.cpf, " +
+                     " c.cvc, c.val_mes, c.val_ano, c.status, c.id, c.id_api " +
+                     " from cad_clientes_cartao c " +
+                     " where cli.cod_cli = @codCartao", conn);
 
-            cmd.Parameters.Add(param);
+                SqlParameter param = new SqlParameter();
+                param.ParameterName = "@codCartao";
+                param.Value = id;
 
-            reader = cmd.ExecuteReader();
+                cmd.Parameters.Add(param);
 
-            var cartao = new MeioPagamentoDb();
+                reader = cmd.ExecuteReader();
 
-
-            cartao.Cod_Cli = reader.GetInt32(reader.GetOrdinal("cod_cli"));
-            cartao.Numero_Cartao = reader["numero_cartao"].ToString();
-            cartao.Bandeira = reader["bandeira"].ToString();
-            cartao.Cpf = reader["cpf"].ToString();
-            cartao.Cvc = reader["cvc"].ToString();
-            cartao.Val_Mes = reader.GetInt32(reader.GetOrdinal("val_mes"));
-            cartao.Val_Ano = reader.GetInt32(reader.GetOrdinal("val_ano"));
-            cartao.Status = reader["status"].ToString();
-            cartao.Id = reader.GetInt32(reader.GetOrdinal("id"));
-            cartao.Id_Api = reader["id_api"].ToString();
+                var cartao = new MeioPagamentoDb();
 
 
-            return cartao;
+                cartao.Cod_Cli = reader.GetInt32(reader.GetOrdinal("cod_cli"));
+                cartao.Numero_Cartao = reader["numero_cartao"].ToString();
+                cartao.Bandeira = reader["bandeira"].ToString();
+                cartao.Cpf = reader["cpf"].ToString();
+                cartao.Cvc = reader["cvc"].ToString();
+                cartao.Val_Mes = reader.GetInt32(reader.GetOrdinal("val_mes"));
+                cartao.Val_Ano = reader.GetInt32(reader.GetOrdinal("val_ano"));
+                cartao.Status = reader["status"].ToString();
+                cartao.Id = reader.GetInt32(reader.GetOrdinal("id"));
+                cartao.Id_Api = reader["id_api"].ToString();
+
+
+                return cartao;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+            finally
+            {
+                if (reader != null)
+                {
+                    reader.Close();
+                }
+
+                if (conn != null)
+                {
+                    conn.Close();
+                }
+            }
         }
     }
 }
