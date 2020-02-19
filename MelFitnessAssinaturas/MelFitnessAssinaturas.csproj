@@ -38,6 +38,10 @@
     <ApplicationIcon>ponto_de_servico_48x48.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.SqlServer.ConnectionInfo, Version=12.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.SqlServer.Management.Sdk.Sfc, Version=12.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.SqlServer.Smo, Version=12.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.SqlServer.SmoExtended, Version=12.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.Threading.Tasks, Version=1.0.12.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Bcl.Async.1.0.168\lib\net40\Microsoft.Threading.Tasks.dll</HintPath>
     </Reference>
@@ -79,6 +83,7 @@
     <Compile Include="Controllers\ClienteController.cs" />
     <Compile Include="Controllers\FaturaController.cs" />
     <Compile Include="Controllers\LogApiMundipaggController.cs" />
+    <Compile Include="Controllers\TesteConnectionStringController.cs" />
     <Compile Include="Controllers\MainController.cs" />
     <Compile Include="Controllers\MeioPagamentoController.cs" />
     <Compile Include="Controllers\PlanoController.cs" />
@@ -88,6 +93,13 @@
     <Compile Include="DAL\BaseDAL.cs" />
     <Compile Include="DAL\ClienteDAL.cs" />
     <Compile Include="DAL\LoApiMundipaggDal.cs" />
+    <Compile Include="Enums\TipoEnum.cs" />
+    <Compile Include="FrmConfigConexaoBanco.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmConfigConexaoBanco.Designer.cs">
+      <DependentUpon>FrmConfigConexaoBanco.cs</DependentUpon>
+    </Compile>
     <Compile Include="DAL\MeioPagamentoDAL.cs" />
     <Compile Include="Enums\TipoLogEnum.cs" />
     <Compile Include="FrmPrincipal.cs">
@@ -111,6 +123,9 @@
     <Compile Include="Util\LogDatabaseErrorUtil.cs" />
     <Compile Include="Util\RotinasDataUtil.cs" />
     <Compile Include="Util\Sheduler.cs" />
+    <EmbeddedResource Include="FrmConfigConexaoBanco.resx">
+      <DependentUpon>FrmConfigConexaoBanco.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FrmPrincipal.resx">
       <DependentUpon>FrmPrincipal.cs</DependentUpon>
     </EmbeddedResource>

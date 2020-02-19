@@ -400,6 +400,9 @@ namespace MelFitnessAssinaturas
             return retValue;
         }
 
-      
+        private void menuItemConfiguracao_Click(object sender, EventArgs e)
+        {
+            new FrmConfigConexaoBanco().ShowDialog();
+        }
     }
 }
