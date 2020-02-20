@@ -3,13 +3,10 @@ using MelFitnessAssinaturas.Models;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MelFitnessAssinaturas.DAL
 {
-    public class AssinaturaDAL : BaseDAL
+    public class AssinaturaDal : BaseDal
     {
         /// <summary>
         /// Busca as assinaturas pelo status
@@ -20,47 +17,50 @@ namespace MelFitnessAssinaturas.DAL
         {
             try
             {
-                conn = ConexaoBd.GetConnection();
-                ClienteDAL clienteDal = new ClienteDAL();
-                MeioPagamentoDAL meioPagamentoDal = new MeioPagamentoDAL();
+                Conn = ConexaoBd.GetConnection();
+                var clienteDal = new ClienteDal();
+                var meioPagamentoDal = new MeioPagamentoDal();
 
-                List<AssinaturaDb> listaAssinaturaDb = new List<AssinaturaDb>();
+                var listaAssinaturaDb = new List<AssinaturaDb>();
 
-                SqlCommand cmd = new SqlCommand("select a.id, a.dt_inicio, a.intervalo_quantidade, " + 
-                    " a.dia_cobranca, a.quant_parcelas, a.texto_fatura, a.valor_minimo, a.status, " +
-                    " a.id_cliente, a.id_cartao " +
-                    " from rec_assinatura a " +
-                    " where a.status = @Status ", conn);
+                var cmd = new SqlCommand("select a.id, a.dt_inicio, a.intervalo_quantidade, " + 
+                                         " a.dia_cobranca, a.quant_parcelas, a.texto_fatura, a.valor_minimo, a.status, " +
+                                         " a.id_cliente, a.id_cartao " +
+                                         " from rec_assinatura a " +
+                                         " where a.status = @Status ", Conn);
 
-                SqlParameter param = new SqlParameter();
-                param.ParameterName = "@Status";
-                param.Value = _status;
+                var param = new SqlParameter
+                {
+                    ParameterName = "@Status",
+                    Value = _status
+                };
 
                 cmd.Parameters.Add(param);
 
-                reader = cmd.ExecuteReader();
+                Reader = cmd.ExecuteReader();
 
 
-                while (reader.Read())
+                while (Reader.Read())
                 {
 
-                    var assinatura = new AssinaturaDb();
+                    var assinatura = new AssinaturaDb
+                    {
+                        Id = Reader.GetInt32(Reader.GetOrdinal("id")),
+                        Dt_Inicio = Reader.GetDateTime(Reader.GetOrdinal("dt_inicio")),
+                        Intervalo = Reader["intervalo"].ToString(),
+                        Intervalo_Quantidade = Reader.GetInt32(Reader.GetOrdinal("intervalo_quantidade")),
+                        Dia_Cobranca = Reader.GetInt32(Reader.GetOrdinal("dia_cobranca")),
+                        Quant_Parcelas = Reader.GetInt32(Reader.GetOrdinal("quant_parcelas")),
+                        Texto_Fatura = Reader["texto_fatura"].ToString(),
+                        Valor_Minimo = Reader.GetDouble(Reader.GetOrdinal("valor_minimo")),
+                        Status = Reader["status"].ToString(),
+                        Cliente = clienteDal.GetClienteDb(Reader["id_cliente"].ToString()),
+                        MeioPagamento = meioPagamentoDal.GetCartaoDb(Reader["id_cartao"].ToString())
+                    };
 
-                    assinatura.Id = reader.GetInt32(reader.GetOrdinal("id"));
-                    assinatura.Dt_Inicio = reader.GetDateTime(reader.GetOrdinal("dt_inicio"));
-                    assinatura.Intervalo = reader["intervalo"].ToString();
-                    assinatura.Intervalo_Quantidade = reader.GetInt32(reader.GetOrdinal("intervalo_quantidade"));
-                    assinatura.Dia_Cobranca = reader.GetInt32(reader.GetOrdinal("dia_cobranca"));
-                    assinatura.Quant_Parcelas = reader.GetInt32(reader.GetOrdinal("quant_parcelas"));
-                    assinatura.Texto_Fatura = reader["texto_fatura"].ToString();
-                    assinatura.Valor_Minimo = reader.GetDouble(reader.GetOrdinal("valor_minimo"));
-                    assinatura.Status = reader["status"].ToString();
 
                     // popular o model com os itens da assinatura . Pode colocar aqui ou em um método privado
 
-
-                    assinatura.Cliente = clienteDal.GetClienteDb(reader["id_cliente"].ToString());
-                    assinatura.MeioPagamento = meioPagamentoDal.GetCartaoDb(reader["id_cartao"].ToString());
                     assinatura.ItensAssinatura = GetItensAssinatura(assinatura.Id);
 
                     listaAssinaturaDb.Add(assinatura);
@@ -75,15 +75,8 @@ namespace MelFitnessAssinaturas.DAL
             }
             finally
             {
-                if (reader != null)
-                {
-                    reader.Close();
-                }
-
-                if (conn != null)
-                {
-                    conn.Close();
-                }
+                Reader?.Close();
+                Conn?.Close();
             }
         }
 
@@ -97,28 +90,30 @@ namespace MelFitnessAssinaturas.DAL
             try
             {
 
-                SqlCommand cmd = new SqlCommand("select i.id_assinatura, i.descricao, i.ciclos, i.quant, i.status " +
-                    " from rec_assinatura_item i " +
-                    " where i.status = 'A' and i.id_assinatura = @id", conn);
+                var cmd = new SqlCommand("select i.id_assinatura, i.descricao, i.ciclos, i.quant, i.status " +
+                                         " from rec_assinatura_item i " +
+                                         " where i.status = 'A' and i.id_assinatura = @id", Conn);
 
-                SqlParameter param = new SqlParameter();
-                param.ParameterName = "@id";
-                param.Value = id;
+                var param = new SqlParameter
+                {
+                    ParameterName = "@id",
+                    Value = id
+                };
 
                 cmd.Parameters.Add(param);
 
-                reader = cmd.ExecuteReader();
+                Reader = cmd.ExecuteReader();
 
                 var listaItens = new List<AssinaturaItemDb>();
 
-                while (reader.Read())
+                while (Reader.Read())
                 {
                     var item = new AssinaturaItemDb();
-                    item.Id_Assinatura = reader.GetInt32(reader.GetOrdinal("id_assinatura"));
-                    item.Descricao = reader["descricao"].ToString();
-                    item.Ciclos = reader.GetInt32(reader.GetOrdinal("ciclos"));
-                    item.Quant = reader.GetInt32(reader.GetOrdinal("quant"));
-                    item.Status = reader["status"].ToString();
+                    item.Id_Assinatura = Reader.GetInt32(Reader.GetOrdinal("id_assinatura"));
+                    item.Descricao = Reader["descricao"].ToString();
+                    item.Ciclos = Reader.GetInt32(Reader.GetOrdinal("ciclos"));
+                    item.Quant = Reader.GetInt32(Reader.GetOrdinal("quant"));
+                    item.Status = Reader["status"].ToString();
 
                     listaItens.Add(item);
                 }
@@ -131,15 +126,8 @@ namespace MelFitnessAssinaturas.DAL
             }
             finally
             {
-                if (reader != null)
-                {
-                    reader.Close();
-                }
-
-                if (conn != null)
-                {
-                    conn.Close();
-                }
+                Reader?.Close();
+                Conn?.Close();
             }
         }
     
@@ -154,13 +142,13 @@ namespace MelFitnessAssinaturas.DAL
         {
             try
             {
-                conn = ConexaoBd.GetConnection();
+                Conn = ConexaoBd.GetConnection();
 
-                SqlCommand cmd = new SqlCommand("update rec_assinatura " +
-                " set status = 'F', id_api = @_id_api " +
-                " where id = @id ", conn);
+                var cmd = new SqlCommand("update rec_assinatura " +
+                                         " set status = 'F', id_api = @_id_api " +
+                                         " where id = @id ", Conn);
 
-                SqlParameter param1 = new SqlParameter
+                var param1 = new SqlParameter
                 {
                     ParameterName = "@id",
                     Value = _code
@@ -168,7 +156,7 @@ namespace MelFitnessAssinaturas.DAL
 
                 cmd.Parameters.Add(param1);
 
-                SqlParameter param2 = new SqlParameter
+                var param2 = new SqlParameter
                 {
                     ParameterName = "@_id_api",
                     Value = _id_api
@@ -183,15 +171,11 @@ namespace MelFitnessAssinaturas.DAL
             }
             catch (Exception ex)
             {
-
                 throw new Exception(ex.Message);
             }
             finally
             {
-                if (conn != null)
-                {
-                    conn.Close();
-                }
+                Conn?.Close();
             }
         }
     }

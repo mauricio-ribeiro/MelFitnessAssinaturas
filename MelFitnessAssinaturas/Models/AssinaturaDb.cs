@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MelFitnessAssinaturas.Models
 {
@@ -15,7 +12,7 @@ namespace MelFitnessAssinaturas.Models
         public int Dia_Cobranca { get; set; }
         public int Quant_Parcelas { get; set; }
         public string Texto_Fatura { get; set; }
-        public Double Valor_Minimo { get; set; }
+        public double Valor_Minimo { get; set; }
         public string Status { get; set; }
         public string Id_Api { get; set; }
 

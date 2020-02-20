@@ -1,18 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using MelFitnessAssinaturas.DAL;
+﻿using MelFitnessAssinaturas.DAL;
 using MelFitnessAssinaturas.Models;
 using MundiAPI.PCL;
 using MundiAPI.PCL.Models;
+using System;
+using System.Collections.Generic;
 
 namespace MelFitnessAssinaturas.Controllers
 {
     public class AssinaturaController
     {
-        private AssinaturaDAL assinaturaDal = new AssinaturaDAL();
+        private AssinaturaDal assinaturaDal = new AssinaturaDal();
         /// <summary>
         /// Pesquisa novas assinaturas no banco de dados, popula seus dados e relacionamentos e grava na API
         /// </summary>
@@ -28,14 +25,14 @@ namespace MelFitnessAssinaturas.Controllers
                 foreach (var assinatura in listaNovasAssinaturas)
                 {
                     //transferir as assinaturas do banco para objetos da Api e registrar
-                    CreateSubscriptionRequest assinaturaApi = ConverteAssinaturaDbEmApi(assinatura);
-                    String id_api = GravaAssinaturaApi(assinaturaApi);
+                    var assinaturaApi = ConverteAssinaturaDbEmApi(assinatura);
+                    var id_api = GravaAssinaturaApi(assinaturaApi);
                     contAssinaturasGravadas++;
 
                     var log = new LogApiMundipaggController();
                     log.Incluir(new LogApiMundipagg()
                     {
-                        Descricao = String.Format("Assinatura {0} gravada", assinatura.Texto_Fatura),
+                        Descricao = $"Assinatura {assinatura.Texto_Fatura} gravada",
                         DtEvento = DateTime.Now,
                         NomeCliente = assinatura.Cliente.Nome,
                         Tipo = Enums.TipoLogEnum.As,
@@ -100,8 +97,10 @@ namespace MelFitnessAssinaturas.Controllers
                 };
             }
 
-            var metadata = new Dictionary<string, string>();
-            metadata.Add("id", assinatura.Id.ToString());
+            var metadata = new Dictionary<string, string>
+            {
+                {"id", assinatura.Id.ToString()}
+            };
 
             var request = new CreateSubscriptionRequest
             {
@@ -126,12 +125,13 @@ namespace MelFitnessAssinaturas.Controllers
 
         }
 
-        private String GravaAssinaturaApi(CreateSubscriptionRequest assinaturaApi)
+        private string GravaAssinaturaApi(CreateSubscriptionRequest assinaturaApi)
         {
             // Secret key fornecida pela Mundipagg
-            string basicAuthUserName = "sk_test_4tdVXpseumRmqbo";
+            var basicAuthUserName = "sk_test_4tdVXpseumRmqbo";
+
             // Senha em branco. Passando apenas a secret key
-            string basicAuthPassword = "";
+            var basicAuthPassword = "";
 
             var client = new MundiAPIClient(basicAuthUserName, basicAuthPassword);
 

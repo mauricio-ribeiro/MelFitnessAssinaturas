@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Data.SqlClient;
 
 namespace MelFitnessAssinaturas.DAL
 {
-    public class BaseDAL
+    public class BaseDal
     {
-        protected SqlConnection conn;
-        protected SqlDataReader reader = null;
+        protected SqlConnection Conn;
+        protected SqlDataReader Reader = null;
     }
 }

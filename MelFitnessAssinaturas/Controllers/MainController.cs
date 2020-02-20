@@ -1,9 +1,5 @@
 ﻿using MelFitnessAssinaturas.Util;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MelFitnessAssinaturas.Controllers
 {
@@ -13,14 +9,14 @@ namespace MelFitnessAssinaturas.Controllers
 
         public void IniciaRelogioAssinatura()
         {
-            Scheduler tarefa = new Scheduler(tempo =>
+            var tarefa = new Scheduler(tempo =>
             {
-                Console.WriteLine("Buscando e cadastrando novas assinaturas");
+                Console.WriteLine(@"Buscando e cadastrando novas assinaturas");
                 var numAssinaturas = AssinaturaCtrl.CadastraNovasAssinaturas();
-                Console.WriteLine(String.Format("{0} novas assinaturas cadastradas", numAssinaturas));
+                Console.WriteLine($@"{numAssinaturas} novas assinaturas cadastradas");
             });
 
-            tarefa.ID = "cadastraNoasAssinaturas";
+            tarefa.ID = "cadastraNovasAssinaturas";
             tarefa.Frequencia = new TimeSpan(0, 0, 30);
             tarefa.StartWithDelay(null, new TimeSpan(0, 0, 30));
         }

@@ -8,45 +8,48 @@ using System;
 
 namespace MelFitnessAssinaturas.DAL
 {
-    public class ClienteDAL : BaseDAL
+    public class ClienteDal : BaseDal
     {
         private CreateCustomerRequest cliApi;
 
         public ClienteDb GetClienteDb(string codCli)
         {
-            SqlCommand cmd = new SqlCommand("select cli.cod_cli, cli.nome, cli.email, cli.cpf, " +
-                  " case when cli.sexo = 1 then 'male' else 'famale' end as sexo, cli.data_nasc, " +
-                  " cli.endereco as address_1, cli.bairro as address_2, cli.cep, cid.cid_nome as cidade, " +
-                  " cid.uf_sigla as uf, cli.fone1, cli.fone2, cli.id_api, cli.status_api " +
-                  " from cad_clientes cli " +
-                  " left join cad_cidade cid on cid.cid_codigo = cli.cid_codigo " +
-                  " where cli.cod_cli = @codCli", conn);
+            var cmd = new SqlCommand("select cli.cod_cli, cli.nome, cli.email, cli.cpf, " +
+                                     " case when cli.sexo = 1 then 'male' else 'famale' end as sexo, cli.data_nasc, " +
+                                     " cli.endereco as address_1, cli.bairro as address_2, cli.cep, cid.cid_nome as cidade, " +
+                                     " cid.uf_sigla as uf, cli.fone1, cli.fone2, cli.id_api, cli.status_api " +
+                                     " from cad_clientes cli " +
+                                     " left join cad_cidade cid on cid.cid_codigo = cli.cid_codigo " +
+                                     " where cli.cod_cli = @codCli", Conn);
 
-            SqlParameter param = new SqlParameter();
-            param.ParameterName = "@codCli";
-            param.Value = reader["cod_cli"].ToString();
+            var param = new SqlParameter
+            {
+                ParameterName = "@codCli",
+                Value = Reader["cod_cli"].ToString()
+            };
 
             cmd.Parameters.Add(param);
 
-            reader = cmd.ExecuteReader();
+            Reader = cmd.ExecuteReader();
 
-            var cliente = new ClienteDb();
-
-            cliente.Codigo = reader["cod_cli"].ToString();
-            cliente.Nome = reader["nome"].ToString();
-            cliente.Email = reader["email"].ToString();
-            cliente.Documento = reader["cpf"].ToString();
-            cliente.Sexo = reader["sexo"].ToString();
-            cliente.Dt_Nascimento = reader["data_nasc"].ToString();
-            cliente.Endereco_1 = reader["address_1"].ToString();
-            cliente.Endereco_2 = reader["bairro"].ToString();
-            cliente.Cep = reader["cep"].ToString();
-            cliente.Cidade = reader["cidade"].ToString();
-            cliente.Uf = reader["uf"].ToString();
-            cliente.Fone1 = reader["fone1"].ToString();
-            cliente.Fone2 = reader["fone2"].ToString();
-            cliente.Id_Api = reader["id_api"].ToString();
-            cliente.Status_Api = reader["status_api"].ToString();
+            var cliente = new ClienteDb
+            {
+                Codigo = Reader["cod_cli"].ToString(),
+                Nome = Reader["nome"].ToString(),
+                Email = Reader["email"].ToString(),
+                Documento = Reader["cpf"].ToString(),
+                Sexo = Reader["sexo"].ToString(),
+                Dt_Nascimento = Reader["data_nasc"].ToString(),
+                Endereco_1 = Reader["address_1"].ToString(),
+                Endereco_2 = Reader["bairro"].ToString(),
+                Cep = Reader["cep"].ToString(),
+                Cidade = Reader["cidade"].ToString(),
+                Uf = Reader["uf"].ToString(),
+                Fone1 = Reader["fone1"].ToString(),
+                Fone2 = Reader["fone2"].ToString(),
+                Id_Api = Reader["id_api"].ToString(),
+                Status_Api = Reader["status_api"].ToString()
+            };
 
 
             return cliente;
@@ -56,39 +59,42 @@ namespace MelFitnessAssinaturas.DAL
         {
             try
             {
-                conn = ConexaoBd.GetConnection();
-                List<CreateCustomerRequest> listaCliApi = new List<CreateCustomerRequest>();
+                Conn = ConexaoBd.GetConnection();
 
-                SqlCommand cmd = new SqlCommand("select cli.cod_cli, cli.nome, cli.email, cli.cpf, " +
-                " case when cli.sexo = 1 then 'male' else 'famale' end as sexo, cli.data_nasc, " +
-                " cli.endereco as address_1, cli.bairro as address_2, cli.cep, cid.cid_nome as cidade, " +
-                " cid.uf_sigla as uf, cli.fone1, cli.fone2, cli.id_api, cli.status_api " +
-                " from cad_clientes cli " +
-                " left join cad_cidade cid on cid.cid_codigo = cli.cid_codigo " +
-                " where cli.status_api = @StatusCli ", conn);
+                var listaCliApi = new List<CreateCustomerRequest>();
 
-                SqlParameter param = new SqlParameter();
-                param.ParameterName = "@StatusCli";
-                param.Value = _statusCli;
+                var cmd = new SqlCommand("select cli.cod_cli, cli.nome, cli.email, cli.cpf, " +
+                                         " case when cli.sexo = 1 then 'male' else 'famale' end as sexo, cli.data_nasc, " +
+                                         " cli.endereco as address_1, cli.bairro as address_2, cli.cep, cid.cid_nome as cidade, " +
+                                         " cid.uf_sigla as uf, cli.fone1, cli.fone2, cli.id_api, cli.status_api " +
+                                         " from cad_clientes cli " +
+                                         " left join cad_cidade cid on cid.cid_codigo = cli.cid_codigo " +
+                                         " where cli.status_api = @StatusCli ", Conn);
+
+                var param = new SqlParameter
+                {
+                    ParameterName = "@StatusCli",
+                    Value = _statusCli
+                };
 
                 cmd.Parameters.Add(param);
 
-                reader = cmd.ExecuteReader();
+                Reader = cmd.ExecuteReader();
 
 
-                while (reader.Read())
+                while (Reader.Read())
                 {
                     var metadata = new Dictionary<string, string>();
-                    metadata.Add("id", reader["cod_cli"].ToString());
-                    metadata.Add("id_api", reader["id_api"].ToString());
+                    metadata.Add("id", Reader["cod_cli"].ToString());
+                    metadata.Add("id_api", Reader["id_api"].ToString());
 
                     var address = new CreateAddressRequest
                     {
-                        Line1 = reader["address_1"].ToString(),
-                        Line2 = reader["address_2"].ToString(),
-                        ZipCode = reader["cep"].ToString(),
-                        City = reader["cidade"].ToString(),
-                        State = reader["uf"].ToString(),
+                        Line1 = Reader["address_1"].ToString(),
+                        Line2 = Reader["address_2"].ToString(),
+                        ZipCode = Reader["cep"].ToString(),
+                        City = Reader["cidade"].ToString(),
+                        State = Reader["uf"].ToString(),
                         Country = "BR"
                     };
 
@@ -96,27 +102,27 @@ namespace MelFitnessAssinaturas.DAL
                     {
                         HomePhone = new CreatePhoneRequest
                         {
-                            AreaCode = reader["fone1"].ToString().Substring(0, 2),
+                            AreaCode = Reader["fone1"].ToString().Substring(0, 2),
                             CountryCode = "55",
-                            Number = reader["fone1"].ToString().Substring(2, reader["fone1"].ToString().Length - 3)
+                            Number = Reader["fone1"].ToString().Substring(2, Reader["fone1"].ToString().Length - 3)
                         },
                         MobilePhone = new CreatePhoneRequest
                         {
-                            AreaCode = reader["fone2"].ToString().Substring(0, 2),
+                            AreaCode = Reader["fone2"].ToString().Substring(0, 2),
                             CountryCode = "55",
-                            Number = reader["fone2"].ToString().Substring(2, reader["fone2"].ToString().Length - 3)
+                            Number = Reader["fone2"].ToString().Substring(2, Reader["fone2"].ToString().Length - 3)
                         },
                     };
 
 
                     cliApi = new CreateCustomerRequest
                     {
-                        Name = reader["nome"].ToString(),
-                        Email = reader["email"].ToString(),
+                        Name = Reader["nome"].ToString(),
+                        Email = Reader["email"].ToString(),
                         Type = "individual",
-                        Document = reader["cpf"].ToString(),
-                        Gender = reader["sexo"].ToString(),
-                        Code = reader["cod_cli"].ToString(),
+                        Document = Reader["cpf"].ToString(),
+                        Gender = Reader["sexo"].ToString(),
+                        Code = Reader["cod_cli"].ToString(),
                         Phones = phones,
                         Address = address,
                         Metadata = metadata
@@ -133,14 +139,14 @@ namespace MelFitnessAssinaturas.DAL
             }
             finally
             {
-                if (reader != null)
+                if (Reader != null)
                 {
-                    reader.Close();
+                    Reader.Close();
                 }
 
-                if (conn != null)
+                if (Conn != null)
                 {
-                    conn.Close();
+                    Conn.Close();
                 }
             }
         }
@@ -149,11 +155,11 @@ namespace MelFitnessAssinaturas.DAL
         {
             try
             {
-                conn = ConexaoBd.GetConnection();
+                Conn = ConexaoBd.GetConnection();
 
                 SqlCommand cmd = new SqlCommand("update cad_clientes " +
                 " set status_api = 'F', id_api = @_id_api " +
-                " where cod_cli = @codigo ", conn);
+                " where cod_cli = @codigo ", Conn);
 
                 SqlParameter param1 = new SqlParameter
                 {
@@ -183,9 +189,9 @@ namespace MelFitnessAssinaturas.DAL
             }
             finally
             {
-                if (conn != null)
+                if (Conn != null)
                 {
-                    conn.Close();
+                    Conn.Close();
                 }
             }
         }
