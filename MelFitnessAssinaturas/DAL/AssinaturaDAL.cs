@@ -3,11 +3,17 @@ using MelFitnessAssinaturas.Models;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
+using System.Text;
+using MelFitnessAssinaturas.Util;
 
 namespace MelFitnessAssinaturas.DAL
 {
-    public class AssinaturaDal : BaseDal
+    public class AssinaturaDal
     {
+
+        private const string Camada = "AssinaturaDal";
+        
+
         /// <summary>
         /// Busca as assinaturas pelo status
         /// </summary>
@@ -15,68 +21,95 @@ namespace MelFitnessAssinaturas.DAL
         /// <returns>Lista de assinaturas com os itens populados</returns>
         public List<AssinaturaDb> ListaAssinaturasDb(string _status)
         {
+
+            const string metodo = "ListaAssinaturasDb";
+
+            var clienteDal = new ClienteDal();
+            var meioPagamentoDal = new MeioPagamentoDal();
+            var listaAssinaturaDb = new List<AssinaturaDb>();
+
+
             try
             {
-                Conn = ConexaoBd.GetConnection();
-                var clienteDal = new ClienteDal();
-                var meioPagamentoDal = new MeioPagamentoDal();
+            
+                var sql = new StringBuilder();
 
-                var listaAssinaturaDb = new List<AssinaturaDb>();
-
-                var cmd = new SqlCommand("select a.id, a.dt_inicio, a.intervalo_quantidade, " + 
-                                         " a.dia_cobranca, a.quant_parcelas, a.texto_fatura, a.valor_minimo, a.status, " +
-                                         " a.id_cliente, a.id_cartao " +
-                                         " from rec_assinatura a " +
-                                         " where a.status = @Status ", Conn);
-
-                var param = new SqlParameter
+                sql.Append("select a.id, a.dt_inicio, a.intervalo_quantidade,");
+                sql.Append("a.dia_cobranca, a.quant_parcelas, a.texto_fatura, a.valor_minimo, a.status,");
+                sql.Append("a.id_cliente, a.id_cartao from rec_assinatura a ");
+                sql.Append("where a.status = @Status;");
+                
+                using (var conn = ConexaoBd.GetConnection())
                 {
-                    ParameterName = "@Status",
-                    Value = _status
-                };
-
-                cmd.Parameters.Add(param);
-
-                Reader = cmd.ExecuteReader();
-
-
-                while (Reader.Read())
-                {
-
-                    var assinatura = new AssinaturaDb
+                    using (var cmd = new SqlCommand(sql.ToString(),conn))
                     {
-                        Id = Reader.GetInt32(Reader.GetOrdinal("id")),
-                        Dt_Inicio = Reader.GetDateTime(Reader.GetOrdinal("dt_inicio")),
-                        Intervalo = Reader["intervalo"].ToString(),
-                        Intervalo_Quantidade = Reader.GetInt32(Reader.GetOrdinal("intervalo_quantidade")),
-                        Dia_Cobranca = Reader.GetInt32(Reader.GetOrdinal("dia_cobranca")),
-                        Quant_Parcelas = Reader.GetInt32(Reader.GetOrdinal("quant_parcelas")),
-                        Texto_Fatura = Reader["texto_fatura"].ToString(),
-                        Valor_Minimo = Reader.GetDouble(Reader.GetOrdinal("valor_minimo")),
-                        Status = Reader["status"].ToString(),
-                        Cliente = clienteDal.GetClienteDb(Reader["id_cliente"].ToString()),
-                        MeioPagamento = meioPagamentoDal.GetCartaoDb(Reader["id_cartao"].ToString())
-                    };
+                        cmd.Parameters.Clear();
+                        cmd.Parameters.AddWithValue("@Status",_status);
 
+                        using (var dr = cmd.ExecuteReader())
+                        {
+                            while (dr.Read())
+                            {
 
-                    // popular o model com os itens da assinatura . Pode colocar aqui ou em um método privado
+                                var assinatura = new AssinaturaDb
+                                {
+                                    Id = dr.GetInt32(dr.GetOrdinal("id")),
+                                    Dt_Inicio = dr.GetDateTime(dr.GetOrdinal("dt_inicio")),
+                                    Intervalo = dr["intervalo"].ToString(),
+                                    Intervalo_Quantidade = dr.GetInt32(dr.GetOrdinal("intervalo_quantidade")),
+                                    Dia_Cobranca = dr.GetInt32(dr.GetOrdinal("dia_cobranca")),
+                                    Quant_Parcelas = dr.GetInt32(dr.GetOrdinal("quant_parcelas")),
+                                    Texto_Fatura = dr["texto_fatura"].ToString(),
+                                    Valor_Minimo = dr.GetDouble(dr.GetOrdinal("valor_minimo")),
+                                    Status = dr["status"].ToString(),
+                                    Cliente = clienteDal.GetClienteDb(dr["id_cliente"].ToString()),
+                                    MeioPagamento = meioPagamentoDal.GetCartaoDb(dr["id_cartao"].ToString())
+                                };
 
-                    assinatura.ItensAssinatura = GetItensAssinatura(assinatura.Id);
+                                // popular o model com os itens da assinatura . Pode colocar aqui ou em um método privado
+                                assinatura.ItensAssinatura = GetItensAssinatura(assinatura.Id);
 
-                    listaAssinaturaDb.Add(assinatura);
+                                listaAssinaturaDb.Add(assinatura);
 
+                            }
+                        }
+
+                    }     
                 }
+
                 return listaAssinaturaDb;
+
+            }
+            catch (SqlException sqlException)
+            {
+
+                string strMensagem = "";
+                strMensagem = LogDatabaseErrorUtil.CreateErrorDatabaseMessage(sqlException);
+                LogDatabaseErrorUtil.LogFileWrite(strMensagem, metodo);
+
+                sqlException.Data["MensagemCustomizada"] = LogDatabaseErrorUtil.ValidateDataBaseErrorNumber(sqlException.Number);
+                sqlException.Data["Metodo"] = metodo;
+                sqlException.Data["Classe"] = Camada;
+                sqlException.Data["Hora"] = DateTime.Now;
+
+                throw;
 
             }
             catch (Exception ex)
             {
-                throw new Exception(ex.Message);
-            }
-            finally
-            {
-                Reader?.Close();
-                Conn?.Close();
+
+                string strMensagem = "";
+
+                strMensagem = LogDatabaseErrorUtil.CreateErrorMessage(ex);
+                LogDatabaseErrorUtil.LogFileWrite(strMensagem, metodo);
+
+                ex.Data["MensagemCustomizada"] = "Ocorreu um erro ao tentar executar a operação.";
+                ex.Data["Metodo"] = metodo;
+                ex.Data["Classe"] = Camada;
+                ex.Data["Hora"] = DateTime.Now;
+
+                throw;
+
             }
         }
 
@@ -87,47 +120,78 @@ namespace MelFitnessAssinaturas.DAL
         /// <returns></returns>
         private List<AssinaturaItemDb> GetItensAssinatura(int id)
         {
+
+            const string metodo = "GetItensAssinatura";
+
+            var listaItens = new List<AssinaturaItemDb>();
+
             try
             {
+                
+                var sql = new StringBuilder();
 
-                var cmd = new SqlCommand("select i.id_assinatura, i.descricao, i.ciclos, i.quant, i.status " +
-                                         " from rec_assinatura_item i " +
-                                         " where i.status = 'A' and i.id_assinatura = @id", Conn);
+                sql.Append("select i.id_assinatura, i.descricao, i.ciclos, i.quant, i.status from rec_assinatura_item i ");
+                sql.Append("where i.status = 'A' and i.id_assinatura = @id");
 
-                var param = new SqlParameter
+                using (var conn = ConexaoBd.GetConnection())
                 {
-                    ParameterName = "@id",
-                    Value = id
-                };
+                    using (var cmd = new SqlCommand(sql.ToString(), conn))
+                    {
+                        cmd.Parameters.Clear();
+                        cmd.Parameters.AddWithValue("@id",id);
 
-                cmd.Parameters.Add(param);
+                        using (var dr = cmd.ExecuteReader())
+                        {
+                            while (dr.Read())
+                            {
+                                var item = new AssinaturaItemDb
+                                {
+                                    Id_Assinatura = dr.GetInt32(dr.GetOrdinal("id_assinatura")),
+                                    Descricao = dr["descricao"].ToString(),
+                                    Ciclos = dr.GetInt32(dr.GetOrdinal("ciclos")),
+                                    Quant = dr.GetInt32(dr.GetOrdinal("quant")),
+                                    Status = dr["status"].ToString()
+                                };
 
-                Reader = cmd.ExecuteReader();
+                                listaItens.Add(item);
+                            }
+                        }
 
-                var listaItens = new List<AssinaturaItemDb>();
-
-                while (Reader.Read())
-                {
-                    var item = new AssinaturaItemDb();
-                    item.Id_Assinatura = Reader.GetInt32(Reader.GetOrdinal("id_assinatura"));
-                    item.Descricao = Reader["descricao"].ToString();
-                    item.Ciclos = Reader.GetInt32(Reader.GetOrdinal("ciclos"));
-                    item.Quant = Reader.GetInt32(Reader.GetOrdinal("quant"));
-                    item.Status = Reader["status"].ToString();
-
-                    listaItens.Add(item);
+                    }
                 }
 
                 return listaItens;
             }
+            catch (SqlException sqlException)
+            {
+
+                string strMensagem = "";
+                strMensagem = LogDatabaseErrorUtil.CreateErrorDatabaseMessage(sqlException);
+                LogDatabaseErrorUtil.LogFileWrite(strMensagem, metodo);
+
+                sqlException.Data["MensagemCustomizada"] = LogDatabaseErrorUtil.ValidateDataBaseErrorNumber(sqlException.Number);
+                sqlException.Data["Metodo"] = metodo;
+                sqlException.Data["Classe"] = Camada;
+                sqlException.Data["Hora"] = DateTime.Now;
+
+                throw;
+
+            }
             catch (Exception ex)
             {
-                throw new Exception(ex.Message);
-            }
-            finally
-            {
-                Reader?.Close();
-                Conn?.Close();
+
+                string strMensagem = "";
+
+                strMensagem = LogDatabaseErrorUtil.CreateErrorMessage(ex);
+                LogDatabaseErrorUtil.LogFileWrite(strMensagem, metodo);
+
+                ex.Data["MensagemCustomizada"] = "Ocorreu um erro ao tentar executar a operação.";
+                ex.Data["Metodo"] = metodo;
+                ex.Data["Classe"] = Camada;
+                ex.Data["Hora"] = DateTime.Now;
+
+                throw;
+
             }
         }
     
@@ -140,42 +204,61 @@ namespace MelFitnessAssinaturas.DAL
         /// <returns>Número de linha atualizadas</returns>
         public int AssinaturaGravadaNaApiAtualizaBanco(string _code, string _id_api)
         {
+
+            const string metodo = "GetItensAssinatura";
+
             try
             {
-                Conn = ConexaoBd.GetConnection();
+                
+                var sql = new StringBuilder();
+                int rowsAffected;
 
-                var cmd = new SqlCommand("update rec_assinatura " +
-                                         " set status = 'F', id_api = @_id_api " +
-                                         " where id = @id ", Conn);
-
-                var param1 = new SqlParameter
+                sql.Append("update rec_assinatura set status = 'F', id_api = @_id_api where id = @id;");
+                
+                using (var conn = ConexaoBd.GetConnection())
                 {
-                    ParameterName = "@id",
-                    Value = _code
-                };
-
-                cmd.Parameters.Add(param1);
-
-                var param2 = new SqlParameter
-                {
-                    ParameterName = "@_id_api",
-                    Value = _id_api
-                };
-
-                cmd.Parameters.Add(param2);
-
-                var rowsAffected = cmd.ExecuteNonQuery();
-
+                    using (var cmd = new SqlCommand(sql.ToString(), conn))
+                    {
+                        cmd.Parameters.Clear();
+                        cmd.Parameters.AddWithValue("@id",_code);
+                        cmd.Parameters.AddWithValue("@_id_api", _code);
+                        rowsAffected = cmd.ExecuteNonQuery();
+                    }    
+                }
+                
                 return rowsAffected;
+
+            }
+            catch (SqlException sqlException)
+            {
+
+                string strMensagem = "";
+                strMensagem = LogDatabaseErrorUtil.CreateErrorDatabaseMessage(sqlException);
+                LogDatabaseErrorUtil.LogFileWrite(strMensagem, metodo);
+
+                sqlException.Data["MensagemCustomizada"] = LogDatabaseErrorUtil.ValidateDataBaseErrorNumber(sqlException.Number);
+                sqlException.Data["Metodo"] = metodo;
+                sqlException.Data["Classe"] = Camada;
+                sqlException.Data["Hora"] = DateTime.Now;
+
+                throw;
 
             }
             catch (Exception ex)
             {
-                throw new Exception(ex.Message);
-            }
-            finally
-            {
-                Conn?.Close();
+
+                string strMensagem = "";
+
+                strMensagem = LogDatabaseErrorUtil.CreateErrorMessage(ex);
+                LogDatabaseErrorUtil.LogFileWrite(strMensagem, metodo);
+
+                ex.Data["MensagemCustomizada"] = "Ocorreu um erro ao tentar executar a operação.";
+                ex.Data["Metodo"] = metodo;
+                ex.Data["Classe"] = Camada;
+                ex.Data["Hora"] = DateTime.Now;
+
+                throw;
+
             }
         }
     }

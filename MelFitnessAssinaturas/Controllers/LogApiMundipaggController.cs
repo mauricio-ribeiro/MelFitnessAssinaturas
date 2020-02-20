@@ -1,28 +1,26 @@
 ﻿using System.Collections.Generic;
 using MelFitnessAssinaturas.DAL;
-using MelFitnessAssinaturas.Interfaces;
 using MelFitnessAssinaturas.Models;
 
 namespace MelFitnessAssinaturas.Controllers
 {
     public class LogApiMundipaggController
     {
-
-        private readonly ILogApiMundipagg<LogApiMundipagg> _logApiMundipagg;
+        private readonly LogApiMundipaggDal _logApiMundipaggDal;
 
         public LogApiMundipaggController()
         {
-            _logApiMundipagg = new LoApiMundipaggDal();
+            _logApiMundipaggDal = new LogApiMundipaggDal();
         }
         
         public void Incluir(LogApiMundipagg logApiMundipagg)
         {
-            _logApiMundipagg.Incluir(logApiMundipagg);
+            _logApiMundipaggDal.Incluir(logApiMundipagg);
         }
 
         public IEnumerable<LogApiMundipagg> ObterTodos(params object[] parametros)
         {
-            return _logApiMundipagg.ObterTodos(parametros);
+            return _logApiMundipaggDal.ObterTodos(parametros);
         }
 
 

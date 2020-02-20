@@ -1,6 +1,5 @@
 ﻿using MelFitnessAssinaturas.Enums;
 using MelFitnessAssinaturas.InfraEstruturas;
-using MelFitnessAssinaturas.Interfaces;
 using MelFitnessAssinaturas.Models;
 using MelFitnessAssinaturas.Util;
 using System;
@@ -10,10 +9,10 @@ using System.Text;
 
 namespace MelFitnessAssinaturas.DAL
 {
-    public class LoApiMundipaggDal : ILogApiMundipagg<LogApiMundipagg>
+    public class LogApiMundipaggDal
     {
 
-        private const string Camada = "LoApiMundipaggDal";
+        private const string Camada = "LogApiMundipaggDal";
 
         public void Incluir(LogApiMundipagg entidade)
         {
@@ -129,7 +128,7 @@ namespace MelFitnessAssinaturas.DAL
                                     };
 
                                     listaLogApi.Add(logApiMundipagg);
-                                    ;
+
                                 }
                             }
                         }
