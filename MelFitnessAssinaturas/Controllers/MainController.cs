@@ -9,16 +9,28 @@ namespace MelFitnessAssinaturas.Controllers
 
         public void IniciaRelogioAssinatura()
         {
-            var tarefa = new Scheduler(tempo =>
+            var tarefa_1 = new Scheduler(tempo =>
             {
                 Console.WriteLine(@"Buscando e cadastrando novas assinaturas");
-                var numAssinaturas = AssinaturaCtrl.CadastraNovasAssinaturas();
-                Console.WriteLine($@"{numAssinaturas} novas assinaturas cadastradas");
+                var numAssinaturasNovas = AssinaturaCtrl.CadastraNovasAssinaturas();
+                Console.WriteLine($@"{numAssinaturasNovas} novas assinaturas cadastradas");
+
+               
             });
 
-            tarefa.ID = "cadastraNovasAssinaturas";
-            tarefa.Frequencia = new TimeSpan(0, 0, 30);
-            tarefa.StartWithDelay(null, new TimeSpan(0, 0, 30));
+            tarefa_1.ID = "cadastraNovasAssinaturas";
+            tarefa_1.Frequencia = new TimeSpan(0, 0, 30);
+            tarefa_1.StartWithDelay(null, new TimeSpan(0, 0, 30));
+
+            var tarefa_2 = new Scheduler(tempo =>
+            {
+                Console.WriteLine(@"Buscanso e registrando assinaturas canceladas");
+                var numAssinaturasCanceladas = AssinaturaCtrl.CancelarAssinaturas();
+                Console.WriteLine($@"{numAssinaturasCanceladas} assinaturas canceladas");
+            });
+            tarefa_2.ID = "cancelaAssinaturas";
+            tarefa_2.Frequencia = new TimeSpan(0, 0, 30);
+            tarefa_2.StartWithDelay(null, new TimeSpan(0, 0, 30));
         }
     }
 }

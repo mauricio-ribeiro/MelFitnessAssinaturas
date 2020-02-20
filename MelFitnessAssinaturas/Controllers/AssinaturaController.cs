@@ -1,15 +1,15 @@
 ﻿using MelFitnessAssinaturas.DAL;
+using MelFitnessAssinaturas.DTO;
 using MelFitnessAssinaturas.Models;
-using MundiAPI.PCL;
-using MundiAPI.PCL.Models;
 using System;
-using System.Collections.Generic;
 
 namespace MelFitnessAssinaturas.Controllers
 {
     public class AssinaturaController
     {
         private AssinaturaDal assinaturaDal = new AssinaturaDal();
+        private AssinaturaApi assinaturaApi = new AssinaturaApi();
+
         /// <summary>
         /// Pesquisa novas assinaturas no banco de dados, popula seus dados e relacionamentos e grava na API
         /// </summary>
@@ -25,8 +25,8 @@ namespace MelFitnessAssinaturas.Controllers
                 foreach (var assinatura in listaNovasAssinaturas)
                 {
                     //transferir as assinaturas do banco para objetos da Api e registrar
-                    var assinaturaApi = ConverteAssinaturaDbEmApi(assinatura);
-                    var id_api = GravaAssinaturaApi(assinaturaApi);
+                    var assinaturaModelApi = AssinaturaDTO.ConverteAssinaturaDbEmApi(assinatura);
+                    var id_api = assinaturaApi.GravaAssinaturaApi(assinaturaModelApi);
                     contAssinaturasGravadas++;
 
                     var log = new LogApiMundipaggController();
@@ -50,96 +50,41 @@ namespace MelFitnessAssinaturas.Controllers
 
         }
 
-        private CreateSubscriptionRequest ConverteAssinaturaDbEmApi(AssinaturaDb assinatura)
+        /// <summary>
+        /// Busca assinaturas elegíveis a serem canceladas. Cancela na API e "fecha" elas no Banco de dados.
+        /// </summary>
+        /// <returns>numero de assinaturas canceladas para registro</returns>
+        public int CancelarAssinaturas()
         {
-
-            var billinAddress = new CreateAddressRequest
+            try
             {
-                Line1 = assinatura.Cliente.Endereco_1,
-                Line2 = assinatura.Cliente.Endereco_2,
-                ZipCode = assinatura.Cliente.Cep,
-                City = assinatura.Cliente.Cidade,
-                State = assinatura.Cliente.Uf,
-                Country = "BR"
-            };
+                var numAssinaturasCancelas = 0;
 
-            var card = new CreateCardRequest
-            {
-                HolderName = assinatura.MeioPagamento.Nome_Cartao,
-                Number = assinatura.MeioPagamento.Numero_Cartao,
-                ExpMonth = assinatura.MeioPagamento.Val_Mes,
-                ExpYear = assinatura.MeioPagamento.Val_Ano,
-                Cvv = assinatura.MeioPagamento.Cvc,
-                BillingAddress = billinAddress
-            };
+                var listaAssinaturasCanceladas = assinaturaDal.ListaAssinaturasDb("C");
 
-            // por enquanto não vai trabalhar com descontos
-            //var discounts = new List<CreateDiscountRequest>
-            //{
-            //    new CreateDiscountRequest
-            //    {
-            //        Cycles = assinatura.
-            //    }
-            //}
-
-            var items = new List<CreateSubscriptionItemRequest>();
-
-            foreach (var item in assinatura.ItensAssinatura)
-            {
-                var i = new CreateSubscriptionItemRequest
+                foreach (var assinatura in listaAssinaturasCanceladas)
                 {
-                    Description = item.Descricao,
-                    Quantity = item.Quant,
-                    PricingScheme = new CreatePricingSchemeRequest
+                    assinaturaApi.CancelaAssinaturaApi(assinatura.Id_Api);
+
+                    numAssinaturasCancelas++;
+
+                    var log = new LogApiMundipaggController();
+                    log.Incluir(new LogApiMundipagg()
                     {
-                        Price = item.GetValor()
-                    }
-                };
+                        Descricao = $"Assinatura {assinatura.Texto_Fatura}/{assinatura.Id_Api} cancelada",
+                        DtEvento = DateTime.Now,
+                        NomeCliente = assinatura.Cliente.Nome,
+                        Tipo = Enums.TipoLogEnum.As,
+                        IdApi = assinatura.Id_Api
+                    });
+                }
+
+                return numAssinaturasCancelas;
             }
-
-            var metadata = new Dictionary<string, string>
+            catch (Exception ex)
             {
-                {"id", assinatura.Id.ToString()}
-            };
-
-            var request = new CreateSubscriptionRequest
-            {
-                PaymentMethod = "credit_card",
-                Currency = "BRL",
-                Interval = assinatura.Intervalo,
-                IntervalCount = assinatura.Intervalo_Quantidade,
-                BillingType = "prepaid",
-                Installments = assinatura.Quant_Parcelas,
-                Customer = new CreateCustomerRequest
-                {
-                    Name = assinatura.Cliente.Nome,
-                    Email = assinatura.Cliente.Email
-                },
-                Card = card,
-                Discounts = null,
-                Items = items,
-                Metadata = metadata
-            };
-
-            return request;
-
-        }
-
-        private string GravaAssinaturaApi(CreateSubscriptionRequest assinaturaApi)
-        {
-            // Secret key fornecida pela Mundipagg
-            var basicAuthUserName = "sk_test_4tdVXpseumRmqbo";
-
-            // Senha em branco. Passando apenas a secret key
-            var basicAuthPassword = "";
-
-            var client = new MundiAPIClient(basicAuthUserName, basicAuthPassword);
-
-            var response = client.Subscriptions.CreateSubscription(assinaturaApi);
-
-            assinaturaDal.AssinaturaGravadaNaApiAtualizaBanco(assinaturaApi.Metadata["Id"], response.Id);
-
-            return response.Id;
+                throw new Exception(ex.Message);
+            }
         }
     }
 }

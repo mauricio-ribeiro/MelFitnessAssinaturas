@@ -89,9 +89,11 @@
     <Compile Include="Controllers\PlanoController.cs" />
     <Compile Include="Controllers\VerificaConfigIniController.cs" />
     <Compile Include="Controllers\VerificaDiretorioLogErrorController.cs" />
+    <Compile Include="DAL\AssinaturaApi.cs" />
     <Compile Include="DAL\AssinaturaDal.cs" />
     <Compile Include="DAL\ClienteDal.cs" />
     <Compile Include="DAL\LogApiMundipaggDal.cs" />
+    <Compile Include="DTO\AssinaturaDTO.cs" />
     <Compile Include="Enums\TipoEnum.cs" />
     <Compile Include="FrmConfigConexaoBanco.cs">
       <SubType>Form</SubType>
