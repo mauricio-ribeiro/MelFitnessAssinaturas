@@ -92,6 +92,7 @@
     <Compile Include="DAL\AssinaturaApi.cs" />
     <Compile Include="DAL\AssinaturaDal.cs" />
     <Compile Include="DAL\ClienteDal.cs" />
+    <Compile Include="DAL\EventoDal.cs" />
     <Compile Include="DAL\LogApiMundipaggDal.cs" />
     <Compile Include="DTO\AssinaturaDTO.cs" />
     <Compile Include="Enums\TipoEnum.cs" />
@@ -113,6 +114,7 @@
     <Compile Include="Models\AssinaturaDb.cs" />
     <Compile Include="Models\AssinaturaItemDb.cs" />
     <Compile Include="Models\ClienteDb.cs" />
+    <Compile Include="Models\EventoDb.cs" />
     <Compile Include="Models\LogApiMundipagg.cs" />
     <Compile Include="Models\MeioPagamentoDb.cs" />
     <Compile Include="Program.cs" />
