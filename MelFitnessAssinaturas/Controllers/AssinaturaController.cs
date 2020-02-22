@@ -29,8 +29,8 @@ namespace MelFitnessAssinaturas.Controllers
                     var id_api = assinaturaApi.GravaAssinaturaApi(assinaturaModelApi);
                     contAssinaturasGravadas++;
 
-                    var log = new LogApiMundipaggController();
-                    log.Incluir(new LogApiMundipagg()
+                    var log = new LogSyncController();
+                    log.Incluir(new LogSync()
                     {
                         Descricao = $"Assinatura {assinatura.Texto_Fatura} gravada",
                         DtEvento = DateTime.Now,
@@ -68,8 +68,8 @@ namespace MelFitnessAssinaturas.Controllers
 
                     numAssinaturasCancelas++;
 
-                    var log = new LogApiMundipaggController();
-                    log.Incluir(new LogApiMundipagg()
+                    var log = new LogSyncController();
+                    log.Incluir(new LogSync()
                     {
                         Descricao = $"Assinatura {assinatura.Texto_Fatura}/{assinatura.Id_Api} cancelada",
                         DtEvento = DateTime.Now,

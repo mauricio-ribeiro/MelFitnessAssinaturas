@@ -85,18 +85,20 @@
     <Compile Include="Controllers\AssinaturaController.cs" />
     <Compile Include="Controllers\ClienteController.cs" />
     <Compile Include="Controllers\FaturaController.cs" />
-    <Compile Include="Controllers\LogApiMundipaggController.cs" />
+    <Compile Include="Controllers\LogSyncController.cs" />
     <Compile Include="Controllers\TesteConnectionStringController.cs" />
     <Compile Include="Controllers\MainController.cs" />
     <Compile Include="Controllers\MeioPagamentoController.cs" />
     <Compile Include="Controllers\PlanoController.cs" />
+    <Compile Include="Controllers\UsuarioController.cs" />
     <Compile Include="Controllers\VerificaConfigIniController.cs" />
     <Compile Include="Controllers\VerificaDiretorioLogErrorController.cs" />
     <Compile Include="DAL\AssinaturaApi.cs" />
     <Compile Include="DAL\AssinaturaDal.cs" />
     <Compile Include="DAL\ClienteDal.cs" />
     <Compile Include="DAL\EventoDal.cs" />
-    <Compile Include="DAL\LogApiMundipaggDal.cs" />
+    <Compile Include="DAL\LogSyncDal.cs" />
+    <Compile Include="DAL\UsuarioDal.cs" />
     <Compile Include="DTO\AssinaturaDTO.cs" />
     <Compile Include="Enums\TipoEnum.cs" />
     <Compile Include="FrmConfigConexaoBanco.cs">
@@ -107,6 +109,12 @@
     </Compile>
     <Compile Include="DAL\MeioPagamentoDal.cs" />
     <Compile Include="Enums\TipoLogEnum.cs" />
+    <Compile Include="FrmLogin.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmLogin.Designer.cs">
+      <DependentUpon>FrmLogin.cs</DependentUpon>
+    </Compile>
     <Compile Include="FrmPrincipal.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -118,17 +126,23 @@
     <Compile Include="Models\AssinaturaItemDb.cs" />
     <Compile Include="Models\ClienteDb.cs" />
     <Compile Include="Models\EventoDb.cs" />
-    <Compile Include="Models\LogApiMundipagg.cs" />
+    <Compile Include="Models\LogSync.cs" />
     <Compile Include="Models\MeioPagamentoDb.cs" />
+    <Compile Include="Models\Usuario.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Singletons\UsuarioSingleton.cs" />
     <Compile Include="Util\ConfigIniUtil.cs" />
     <Compile Include="Util\EnumHelpersUtil.cs" />
     <Compile Include="Util\LogDatabaseErrorUtil.cs" />
     <Compile Include="Util\RotinasDataUtil.cs" />
     <Compile Include="Util\Sheduler.cs" />
+    <Compile Include="Util\StringUtil.cs" />
     <EmbeddedResource Include="FrmConfigConexaoBanco.resx">
       <DependentUpon>FrmConfigConexaoBanco.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmLogin.resx">
+      <DependentUpon>FrmLogin.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FrmPrincipal.resx">
       <DependentUpon>FrmPrincipal.cs</DependentUpon>
@@ -141,6 +155,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
@@ -158,6 +173,11 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="ponto_de_servico_48x48.ico" />
+    <None Include="Resources\Cancel_16x16.png" />
+    <None Include="Resources\exit_16x16.ico" />
+    <None Include="Resources\exit.ico" />
+    <None Include="Resources\Ok_16X16.png" />
+    <None Include="Resources\PadLock_2.png" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -11,7 +11,6 @@ namespace MelFitnessAssinaturas.DAL
     {
 
         private const string Camada = "MeioPagamentoDal";
-        
 
         public MeioPagamentoDb GetCartaoDb(string id)
         {

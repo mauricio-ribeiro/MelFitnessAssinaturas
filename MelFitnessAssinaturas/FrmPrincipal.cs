@@ -73,30 +73,11 @@ namespace MelFitnessAssinaturas
         {
             dgvDadosLog.AutoGenerateColumns = false;
             CarregaComboTipo();
-
             _timer.Start();
             
+            var logApiMundipaggController = new LogSyncController();
 
-            //var sql = new StringBuilder();
-            //var ds = new DataSet();
-
-            //sql.Append("SELECT * FROM cad_clientes;");
-
-            //using (var conn = ConexaoBd.GetConnection())
-            //{
-            //    using (var cmd = new SqlCommand(sql.ToString(),conn))
-            //    {
-            //        using (var da = new SqlDataAdapter(cmd))
-            //        {
-            //            da.TableMappings.Add("Table","Clientes");
-            //            da.Fill(ds);
-            //        }
-            //    }
-            //}
-
-            var logApiMundipaggController = new LogApiMundipaggController();
-
-            var logApiMundipagg = new LogApiMundipagg
+            var logApiMundipagg = new LogSync
             {
                 DtEvento = DateTime.Now,
                 Tipo = TipoLogEnum.Cl,
@@ -124,16 +105,30 @@ namespace MelFitnessAssinaturas
 
         private void abrir_Click(object sender, EventArgs e)
         {
-            _allowVisible = true;
-            Show();
-            WindowState = FormWindowState.Normal;
-            Activate();
+            var frmLogin = new FrmLogin();
+            frmLogin.ShowDialog();
+
+            if (frmLogin.entrarOk)
+            {
+                _allowVisible = true;
+                Show();
+                WindowState = FormWindowState.Normal;
+                Activate();
+            }
+            
         }
 
         private void sair_Click(object sender, EventArgs e)
         {
-            _allowClose = true;
-            Application.Exit();
+            var frmLogin = new FrmLogin();
+            frmLogin.ShowDialog();
+
+            if (frmLogin.sairOk)
+            {
+                _allowClose = true;
+                Application.Exit();
+            }
+
         }
 
 
@@ -318,7 +313,7 @@ namespace MelFitnessAssinaturas
         {
 
             var datasValida = RotinasDataUtil.CompareDatas(dtInicial.Value, dtFinal.Value);
-            var logApiMundipaggController = new LogApiMundipaggController();
+            var logApiMundipaggController = new LogSyncController();
 
             object[] parametros = { txtNomeCliente.Text, dtInicial.Value, dtFinal.Value, (TipoLogEnum)cbTipo.SelectedValue };
 

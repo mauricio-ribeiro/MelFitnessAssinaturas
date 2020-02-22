@@ -95,3 +95,4 @@ F:\Projetos Freela\MelFitnessAssinaturas\MelFitnessAssinaturas\bin\Debug\pt\Micr
 F:\Projetos Freela\MelFitnessAssinaturas\MelFitnessAssinaturas\bin\Debug\pt\Microsoft.SqlServer.RegSvrEnum.resources.dll
 D:\Sistemas\MelFitnessAssinaturas\MelFitnessAssinaturas\bin\Debug\CryptoDll.dll
 D:\Sistemas\MelFitnessAssinaturas\MelFitnessAssinaturas\bin\Debug\CryptoDll.pdb
+D:\Sistemas\MelFitnessAssinaturas\MelFitnessAssinaturas\obj\Debug\MelFitnessAssinaturas.FrmLogin.resources
