@@ -13,6 +13,7 @@ using MelFitnessAssinaturas.Util;
 using MundiAPI.PCL;
 using MundiAPI.PCL.Models;
 
+
 namespace MelFitnessAssinaturas
 {
     public partial class FrmPrincipal : Form
@@ -21,7 +22,7 @@ namespace MelFitnessAssinaturas
         private Timer _timer = new Timer();
         private bool _allowVisible;
         private bool _allowClose;
-
+        
 
         public FrmPrincipal()
         {

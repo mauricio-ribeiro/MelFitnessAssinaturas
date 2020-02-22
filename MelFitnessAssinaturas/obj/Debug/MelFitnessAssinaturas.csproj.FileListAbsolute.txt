@@ -93,3 +93,5 @@ F:\Projetos Freela\MelFitnessAssinaturas\MelFitnessAssinaturas\bin\Debug\Microso
 F:\Projetos Freela\MelFitnessAssinaturas\MelFitnessAssinaturas\bin\Debug\pt\Microsoft.SqlServer.Management.Sdk.Sfc.resources.dll
 F:\Projetos Freela\MelFitnessAssinaturas\MelFitnessAssinaturas\bin\Debug\pt\Microsoft.SqlServer.Dmf.resources.dll
 F:\Projetos Freela\MelFitnessAssinaturas\MelFitnessAssinaturas\bin\Debug\pt\Microsoft.SqlServer.RegSvrEnum.resources.dll
+D:\Sistemas\MelFitnessAssinaturas\MelFitnessAssinaturas\bin\Debug\CryptoDll.dll
+D:\Sistemas\MelFitnessAssinaturas\MelFitnessAssinaturas\bin\Debug\CryptoDll.pdb
