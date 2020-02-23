@@ -24,8 +24,8 @@ namespace MelFitnessAssinaturas.Controllers
                 var assinaturaModelApi = AssinaturaDTO.ConverteAssinaturaDbEmApi(NovaAssinatura);
                 var id_api = assinaturaApi.GravaAssinaturaApi(assinaturaModelApi);
 
-                var log = new LogApiMundipaggController();
-                log.Incluir(new LogApiMundipagg()
+                var log = new LogSyncController();
+                log.Incluir(new LogSync()
                 {
                     Descricao = $"Assinatura {NovaAssinatura.Texto_Fatura} gravada",
                     DtEvento = DateTime.Now,
@@ -34,17 +34,7 @@ namespace MelFitnessAssinaturas.Controllers
                     IdApi = id_api
                 });
 
-                    var log = new LogSyncController();
-                    log.Incluir(new LogSync()
-                    {
-                        Descricao = $"Assinatura {assinatura.Texto_Fatura} gravada",
-                        DtEvento = DateTime.Now,
-                        NomeCliente = assinatura.Cliente.Nome,
-                        Tipo = Enums.TipoLogEnum.As,
-                        IdApi = id_api
-                    });
-                }
-                return contAssinaturasGravadas;
+                return true;
 
             }
             catch (Exception ex)
@@ -95,10 +85,10 @@ namespace MelFitnessAssinaturas.Controllers
                 var assinatura = assinaturaDal.GetAssinaturaDb(assinaturaItem.Id_Assinatura.ToString());
                 var assinaturaItemApi = AssinaturaDTO.ConverteItemNovoDbEmApi(assinaturaItem);
 
-                assinaturaApi.ItemIncluirNaAssinatura(assinatura, assinaturaItemApi);
+                assinaturaApi.ItemIncluirNaAssinatura(assinatura, assinaturaItem, assinaturaItemApi);
 
-                var log = new LogApiMundipaggController();
-                log.Incluir(new LogApiMundipagg()
+                var log = new LogSyncController();
+                log.Incluir(new LogSync()
                 {
                     Descricao = $"Incluído item de assinatura {assinaturaItem.Descricao} na Assinatura no.{assinatura.Id}",
                     DtEvento = DateTime.Now,
@@ -124,8 +114,8 @@ namespace MelFitnessAssinaturas.Controllers
 
                 assinaturaApi.ItemEditarNaAssinatura(assinatura, assinaturaItem, assinaturaItemApi);
 
-                var log = new LogApiMundipaggController();
-                log.Incluir(new LogApiMundipagg()
+                var log = new LogSyncController();
+                log.Incluir(new LogSync()
                 {
                     Descricao = $"Incluído item de assinatura {assinaturaItem.Descricao} na Assinatura no.{assinatura.Id}",
                     DtEvento = DateTime.Now,

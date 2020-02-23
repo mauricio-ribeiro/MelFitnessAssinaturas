@@ -96,3 +96,5 @@ F:\Projetos Freela\MelFitnessAssinaturas\MelFitnessAssinaturas\bin\Debug\pt\Micr
 D:\Sistemas\MelFitnessAssinaturas\MelFitnessAssinaturas\bin\Debug\CryptoDll.dll
 D:\Sistemas\MelFitnessAssinaturas\MelFitnessAssinaturas\bin\Debug\CryptoDll.pdb
 D:\Sistemas\MelFitnessAssinaturas\MelFitnessAssinaturas\obj\Debug\MelFitnessAssinaturas.FrmLogin.resources
+F:\Projetos Freela\MelFitnessAssinaturas\MelFitnessAssinaturas\obj\Debug\MelFitnessAssinaturas.FrmLogin.resources
+F:\Projetos Freela\MelFitnessAssinaturas\MelFitnessAssinaturas\bin\Debug\CryptoDll.pdb

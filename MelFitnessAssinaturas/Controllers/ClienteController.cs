@@ -28,8 +28,8 @@ namespace MelFitnessAssinaturas.Controllers
                 var cliApi = ClienteDTO.ConverteEditadoClienteDbEmApi(clienteDb);
                 clienteApi.EditaClienteApi(clienteDb.Id_Api, cliApi);
 
-                var log = new LogApiMundipaggController();
-                log.Incluir(new LogApiMundipagg()
+                var log = new LogSyncController();
+                log.Incluir(new LogSync()
                 {
                     Descricao = $"Cliente {clienteDb.Codigo} editado.",
                     DtEvento = DateTime.Now,
