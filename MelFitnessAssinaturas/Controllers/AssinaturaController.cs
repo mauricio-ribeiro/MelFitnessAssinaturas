@@ -104,6 +104,32 @@ namespace MelFitnessAssinaturas.Controllers
             }
         }
 
+        public void RemoverItemApi(string idTabela)
+        {
+            try
+            {
+                var assinaturaItem = assinaturaDal.GetItemAssinatura(idTabela);
+                var assinatura = assinaturaDal.GetAssinaturaDb(assinaturaItem.Id_Assinatura.ToString());
+
+                assinaturaApi.ItemRemoverNaAssinatura(assinatura.Id_Api, assinaturaItem.Id_Api);
+
+                var log = new LogSyncController();
+                log.Incluir(new LogSync()
+                {
+                    Descricao = $"Removido item de assinatura {assinaturaItem.Descricao} na Assinatura no.{assinatura.Id}",
+                    DtEvento = DateTime.Now,
+                    NomeCliente = assinatura.Cliente.Nome,
+                    Tipo = Enums.TipoLogEnum.As,
+                    IdApi = assinatura.Id_Api
+                });
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
         public void EditarItemApi(string idTabela)
         {
             try
@@ -117,7 +143,7 @@ namespace MelFitnessAssinaturas.Controllers
                 var log = new LogSyncController();
                 log.Incluir(new LogSync()
                 {
-                    Descricao = $"Incluído item de assinatura {assinaturaItem.Descricao} na Assinatura no.{assinatura.Id}",
+                    Descricao = $"Editado item de assinatura {assinaturaItem.Descricao} na Assinatura no.{assinatura.Id}",
                     DtEvento = DateTime.Now,
                     NomeCliente = assinatura.Cliente.Nome,
                     Tipo = Enums.TipoLogEnum.As,

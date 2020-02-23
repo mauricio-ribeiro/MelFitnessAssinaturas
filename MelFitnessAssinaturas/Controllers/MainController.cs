@@ -75,7 +75,8 @@ namespace MelFitnessAssinaturas.Controllers
                         break;
                     // Um item ( atividade ) de assinatura foi REMOVIDO. Deve atualiar a API.
                     case "IA_R":
-
+                        Console.WriteLine(@"Removendo um item na assinatura do cliente");
+                        AssinaturaCtrl.RemoverItemApi(evento.IdTabela);
                         break;
                     default:
                         break;

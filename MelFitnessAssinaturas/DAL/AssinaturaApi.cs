@@ -101,5 +101,24 @@ namespace MelFitnessAssinaturas.DAL
                 throw new Exception(ex.Message);
             }
         }
+
+        public void ItemRemoverNaAssinatura(string assinaturaId_api, string itemAssinatudaId_api)
+        {
+            try
+            {
+                // Secret key fornecida pela Mundipagg
+                string basicAuthUserName = "sk_test_4tdVXpseumRmqbo";
+                // Senha em branco. Passando apenas a secret key
+                string basicAuthPassword = "";
+
+                var client = new MundiAPIClient(basicAuthUserName, basicAuthPassword);
+
+                var response = client.Subscriptions.DeleteSubscriptionItem(assinaturaId_api, itemAssinatudaId_api);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
     }
 }
