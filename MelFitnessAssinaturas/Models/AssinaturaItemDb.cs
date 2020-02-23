@@ -8,6 +8,7 @@ namespace MelFitnessAssinaturas.Models
 {
     public class AssinaturaItemDb
     {
+        public int Id { get; set; }
         public int Id_Assinatura { get; set; }
         public string Descricao { get; set; }
         public int Ciclos { get; set; }

@@ -8,6 +8,7 @@ namespace MelFitnessAssinaturas.Controllers
     {
         
         private AssinaturaController AssinaturaCtrl = new AssinaturaController();
+        private ClienteController ClienteCtrl = new ClienteController();
 
         public void IniciaRelogioAssinatura()
         {
@@ -33,11 +34,10 @@ namespace MelFitnessAssinaturas.Controllers
                 {
                     // Nova assinatura. Ainda não existe na API, deve ser cadastrada
                     case "A_N":
-                        Console.WriteLine(@"Buscando e cadastrando novas assinaturas");
-                        var numAssinaturasNovas = AssinaturaCtrl.CadastraNovasAssinaturas();
-                        Console.WriteLine($@"{numAssinaturasNovas} novas assinaturas cadastradas");
+                        Console.WriteLine(@"Buscando e cadastrando nova assinatura");
+                        AssinaturaCtrl.CadastraNovaAssinaturaApi(evento.IdTabela);
                         break;
-                    //  Essa assinatura existe e foi editada no banco e precisa ser atualizada na API
+                    //  Essa assinatura existe, foi editada no banco e precisa ser atualizada na API
                     case "A_E":
 
                         break;
@@ -51,9 +51,8 @@ namespace MelFitnessAssinaturas.Controllers
                         break;
                     // Assinatura cancelada. Deve ser cancelada na API também.
                     case "A_C":
-                        Console.WriteLine(@"Buscanso e registrando assinaturas canceladas");
-                        var numAssinaturasCanceladas = AssinaturaCtrl.CancelarAssinaturas();
-                        Console.WriteLine($@"{numAssinaturasCanceladas} assinaturas canceladas");
+                        Console.WriteLine(@"Buscando e registrando assinatura cancelada");
+                        AssinaturaCtrl.CancelarAssinaturaApi(evento.IdTabela);
                         break;
                     //  Foi soliticado renovação do ciclo de assinatura. Reportar a API.
                     case "A_RC":
@@ -61,11 +60,13 @@ namespace MelFitnessAssinaturas.Controllers
                         break;
                     // Cliente foi editado. Deve verificar se é um cliente que usa a API e atualizar seus dados lá também.
                     case "CLI_E":
-
+                        Console.WriteLine(@"Atualizando cadastro do cliente {0}", evento.IdTabela);
+                        ClienteCtrl.AtualizaClienteApi(evento.IdTabela);
                         break;
                     // Um item ( atividade ) foi INCLUÍDO na assinatura. Deve atualiar a API.
                     case "IA_I":
-
+                        Console.WriteLine(@"Incluindo um item na assinatura do cliente");
+                        AssinaturaCtrl.IncluirItemApi(evento.IdTabela);
                         break;
                     //  Um item ( atividade ) de assinatura foi EDITADO. Deve atualiar a API.
                     case "IA_E":

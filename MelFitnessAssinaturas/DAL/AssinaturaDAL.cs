@@ -12,7 +12,7 @@ namespace MelFitnessAssinaturas.DAL
     {
 
         private const string Camada = "AssinaturaDal";
-        
+
 
         /// <summary>
         /// Busca as assinaturas pelo status
@@ -31,20 +31,20 @@ namespace MelFitnessAssinaturas.DAL
 
             try
             {
-            
+
                 var sql = new StringBuilder();
 
                 sql.Append("select a.id, a.dt_inicio, a.intervalo_quantidade,");
                 sql.Append("a.dia_cobranca, a.quant_parcelas, a.texto_fatura, a.valor_minimo, a.status,");
                 sql.Append("a.id_cliente, a.id_cartao from rec_assinatura a ");
                 sql.Append("where a.status = @Status;");
-                
+
                 using (var conn = ConexaoBd.GetConnection())
                 {
-                    using (var cmd = new SqlCommand(sql.ToString(),conn))
+                    using (var cmd = new SqlCommand(sql.ToString(), conn))
                     {
                         cmd.Parameters.Clear();
-                        cmd.Parameters.AddWithValue("@Status",_status);
+                        cmd.Parameters.AddWithValue("@Status", _status);
 
                         using (var dr = cmd.ExecuteReader())
                         {
@@ -74,10 +74,98 @@ namespace MelFitnessAssinaturas.DAL
                             }
                         }
 
-                    }     
+                    }
                 }
 
                 return listaAssinaturaDb;
+
+            }
+            catch (SqlException sqlException)
+            {
+
+                string strMensagem = "";
+                strMensagem = LogDatabaseErrorUtil.CreateErrorDatabaseMessage(sqlException);
+                LogDatabaseErrorUtil.LogFileWrite(strMensagem, metodo);
+
+                sqlException.Data["MensagemCustomizada"] = LogDatabaseErrorUtil.ValidateDataBaseErrorNumber(sqlException.Number);
+                sqlException.Data["Metodo"] = metodo;
+                sqlException.Data["Classe"] = Camada;
+                sqlException.Data["Hora"] = DateTime.Now;
+
+                throw;
+
+            }
+            catch (Exception ex)
+            {
+
+                string strMensagem = "";
+
+                strMensagem = LogDatabaseErrorUtil.CreateErrorMessage(ex);
+                LogDatabaseErrorUtil.LogFileWrite(strMensagem, metodo);
+
+                ex.Data["MensagemCustomizada"] = "Ocorreu um erro ao tentar executar a operação.";
+                ex.Data["Metodo"] = metodo;
+                ex.Data["Classe"] = Camada;
+                ex.Data["Hora"] = DateTime.Now;
+
+                throw;
+
+            }
+        }
+        
+        /// <summary>
+        /// Busca as assinatura pelo id d tabela
+        /// </summary>
+        /// <param name="_id">id da tabela rec_assinatura</param>
+        /// <returns>Model assinaturaDb com os itens populados</returns>
+        public AssinaturaDb GetAssinaturaDb(string _id)
+        {
+
+            const string metodo = "GetAssinaturasDb";
+
+            var clienteDal = new ClienteDal();
+            var meioPagamentoDal = new MeioPagamentoDal();
+            var assinatura = new AssinaturaDb();
+
+            try
+            {
+
+                var sql = new StringBuilder();
+
+                sql.Append("select a.id, a.dt_inicio, a.intervalo_quantidade,");
+                sql.Append("a.dia_cobranca, a.quant_parcelas, a.texto_fatura, a.valor_minimo, a.status,");
+                sql.Append("a.id_cliente, a.id_cartao from rec_assinatura a ");
+                sql.Append("where a.id = @id;");
+
+                using (var conn = ConexaoBd.GetConnection())
+                {
+                    using (var cmd = new SqlCommand(sql.ToString(), conn))
+                    {
+                        cmd.Parameters.Clear();
+                        cmd.Parameters.AddWithValue("@id", _id);
+
+                        using (var dr = cmd.ExecuteReader())
+                        {
+                            assinatura.Id = dr.GetInt32(dr.GetOrdinal("id"));
+                            assinatura.Dt_Inicio = dr.GetDateTime(dr.GetOrdinal("dt_inicio"));
+                            assinatura.Intervalo = dr["intervalo"].ToString();
+                            assinatura.Intervalo_Quantidade = dr.GetInt32(dr.GetOrdinal("intervalo_quantidade"));
+                            assinatura.Dia_Cobranca = dr.GetInt32(dr.GetOrdinal("dia_cobranca"));
+                            assinatura.Quant_Parcelas = dr.GetInt32(dr.GetOrdinal("quant_parcelas"));
+                            assinatura.Texto_Fatura = dr["texto_fatura"].ToString();
+                            assinatura.Valor_Minimo = dr.GetDouble(dr.GetOrdinal("valor_minimo"));
+                            assinatura.Status = dr["status"].ToString();
+                            assinatura.Cliente = clienteDal.GetClienteDb(dr["id_cliente"].ToString());
+                            assinatura.MeioPagamento = meioPagamentoDal.GetCartaoDb(dr["id_cartao"].ToString());
+
+                            // popular o model com os itens da assinatura . Pode colocar aqui ou em um método privado
+                            assinatura.ItensAssinatura = GetItensAssinatura(assinatura.Id);
+                        }
+
+                    }
+                }
+
+                return assinatura; ;
 
             }
             catch (SqlException sqlException)
@@ -127,7 +215,7 @@ namespace MelFitnessAssinaturas.DAL
 
             try
             {
-                
+
                 var sql = new StringBuilder();
 
                 sql.Append("select i.id_assinatura, i.descricao, i.ciclos, i.quant, i.status from rec_assinatura_item i ");
@@ -138,7 +226,7 @@ namespace MelFitnessAssinaturas.DAL
                     using (var cmd = new SqlCommand(sql.ToString(), conn))
                     {
                         cmd.Parameters.Clear();
-                        cmd.Parameters.AddWithValue("@id",id);
+                        cmd.Parameters.AddWithValue("@id", id);
 
                         using (var dr = cmd.ExecuteReader())
                         {
@@ -194,7 +282,79 @@ namespace MelFitnessAssinaturas.DAL
 
             }
         }
-    
+        /// <summary>
+        /// Busca UM item de assinatura
+        /// </summary>
+        /// <param name="id">id do item</param>
+        /// <returns></returns>
+        public AssinaturaItemDb GetItemAssinatura(string id)
+        {
+
+            const string metodo = "GetItemAssinatura";
+
+            try
+            {
+                var item = new AssinaturaItemDb();
+
+                var sql = new StringBuilder();
+
+                sql.Append("select i.id, i.id_assinatura, i.descricao, i.ciclos, i.quant, i.status from rec_assinatura_item i ");
+                sql.Append("where i.id = @id");
+
+                using (var conn = ConexaoBd.GetConnection())
+                {
+                    using (var cmd = new SqlCommand(sql.ToString(), conn))
+                    {
+                        cmd.Parameters.Clear();
+                        cmd.Parameters.AddWithValue("@id", id);
+
+                        using (var dr = cmd.ExecuteReader())
+                        {
+                            item.Id = dr.GetInt32(dr.GetOrdinal("id"));
+                            item.Id_Assinatura = dr.GetInt32(dr.GetOrdinal("id_assinatura"));
+                            item.Descricao = dr["descricao"].ToString();
+                            item.Ciclos = dr.GetInt32(dr.GetOrdinal("ciclos"));
+                            item.Quant = dr.GetInt32(dr.GetOrdinal("quant"));
+                            item.Status = dr["status"].ToString();
+                        }
+                    }
+                }
+
+                return item;
+            }
+            catch (SqlException sqlException)
+            {
+
+                string strMensagem = "";
+                strMensagem = LogDatabaseErrorUtil.CreateErrorDatabaseMessage(sqlException);
+                LogDatabaseErrorUtil.LogFileWrite(strMensagem, metodo);
+
+                sqlException.Data["MensagemCustomizada"] = LogDatabaseErrorUtil.ValidateDataBaseErrorNumber(sqlException.Number);
+                sqlException.Data["Metodo"] = metodo;
+                sqlException.Data["Classe"] = Camada;
+                sqlException.Data["Hora"] = DateTime.Now;
+
+                throw;
+
+            }
+            catch (Exception ex)
+            {
+
+                string strMensagem = "";
+
+                strMensagem = LogDatabaseErrorUtil.CreateErrorMessage(ex);
+                LogDatabaseErrorUtil.LogFileWrite(strMensagem, metodo);
+
+                ex.Data["MensagemCustomizada"] = "Ocorreu um erro ao tentar executar a operação.";
+                ex.Data["Metodo"] = metodo;
+                ex.Data["Classe"] = Camada;
+                ex.Data["Hora"] = DateTime.Now;
+
+                throw;
+
+            }
+        }
+
 
         /// <summary>
         /// Ao gravar/atualizar uma assinatura na API atualizar o status e a referência do id da API no banco de dados
@@ -209,23 +369,23 @@ namespace MelFitnessAssinaturas.DAL
 
             try
             {
-                
+
                 var sql = new StringBuilder();
                 int rowsAffected;
 
                 sql.Append("update rec_assinatura set status = 'F', id_api = @_id_api where id = @id;");
-                
+
                 using (var conn = ConexaoBd.GetConnection())
                 {
                     using (var cmd = new SqlCommand(sql.ToString(), conn))
                     {
                         cmd.Parameters.Clear();
-                        cmd.Parameters.AddWithValue("@id",_code);
+                        cmd.Parameters.AddWithValue("@id", _code);
                         cmd.Parameters.AddWithValue("@_id_api", _code);
                         rowsAffected = cmd.ExecuteNonQuery();
-                    }    
+                    }
                 }
-                
+
                 return rowsAffected;
 
             }

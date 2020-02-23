@@ -11,35 +11,30 @@ namespace MelFitnessAssinaturas.Controllers
         private AssinaturaApi assinaturaApi = new AssinaturaApi();
 
         /// <summary>
-        /// Pesquisa novas assinaturas no banco de dados, popula seus dados e relacionamentos e grava na API
+        /// Pesquisa nova assinatura no banco de dados, popula seus dados e relacionamentos e grava na API
         /// </summary>
-        /// <returns>quantas assinaturas novas foram gravadas.</returns>
-        public int CadastraNovasAssinaturas()
+        /// <returns>true ou false</returns>
+        public bool CadastraNovaAssinaturaApi(string id_assinatura)
         {
             try
             {
-                var contAssinaturasGravadas = 0;
+                var NovaAssinatura = assinaturaDal.GetAssinaturaDb(id_assinatura);
 
-                var listaNovasAssinaturas = assinaturaDal.ListaAssinaturasDb("N");
+                //transferir as assinaturas do banco para objetos da Api e registrar
+                var assinaturaModelApi = AssinaturaDTO.ConverteAssinaturaDbEmApi(NovaAssinatura);
+                var id_api = assinaturaApi.GravaAssinaturaApi(assinaturaModelApi);
 
-                foreach (var assinatura in listaNovasAssinaturas)
+                var log = new LogApiMundipaggController();
+                log.Incluir(new LogApiMundipagg()
                 {
-                    //transferir as assinaturas do banco para objetos da Api e registrar
-                    var assinaturaModelApi = AssinaturaDTO.ConverteAssinaturaDbEmApi(assinatura);
-                    var id_api = assinaturaApi.GravaAssinaturaApi(assinaturaModelApi);
-                    contAssinaturasGravadas++;
+                    Descricao = $"Assinatura {NovaAssinatura.Texto_Fatura} gravada",
+                    DtEvento = DateTime.Now,
+                    NomeCliente = NovaAssinatura.Cliente.Nome,
+                    Tipo = Enums.TipoLogEnum.As,
+                    IdApi = id_api
+                });
 
-                    var log = new LogApiMundipaggController();
-                    log.Incluir(new LogApiMundipagg()
-                    {
-                        Descricao = $"Assinatura {assinatura.Texto_Fatura} gravada",
-                        DtEvento = DateTime.Now,
-                        NomeCliente = assinatura.Cliente.Nome,
-                        Tipo = Enums.TipoLogEnum.As,
-                        IdApi = id_api
-                    });
-                }
-                return contAssinaturasGravadas;
+                return true;
 
             }
             catch (Exception ex)
@@ -54,19 +49,13 @@ namespace MelFitnessAssinaturas.Controllers
         /// Busca assinaturas elegíveis a serem canceladas. Cancela na API e "fecha" elas no Banco de dados.
         /// </summary>
         /// <returns>numero de assinaturas canceladas para registro</returns>
-        public int CancelarAssinaturas()
+        public void CancelarAssinaturaApi(string _id)
         {
             try
             {
-                var numAssinaturasCancelas = 0;
+                var assinatura = assinaturaDal.GetAssinaturaDb(_id);
 
-                var listaAssinaturasCanceladas = assinaturaDal.ListaAssinaturasDb("C");
-
-                foreach (var assinatura in listaAssinaturasCanceladas)
-                {
                     assinaturaApi.CancelaAssinaturaApi(assinatura.Id_Api);
-
-                    numAssinaturasCancelas++;
 
                     var log = new LogApiMundipaggController();
                     log.Incluir(new LogApiMundipagg()
@@ -77,9 +66,37 @@ namespace MelFitnessAssinaturas.Controllers
                         Tipo = Enums.TipoLogEnum.As,
                         IdApi = assinatura.Id_Api
                     });
-                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
 
-                return numAssinaturasCancelas;
+        /// <summary>
+        /// Incluir item em uma assinatura na API
+        /// </summary>
+        /// <param name="idTabela">código do item de assinatura</param>
+        public void IncluirItemApi(string idTabela)
+        {
+            try
+            {
+                var assinaturaItem = assinaturaDal.GetItemAssinatura(idTabela);
+                var assinatura = assinaturaDal.GetAssinaturaDb(assinaturaItem.Id_Assinatura.ToString());
+                var assinaturaItemApi = AssinaturaDTO.ConverteItemDbEmApi(assinaturaItem);
+
+                assinaturaApi.ItemIncluirNaAssinatura(assinatura.Id_Api, assinaturaItemApi);
+
+                var log = new LogApiMundipaggController();
+                log.Incluir(new LogApiMundipagg()
+                {
+                    Descricao = $"Incluído item de assinatura {assinaturaItem.Descricao} na Assinatura no.{assinatura.Id}",
+                    DtEvento = DateTime.Now,
+                    NomeCliente = assinatura.Cliente.Nome,
+                    Tipo = Enums.TipoLogEnum.As,
+                    IdApi = assinatura.Id_Api
+                });
+
             }
             catch (Exception ex)
             {
