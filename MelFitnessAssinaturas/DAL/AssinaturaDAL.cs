@@ -112,7 +112,66 @@ namespace MelFitnessAssinaturas.DAL
 
             }
         }
-        
+
+        public int ItemAssinaturaGravadaNaApiAtualizaBanco(string _code, string _id_api)
+        {
+            const string metodo = "GetItensAssinatura";
+
+            try
+            {
+
+                var sql = new StringBuilder();
+                int rowsAffected;
+
+                sql.Append("update rec_assinatura_item set status = 'F', id_api = @_id_api where id = @id;");
+
+                using (var conn = ConexaoBd.GetConnection())
+                {
+                    using (var cmd = new SqlCommand(sql.ToString(), conn))
+                    {
+                        cmd.Parameters.Clear();
+                        cmd.Parameters.AddWithValue("@id", _code);
+                        cmd.Parameters.AddWithValue("@_id_api", _code);
+                        rowsAffected = cmd.ExecuteNonQuery();
+                    }
+                }
+
+                return rowsAffected;
+
+            }
+            catch (SqlException sqlException)
+            {
+
+                string strMensagem = "";
+                strMensagem = LogDatabaseErrorUtil.CreateErrorDatabaseMessage(sqlException);
+                LogDatabaseErrorUtil.LogFileWrite(strMensagem, metodo);
+
+                sqlException.Data["MensagemCustomizada"] = LogDatabaseErrorUtil.ValidateDataBaseErrorNumber(sqlException.Number);
+                sqlException.Data["Metodo"] = metodo;
+                sqlException.Data["Classe"] = Camada;
+                sqlException.Data["Hora"] = DateTime.Now;
+
+                throw;
+
+            }
+            catch (Exception ex)
+            {
+
+                string strMensagem = "";
+
+                strMensagem = LogDatabaseErrorUtil.CreateErrorMessage(ex);
+                LogDatabaseErrorUtil.LogFileWrite(strMensagem, metodo);
+
+                ex.Data["MensagemCustomizada"] = "Ocorreu um erro ao tentar executar a operação.";
+                ex.Data["Metodo"] = metodo;
+                ex.Data["Classe"] = Camada;
+                ex.Data["Hora"] = DateTime.Now;
+
+                throw;
+
+            }
+        }
+
         /// <summary>
         /// Busca as assinatura pelo id d tabela
         /// </summary>
@@ -121,7 +180,7 @@ namespace MelFitnessAssinaturas.DAL
         public AssinaturaDb GetAssinaturaDb(string _id)
         {
 
-            const string metodo = "GetAssinaturasDb";
+            const string metodo = "GetAssinaturaDb";
 
             var clienteDal = new ClienteDal();
             var meioPagamentoDal = new MeioPagamentoDal();
@@ -238,7 +297,9 @@ namespace MelFitnessAssinaturas.DAL
                                     Descricao = dr["descricao"].ToString(),
                                     Ciclos = dr.GetInt32(dr.GetOrdinal("ciclos")),
                                     Quant = dr.GetInt32(dr.GetOrdinal("quant")),
-                                    Status = dr["status"].ToString()
+                                    Status = dr["status"].ToString(),
+                                    Id = dr.GetInt32(dr.GetOrdinal("id")),
+                                    Id_Api = dr["id_api"].ToString()
                                 };
 
                                 listaItens.Add(item);
@@ -298,7 +359,7 @@ namespace MelFitnessAssinaturas.DAL
 
                 var sql = new StringBuilder();
 
-                sql.Append("select i.id, i.id_assinatura, i.descricao, i.ciclos, i.quant, i.status from rec_assinatura_item i ");
+                sql.Append("select i.id, i.id_assinatura, i.descricao, i.ciclos, i.quant, i.status, i.id_api from rec_assinatura_item i ");
                 sql.Append("where i.id = @id");
 
                 using (var conn = ConexaoBd.GetConnection())
@@ -316,6 +377,7 @@ namespace MelFitnessAssinaturas.DAL
                             item.Ciclos = dr.GetInt32(dr.GetOrdinal("ciclos"));
                             item.Quant = dr.GetInt32(dr.GetOrdinal("quant"));
                             item.Status = dr["status"].ToString();
+                            item.Id_Api = dr["id_api"].ToString();
                         }
                     }
                 }

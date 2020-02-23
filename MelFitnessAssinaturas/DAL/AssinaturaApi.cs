@@ -1,4 +1,5 @@
-﻿using MundiAPI.PCL;
+﻿using MelFitnessAssinaturas.Models;
+using MundiAPI.PCL;
 using MundiAPI.PCL.Models;
 using System;
 using System.Collections.Generic;
@@ -57,7 +58,7 @@ namespace MelFitnessAssinaturas.DAL
             return response.Id;
         }
 
-        public void ItemIncluirNaAssinatura(string id_Api, CreateSubscriptionItemRequest assinaturaItemApi)
+        public void ItemIncluirNaAssinatura(AssinaturaDb assinaturaDb, AssinaturaItemDb assinaturaItemDb, CreateSubscriptionItemRequest assinaturaItemApi)
         {
             try
             {
@@ -68,15 +69,31 @@ namespace MelFitnessAssinaturas.DAL
 
                 var client = new MundiAPIClient(basicAuthUserName, basicAuthPassword);
 
-                var request = new CreateSubscriptionItemRequest
-                {
-                    Description = assinaturaItemApi.Description,
-                    Cycles = assinaturaItemApi.Cycles,
-                    Quantity = assinaturaItemApi.Quantity,
-                    PricingScheme = assinaturaItemApi.PricingScheme
-                };
+                var response = client.Subscriptions.CreateSubscriptionItem(assinaturaDb.Id_Api, assinaturaItemApi);
 
-                var response = client.Subscriptions.CreateSubscriptionItem(id_Api, request);
+                assinaturaDal.ItemAssinaturaGravadaNaApiAtualizaBanco(assinaturaItemDb.Id.ToString(), response.Id);
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        public void ItemEditarNaAssinatura(AssinaturaDb assinaturaDb, AssinaturaItemDb assinaturaItemDb, UpdateSubscriptionItemRequest assinaturaItemApi)
+        {
+            try
+            {
+                // Secret key fornecida pela Mundipagg
+                string basicAuthUserName = "sk_test_4tdVXpseumRmqbo";
+                // Senha em branco. Passando apenas a secret key
+                string basicAuthPassword = "";
+
+                var client = new MundiAPIClient(basicAuthUserName, basicAuthPassword);
+
+                var response = client.Subscriptions.UpdateSubscriptionItem(assinaturaDb.Id_Api, assinaturaItemDb.Id.ToString(), assinaturaItemApi);
+
+                assinaturaDal.ItemAssinaturaGravadaNaApiAtualizaBanco(assinaturaItemDb.Id.ToString(), response.Id);
 
             }
             catch (Exception ex)

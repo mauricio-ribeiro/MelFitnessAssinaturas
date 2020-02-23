@@ -83,9 +83,36 @@ namespace MelFitnessAssinaturas.Controllers
             {
                 var assinaturaItem = assinaturaDal.GetItemAssinatura(idTabela);
                 var assinatura = assinaturaDal.GetAssinaturaDb(assinaturaItem.Id_Assinatura.ToString());
-                var assinaturaItemApi = AssinaturaDTO.ConverteItemDbEmApi(assinaturaItem);
+                var assinaturaItemApi = AssinaturaDTO.ConverteItemNovoDbEmApi(assinaturaItem);
 
-                assinaturaApi.ItemIncluirNaAssinatura(assinatura.Id_Api, assinaturaItemApi);
+                assinaturaApi.ItemIncluirNaAssinatura(assinatura, assinaturaItemApi);
+
+                var log = new LogApiMundipaggController();
+                log.Incluir(new LogApiMundipagg()
+                {
+                    Descricao = $"Incluído item de assinatura {assinaturaItem.Descricao} na Assinatura no.{assinatura.Id}",
+                    DtEvento = DateTime.Now,
+                    NomeCliente = assinatura.Cliente.Nome,
+                    Tipo = Enums.TipoLogEnum.As,
+                    IdApi = assinatura.Id_Api
+                });
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        public void EditarItemApi(string idTabela)
+        {
+            try
+            {
+                var assinaturaItem = assinaturaDal.GetItemAssinatura(idTabela);
+                var assinatura = assinaturaDal.GetAssinaturaDb(assinaturaItem.Id_Assinatura.ToString());
+                var assinaturaItemApi = AssinaturaDTO.ConverteItemAlteradoDbEmApi(assinaturaItem);
+
+                assinaturaApi.ItemEditarNaAssinatura(assinatura, assinaturaItem, assinaturaItemApi);
 
                 var log = new LogApiMundipaggController();
                 log.Incluir(new LogApiMundipagg()

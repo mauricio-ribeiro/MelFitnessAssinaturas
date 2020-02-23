@@ -91,7 +91,7 @@ namespace MelFitnessAssinaturas.DTO
 
         }
 
-        public static CreateSubscriptionItemRequest ConverteItemDbEmApi(AssinaturaItemDb assinaturaItem)
+        public static CreateSubscriptionItemRequest ConverteItemNovoDbEmApi(AssinaturaItemDb assinaturaItem)
         {
             try
             {
@@ -101,6 +101,29 @@ namespace MelFitnessAssinaturas.DTO
                     Cycles = assinaturaItem.Ciclos,
                     Quantity = assinaturaItem.Quant,
                     PricingScheme = new CreatePricingSchemeRequest
+                    {
+                        Price = assinaturaItem.GetValor()
+                    }
+                };
+
+                return item;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        public static UpdateSubscriptionItemRequest ConverteItemAlteradoDbEmApi(AssinaturaItemDb assinaturaItem)
+        {
+            try
+            {
+                var item = new UpdateSubscriptionItemRequest
+                {
+                    Description = assinaturaItem.Descricao,
+                    Cycles = assinaturaItem.Ciclos,
+                    Quantity = assinaturaItem.Quant,
+                    PricingScheme = new UpdatePricingSchemeRequest
                     {
                         Price = assinaturaItem.GetValor()
                     }

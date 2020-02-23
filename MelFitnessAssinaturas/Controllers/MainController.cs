@@ -70,7 +70,8 @@ namespace MelFitnessAssinaturas.Controllers
                         break;
                     //  Um item ( atividade ) de assinatura foi EDITADO. Deve atualiar a API.
                     case "IA_E":
-
+                        Console.WriteLine(@"Incluindo um item na assinatura do cliente");
+                        AssinaturaCtrl.EditarItemApi(evento.IdTabela);
                         break;
                     // Um item ( atividade ) de assinatura foi REMOVIDO. Deve atualiar a API.
                     case "IA_R":

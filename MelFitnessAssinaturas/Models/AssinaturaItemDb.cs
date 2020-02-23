@@ -15,6 +15,7 @@ namespace MelFitnessAssinaturas.Models
         public int Quant { get; set; }
         public string Status { get; set; }
         public double Valor { private get; set; }
+        public string Id_Api { get; set; }
 
         public int? GetValor()
         {
