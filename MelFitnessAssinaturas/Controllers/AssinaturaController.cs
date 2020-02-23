@@ -34,7 +34,17 @@ namespace MelFitnessAssinaturas.Controllers
                     IdApi = id_api
                 });
 
-                return true;
+                    var log = new LogSyncController();
+                    log.Incluir(new LogSync()
+                    {
+                        Descricao = $"Assinatura {assinatura.Texto_Fatura} gravada",
+                        DtEvento = DateTime.Now,
+                        NomeCliente = assinatura.Cliente.Nome,
+                        Tipo = Enums.TipoLogEnum.As,
+                        IdApi = id_api
+                    });
+                }
+                return contAssinaturasGravadas;
 
             }
             catch (Exception ex)
@@ -57,8 +67,8 @@ namespace MelFitnessAssinaturas.Controllers
 
                     assinaturaApi.CancelaAssinaturaApi(assinatura.Id_Api);
 
-                    var log = new LogApiMundipaggController();
-                    log.Incluir(new LogApiMundipagg()
+                    var log = new LogSyncController();
+                    log.Incluir(new LogSync()
                     {
                         Descricao = $"Assinatura {assinatura.Texto_Fatura}/{assinatura.Id_Api} cancelada",
                         DtEvento = DateTime.Now,

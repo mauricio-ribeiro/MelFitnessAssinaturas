@@ -6,7 +6,6 @@ namespace MelFitnessAssinaturas.Controllers
     public class TesteConnectionStringController
     {
 
-
         public bool TestConnectionString(string connectionString)
         {
             using (var conn = new SqlConnection(connectionString))

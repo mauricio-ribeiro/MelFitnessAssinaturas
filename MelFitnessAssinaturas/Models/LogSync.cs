@@ -1,11 +1,10 @@
 ﻿using MelFitnessAssinaturas.Enums;
-using System;
-using System.Collections.Generic;
 using MelFitnessAssinaturas.Util;
+using System;
 
 namespace MelFitnessAssinaturas.Models
 {
-    public class LogApiMundipagg
+    public class LogSync
     {
 
         public DateTime DtEvento { get; set; }
@@ -25,7 +24,7 @@ namespace MelFitnessAssinaturas.Models
         public DateTime DtDocumento { get; set; }
 
 
-        public LogApiMundipagg()
+        public LogSync()
         {
             
         }

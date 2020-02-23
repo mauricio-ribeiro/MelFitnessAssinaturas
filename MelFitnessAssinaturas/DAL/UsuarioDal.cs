@@ -1,63 +1,54 @@
-﻿using System;
-using System.Data.SqlClient;
-using System.Text;
-using MelFitnessAssinaturas.InfraEstruturas;
+﻿using MelFitnessAssinaturas.InfraEstruturas;
 using MelFitnessAssinaturas.Models;
 using MelFitnessAssinaturas.Util;
+using System;
+using System.Data.SqlClient;
+using System.Text;
 
 namespace MelFitnessAssinaturas.DAL
 {
-    public class MeioPagamentoDal
+    public class UsuarioDal
     {
 
-        private const string Camada = "MeioPagamentoDal";
+        private const string Camada = "UsuarioDal";
 
-        public MeioPagamentoDb GetCartaoDb(string id)
+
+        public Usuario ObterUsuarioPorId(int id)
         {
 
-            const string metodo = "GetCartaoDb";
-
+            const string metodo = "ObterUsuarioPorId";
+            Usuario usuario = null;
 
             try
             {
-                MeioPagamentoDb cartao = null;
+
                 var sql = new StringBuilder();
 
-                sql.Append("select c.cod_cli, c.numero_cartao, c.bandeira, c.cpf,");
-                sql.Append("c.cvc, c.val_mes, c.val_ano, c.status, c.id, c.id_api from cad_clientes_cartao c ");
-                sql.Append("where cli.cod_cli = @codCartao;");
-
+                sql.Append("SELECT id,nome,senha FROM rec_usuario_api WHERE id = @id;");
 
                 using (var conn = ConexaoBd.GetConnection())
                 {
                     using (var cmd = new SqlCommand(sql.ToString(), conn))
                     {
                         cmd.Parameters.Clear();
-                        cmd.Parameters.AddWithValue("@codCartao",id);
+                        cmd.Parameters.AddWithValue("@id",id);
 
                         using (var dr = cmd.ExecuteReader())
                         {
                             while (dr.Read())
                             {
-                                cartao = new MeioPagamentoDb
+                                usuario = new Usuario
                                 {
-                                    Cod_Cli = dr.GetInt32(dr.GetOrdinal("cod_cli")),
-                                    Numero_Cartao = dr["numero_cartao"].ToString(),
-                                    Bandeira = dr["bandeira"].ToString(),
-                                    Cpf = dr["cpf"].ToString(),
-                                    Cvc = dr["cvc"].ToString(),
-                                    Val_Mes = dr.GetInt32(dr.GetOrdinal("val_mes")),
-                                    Val_Ano = dr.GetInt32(dr.GetOrdinal("val_ano")),
-                                    Status = dr["status"].ToString(),
-                                    Id = dr.GetInt32(dr.GetOrdinal("id")),
-                                    Id_Api = dr["id_api"].ToString()
+                                    Id = Convert.ToInt32(dr["id"]),
+                                    Nome = dr["nome"] == DBNull.Value ? string.Empty : Convert.ToString(dr["nome"]),
+                                    Senha = Convert.ToString(dr["senha"])
                                 };
                             }
                         }
                     }
                 }
 
-                return cartao;
+                return usuario;
             }
             catch (SqlException sqlException)
             {
@@ -91,5 +82,6 @@ namespace MelFitnessAssinaturas.DAL
 
             }
         }
+
     }
 }

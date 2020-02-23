@@ -9,12 +9,12 @@ using System.Text;
 
 namespace MelFitnessAssinaturas.DAL
 {
-    public class LogApiMundipaggDal
+    public class LogSyncDal
     {
 
         private const string Camada = "LogApiMundipaggDal";
 
-        public void Incluir(LogApiMundipagg entidade)
+        public void Incluir(LogSync entidade)
         {
 
             const string Metodo = "Incluir";
@@ -25,7 +25,7 @@ namespace MelFitnessAssinaturas.DAL
 
                 var sql = new StringBuilder();
 
-                sql.Append("INSERT INTO log_apimundipagg (dt_evento,tipo,descricao,cliente,id_api,valor,dt_documento) VALUES ");
+                sql.Append("INSERT INTO rec_log_sync (dt_evento,tipo,descricao,cliente,id_api,valor,dt_documento) VALUES ");
                 sql.Append("(@dt_evento,@tipo,@descricao,@cliente,@id_api,@valor,@dt_documento);");
                 
                 using (var conn = ConexaoBd.GetConnection())
@@ -78,11 +78,11 @@ namespace MelFitnessAssinaturas.DAL
             }
         }
 
-        public IEnumerable<LogApiMundipagg> ObterTodos(params object[] parametros)
+        public IEnumerable<LogSync> ObterTodos(params object[] parametros)
         {
 
             const string Metodo = "ObterTodos";
-            var listaLogApi = new List<LogApiMundipagg>();
+            var listaLogApi = new List<LogSync>();
 
             var nomeCliente = Convert.ToString(parametros[0]);
             var strDtInicial = $"{Convert.ToDateTime(parametros[1]):yyyy-MM-dd}";
@@ -95,7 +95,7 @@ namespace MelFitnessAssinaturas.DAL
 
                 var sql = new StringBuilder();
 
-                sql.Append("SELECT dt_evento,tipo,descricao,cliente,id_api,valor,dt_documento FROM log_apimundipagg ");
+                sql.Append("SELECT dt_evento,tipo,descricao,cliente,id_api,valor,dt_documento FROM rec_log_sync ");
                 sql.Append("WHERE CAST(dt_evento as date) BETWEEN @strDtInicial AND @strDtFinal AND cliente LIKE @cliente AND tipo LIKE @tipo;");
 
 
@@ -116,7 +116,7 @@ namespace MelFitnessAssinaturas.DAL
                                 while (dr.Read())
                                 {
                                     
-                                    var logApiMundipagg = new LogApiMundipagg
+                                    var logApiMundipagg = new LogSync
                                     {
                                         DtEvento = Convert.ToDateTime(dr["dt_evento"]),
                                         Tipo = (TipoLogEnum) Enum.Parse(typeof(TipoLogEnum),Convert.ToString(dr["tipo"])),
