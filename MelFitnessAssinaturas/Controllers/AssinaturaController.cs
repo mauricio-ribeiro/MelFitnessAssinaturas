@@ -46,6 +46,34 @@ namespace MelFitnessAssinaturas.Controllers
         }
 
         /// <summary>
+        /// Altera o cartao em uma assinatura
+        /// </summary>
+        /// <param name="idTabela">id da assinatura</param>
+        /// <param name="codAux1">id do novo cartao</param>
+        public void AlteraCartaoNaAssinatura(string idTabela, string codAux1)
+        {
+            try
+            {
+                var cartaoDal = new CartaoDal();
+                var clienteDal = new ClienteDal();
+
+                var assinatura = assinaturaDal.GetAssinaturaDb(idTabela);
+                var cartao = cartaoDal.GetCartaoDb(codAux1);
+                var cliente = clienteDal.GetClienteDb(cartao.Cod_Cli.ToString());
+
+                var cartaoApi = CartaoDTO.ConverteNovoCartaoDbEmApi(cartao, cliente);
+
+                assinaturaApi.AlteraCartaoEmAssinatura(assinatura.Id_Api, cartaoApi, cartao.Id.ToString());
+
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        /// <summary>
         /// Busca assinaturas elegíveis a serem canceladas. Cancela na API e "fecha" elas no Banco de dados.
         /// </summary>
         /// <returns>numero de assinaturas canceladas para registro</returns>
@@ -55,17 +83,17 @@ namespace MelFitnessAssinaturas.Controllers
             {
                 var assinatura = assinaturaDal.GetAssinaturaDb(_id);
 
-                    assinaturaApi.CancelaAssinaturaApi(assinatura.Id_Api);
+                assinaturaApi.CancelaAssinaturaApi(assinatura.Id_Api);
 
-                    var log = new LogSyncController();
-                    log.Incluir(new LogSync()
-                    {
-                        Descricao = $"Assinatura {assinatura.Texto_Fatura}/{assinatura.Id_Api} cancelada",
-                        DtEvento = DateTime.Now,
-                        NomeCliente = assinatura.Cliente.Nome,
-                        Tipo = Enums.TipoLogEnum.As,
-                        IdApi = assinatura.Id_Api
-                    });
+                var log = new LogSyncController();
+                log.Incluir(new LogSync()
+                {
+                    Descricao = $"Assinatura {assinatura.Texto_Fatura}/{assinatura.Id_Api} cancelada",
+                    DtEvento = DateTime.Now,
+                    NomeCliente = assinatura.Cliente.Nome,
+                    Tipo = Enums.TipoLogEnum.As,
+                    IdApi = assinatura.Id_Api
+                });
             }
             catch (Exception ex)
             {

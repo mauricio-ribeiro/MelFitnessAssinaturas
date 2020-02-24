@@ -25,7 +25,7 @@ namespace MelFitnessAssinaturas.DAL
             const string metodo = "ListaAssinaturasDb";
 
             var clienteDal = new ClienteDal();
-            var meioPagamentoDal = new MeioPagamentoDal();
+            var meioPagamentoDal = new CartaoDal();
             var listaAssinaturaDb = new List<AssinaturaDb>();
 
 
@@ -183,7 +183,7 @@ namespace MelFitnessAssinaturas.DAL
             const string metodo = "GetAssinaturaDb";
 
             var clienteDal = new ClienteDal();
-            var meioPagamentoDal = new MeioPagamentoDal();
+            var meioPagamentoDal = new CartaoDal();
             var assinatura = new AssinaturaDb();
 
             try

@@ -41,9 +41,10 @@ namespace MelFitnessAssinaturas.Controllers
                     case "A_E":
 
                         break;
-                    // Um cartão foi alterado.
+                    // Um cartão foi alterado para ser usado em uma assinatura.
                     case "A_ECT":
-
+                        Console.WriteLine(@"Buscando assinatura e o novo cartão para alterar");
+                        AssinaturaCtrl.AlteraCartaoNaAssinatura(evento.IdTabela, evento.CodAux1);   
                         break;
                     // Foi alterada a data de pagamento da assinatura  
                     case "A_EDP ":

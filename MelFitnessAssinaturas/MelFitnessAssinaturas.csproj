@@ -101,6 +101,7 @@
     <Compile Include="DAL\LogSyncDal.cs" />
     <Compile Include="DAL\UsuarioDal.cs" />
     <Compile Include="DTO\AssinaturaDTO.cs" />
+    <Compile Include="DTO\CartaoDTO.cs" />
     <Compile Include="DTO\ClienteDTO.cs" />
     <Compile Include="Enums\TipoEnum.cs" />
     <Compile Include="FrmConfigConexaoBanco.cs">
@@ -109,7 +110,7 @@
     <Compile Include="FrmConfigConexaoBanco.Designer.cs">
       <DependentUpon>FrmConfigConexaoBanco.cs</DependentUpon>
     </Compile>
-    <Compile Include="DAL\MeioPagamentoDal.cs" />
+    <Compile Include="DAL\CartaoDal.cs" />
     <Compile Include="Enums\TipoLogEnum.cs" />
     <Compile Include="FrmLogin.cs">
       <SubType>Form</SubType>
@@ -129,7 +130,7 @@
     <Compile Include="Models\ClienteDb.cs" />
     <Compile Include="Models\EventoDb.cs" />
     <Compile Include="Models\LogSync.cs" />
-    <Compile Include="Models\MeioPagamentoDb.cs" />
+    <Compile Include="Models\CartaoDb.cs" />
     <Compile Include="Models\Usuario.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

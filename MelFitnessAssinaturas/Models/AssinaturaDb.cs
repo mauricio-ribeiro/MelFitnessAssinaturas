@@ -18,7 +18,7 @@ namespace MelFitnessAssinaturas.Models
 
         public List<AssinaturaItemDb> ItensAssinatura { get; set; } = new List<AssinaturaItemDb>();
         public ClienteDb Cliente { get; set; } = new ClienteDb();
-        public MeioPagamentoDb MeioPagamento { get; set; }
+        public CartaoDb MeioPagamento { get; set; }
 
 
     }

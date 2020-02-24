@@ -80,6 +80,35 @@ namespace MelFitnessAssinaturas.DAL
             }
         }
 
+        public void AlteraCartaoEmAssinatura(string id_Api, CreateCardRequest cartaoApi, string idCartaoDb)
+        {
+            try
+            {
+
+                // Secret key fornecida pela Mundipagg
+                string basicAuthUserName = "sk_test_4tdVXpseumRmqbo";
+                // Senha em branco. Passando apenas a secret key
+                string basicAuthPassword = "";
+
+                var client = new MundiAPIClient(basicAuthUserName, basicAuthPassword);
+
+                var assinaturaApi = new UpdateSubscriptionCardRequest
+                {
+                    Card = cartaoApi
+                };
+
+                var response = client.Subscriptions.UpdateSubscriptionCard(id_Api, assinaturaApi);
+
+                var cartaoDal = new CartaoDal();
+
+                cartaoDal.CartaoGravadoNaApiAtualizaBanco(idCartaoDb, response.Card.Id);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
         public void ItemEditarNaAssinatura(AssinaturaDb assinaturaDb, AssinaturaItemDb assinaturaItemDb, UpdateSubscriptionItemRequest assinaturaItemApi)
         {
             try
