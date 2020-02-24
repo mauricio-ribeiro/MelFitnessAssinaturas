@@ -48,7 +48,8 @@ namespace MelFitnessAssinaturas.Controllers
                         break;
                     // Foi alterada a data de pagamento da assinatura  
                     case "A_EDP ":
-
+                        Console.WriteLine(@"Alterando a data de faturamento da assinatura");
+                        AssinaturaCtrl.AlterarDataFaturameto(evento.IdTabela, Convert.ToInt32(evento.CodAux1));
                         break;
                     // Assinatura cancelada. Deve ser cancelada na API também.
                     case "A_C":

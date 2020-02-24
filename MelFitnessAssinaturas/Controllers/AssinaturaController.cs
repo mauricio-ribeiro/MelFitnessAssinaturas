@@ -73,6 +73,19 @@ namespace MelFitnessAssinaturas.Controllers
             }
         }
 
+        public void AlterarDataFaturameto(string idTabela, int dias)
+        {
+            try
+            {
+                var assinaturaDb = assinaturaDal.GetAssinaturaDb(idTabela);
+                assinaturaApi.AlteraDataFaturamentoAssinatura(assinaturaDb.Id_Api, dias);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
         /// <summary>
         /// Busca assinaturas elegíveis a serem canceladas. Cancela na API e "fecha" elas no Banco de dados.
         /// </summary>
