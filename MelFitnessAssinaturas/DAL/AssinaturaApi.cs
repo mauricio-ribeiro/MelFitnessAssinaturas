@@ -109,6 +109,33 @@ namespace MelFitnessAssinaturas.DAL
             }
         }
 
+        public void AlteraDataInicioAssinatura(string id_Api, int dias)
+        {
+            try
+            {
+                // Secret key fornecida pela Mundipagg
+                string basicAuthUserName = "sk_test_4tdVXpseumRmqbo";
+                // Senha em branco. Passando apenas a secret key
+                string basicAuthPassword = "";
+
+                var client = new MundiAPIClient(basicAuthUserName, basicAuthPassword);
+
+
+                var request = new UpdateSubscriptionStartAtRequest
+                {
+                    StartAt = DateTime.UtcNow.AddDays(2)
+                };
+
+
+                client.Subscriptions.UpdateSubscriptionStartAt(id_Api, request);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+            throw new NotImplementedException();
+        }
+
         public void AlteraDataFaturamentoAssinatura(string id_Api, int dias)
         {
             try
