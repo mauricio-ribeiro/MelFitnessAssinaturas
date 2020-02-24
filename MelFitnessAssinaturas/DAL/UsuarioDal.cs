@@ -24,7 +24,7 @@ namespace MelFitnessAssinaturas.DAL
 
                 var sql = new StringBuilder();
 
-                sql.Append("SELECT id,nome,senha FROM rec_usuario_api WHERE id = @id;");
+                sql.Append("SELECT cod_fun,nome,usuario,ativo,adm,senha_api FROM cad_funcionario WHERE cod_fun = @id;");
 
                 using (var conn = ConexaoBd.GetConnection())
                 {
@@ -41,7 +41,10 @@ namespace MelFitnessAssinaturas.DAL
                                 {
                                     Id = Convert.ToInt32(dr["id"]),
                                     Nome = dr["nome"] == DBNull.Value ? string.Empty : Convert.ToString(dr["nome"]),
-                                    Senha = Convert.ToString(dr["senha"])
+                                    EhUsuario = Convert.ToBoolean(dr["usuario"]),
+                                    SenhaApi = Convert.ToString(dr["senha_api"]),
+                                    Ativo = Convert.ToBoolean(dr["ativo"]),
+                                    Admin = Convert.ToBoolean(dr["adm"])
                                 };
                             }
                         }
