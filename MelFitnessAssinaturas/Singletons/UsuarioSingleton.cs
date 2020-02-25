@@ -8,7 +8,10 @@
 
         public int Id;
         public string Nome;
-        public string Senha;
+        public string SenhaApi;
+        public bool EhUsuario;
+        public bool Ativo;
+        public bool Admin;
 
         private UsuarioSingleton()
         { }
