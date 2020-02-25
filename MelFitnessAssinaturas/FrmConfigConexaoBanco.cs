@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using MelFitnessAssinaturas.Controllers;
-using Microsoft.SqlServer.Management.Smo;
+
 
 namespace MelFitnessAssinaturas
 {
@@ -37,7 +37,6 @@ namespace MelFitnessAssinaturas
 
         private void FrmConfigConexaoBanco_Load(object sender, EventArgs e)
         {
-            CarregaComboServidores();
             CarregaComboUsuarios();
         }
         
@@ -79,25 +78,7 @@ namespace MelFitnessAssinaturas
         {
             Close();
         }
-
-        private void CarregaComboServidores()
-        {
-
-            try
-            {
-                var dtInstancias = SmoApplication.EnumAvailableSqlServers();
-                dtInstancias.TableName = "Instancias";
-
-                cbServidores.ValueMember = "Name";
-                cbServidores.DataSource = dtInstancias;
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(@"Erro: " + ex.Message,@"Pesquisa de Servidores",MessageBoxButtons.OK,MessageBoxIcon.Error);
-            }
-            
-        }
-
+        
         private void CarregaComboUsuarios()
         {
             foreach (var s in Properties.Settings.Default.Usuario)
