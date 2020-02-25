@@ -47,18 +47,23 @@ namespace MelFitnessAssinaturas
 
             var testeConnectionStringController = new TesteConnectionStringController();
 
-            var servidor = (string)cbServidores.SelectedValue;
+            var servidor = @"localhost\SQL2014"; // (string)cbServidores.SelectedValue;
             var porta = nupPorta.Text;
-            var usuario = cbUsuarios.SelectedText;
+            var usuario = @"sa"; // cbUsuarios.SelectedText;
             var senha = txtSenha.Text;
             var banco = txtBanco.Text;
 
+            // QUANDO FOR INTANCIA
+            // Server=myServerName\myInstanceName;Database=myDataBase;User Id=myUsername;Password=myPassword;
+            // SERVIDOR noRMAL
+            // Server=myServerName,myPortNumber;Database=myDataBase;User Id=myUsername;Password=myPassword;
 
-            var connectionString = $@"Server={servidor},{porta}" +
-                                   ";Database=" + banco +
-                                   "Integrated Security=true" + 
-                                   ";User ID=" + usuario +
-                                   $@";Password={senha};";
+            var connectionString = $@"Server={servidor}" +";" +
+                                   "Database=" + banco + ";" +
+                                   //"Integrated Security=true" + ";" +
+                                   "User ID=" + usuario + ";" +
+                                   $@"Password={senha}"+
+                                   ";";
 
             MessageBox.Show(testeConnectionStringController.TestConnectionString(connectionString)
                 ? @"Conexão realizada com sucesso !!"

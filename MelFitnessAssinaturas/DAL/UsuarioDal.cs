@@ -39,7 +39,7 @@ namespace MelFitnessAssinaturas.DAL
                             {
                                 usuario = new Usuario
                                 {
-                                    Id = Convert.ToInt32(dr["id"]),
+                                    Id = Convert.ToInt32(dr["cod_fun"]),
                                     Nome = dr["nome"] == DBNull.Value ? string.Empty : Convert.ToString(dr["nome"]),
                                     EhUsuario = Convert.ToBoolean(dr["usuario"]),
                                     SenhaApi = Convert.ToString(dr["senha_api"]),
