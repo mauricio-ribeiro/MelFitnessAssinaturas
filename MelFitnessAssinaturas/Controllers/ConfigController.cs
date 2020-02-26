@@ -25,7 +25,7 @@ namespace MelFitnessAssinaturas.Controllers
             ConfigIniUtil.Write("SERVIDOR", "senha", config.Senha);
 
             // Sessão MUNDIPAGG
-            ConfigIniUtil.Write("MUNDIPAGG", "basicAuthUserName", config.TokenUserNameApi);
+            ConfigIniUtil.Write("MUNDIPAGG", "basicAuthUserName", config.TokenApi);
         }
 
 
