@@ -47,50 +47,6 @@ namespace MelFitnessAssinaturas
             }
         }
 
-        private void txtCodUsuario_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            //Se a tecla digitada não for número e nem backspace
-            if (!char.IsDigit(e.KeyChar) && e.KeyChar != 08)
-            {
-                //Atribui True no Handled para cancelar o evento
-                e.Handled = true;
-            }
-
-            if (e.KeyChar == (char)13)
-            {
-                int id;
-                int.TryParse(txtCodUsuario.Text, out id);
-
-                if (id > 0)
-                {
-
-                    var usuarioController = new UsuarioController();
-
-                    try
-                    {
-
-                        _usuario = usuarioController.ObterUsuarioPorId(id);
-
-                        if (_usuario != null && _usuario.Id > 0)
-                        {
-                            PreencherDadosDoUsuario();
-                        }
-                        else
-                        {
-                            MessageBox.Show(@"Usuário não encontrado!",@"Usuário",MessageBoxButtons.OK,MessageBoxIcon.Warning);
-                        }
-
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show(ex.Data["MensagemCustomizada"] + Environment.NewLine + Environment.NewLine +
-                                        @"Mensagem original: " + ex.Message, @"Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
-                }
-            }
-            
-        }
-
         private void btnEntrar_Click(object sender, EventArgs e)
         {
             if (SenhaValida())
@@ -162,6 +118,46 @@ namespace MelFitnessAssinaturas
             txtSenha.ResetText();
         }
 
-       
+        private void txtCodUsuario_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+        {
+           
+            if (e.KeyData == Keys.Enter || e.KeyData == Keys.Tab)
+            {
+                int id;
+                int.TryParse(txtCodUsuario.Text, out id);
+
+                if (id > 0)
+                {
+
+                    var usuarioController = new UsuarioController();
+
+                    try
+                    {
+
+                        _usuario = usuarioController.ObterUsuarioPorId(id);
+
+                        if (_usuario != null && _usuario.Id > 0)
+                        {
+                            PreencherDadosDoUsuario();
+                        }
+                        else
+                        {
+                            MessageBox.Show(@"Usuário não encontrado!", @"Usuário", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        }
+
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Data["MensagemCustomizada"] + Environment.NewLine + Environment.NewLine +
+                                        @"Mensagem original: " + ex.Message, @"Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+            }
+        }
+
+        private void txtCodUsuario_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            e.Handled = !char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar);
+        }
     }
 }

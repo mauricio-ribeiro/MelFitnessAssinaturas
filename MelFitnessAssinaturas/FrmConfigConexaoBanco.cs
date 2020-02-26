@@ -9,13 +9,20 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using MelFitnessAssinaturas.Controllers;
 using MelFitnessAssinaturas.Models;
-
+using MelFitnessAssinaturas.Util;
 
 namespace MelFitnessAssinaturas
 {
     public partial class FrmConfigConexaoBanco : Form
     {
-        
+
+        private string servidor { get; set; }
+        private string instancia { get; set; }
+        private string porta { get; set; }
+        private string usuario { get; set; }
+        private string senha { get; set; }
+        private string banco { get; set; }
+
         public FrmConfigConexaoBanco()
         {
             InitializeComponent();
@@ -33,13 +40,19 @@ namespace MelFitnessAssinaturas
                     break;
             }
         }
-        
+
 
         private void FrmConfigConexaoBanco_Load(object sender, EventArgs e)
         {
-
+            txtServidor.Text = ConfigIniUtil.Read("SERVIDOR", "servidor");
+            txtInstancia.Text = ConfigIniUtil.Read("SERVIDOR", "instancia");
+            nupPorta.Text = ConfigIniUtil.Read("SERVIDOR", "porta");
+            txtUsuario.Text = ConfigIniUtil.Read("SERVIDOR", "usuario");
+            txtSenha.Text = ConfigIniUtil.Read("SERVIDOR", "senha");
+            txtBanco.Text = ConfigIniUtil.Read("SERVIDOR", "banco");
+            txtTokenApi.Text = ConfigIniUtil.Read("MUNDIPAGG", "basicAuthUserName");
         }
-        
+
 
         private void btnTestarConexao_Click(object sender, EventArgs e)
         {
@@ -56,6 +69,37 @@ namespace MelFitnessAssinaturas
                                    "Database=" + dadosConfig.Banco + ";" +
                                    "User ID=" + dadosConfig.Usuario + ";" +
                                    $@"Password={dadosConfig.Senha}" +
+
+            servidor = txtServidor.Text;
+            instancia = txtInstancia.Text;
+            porta = nupPorta.Text;
+            usuario = txtUsuario.Text;
+            senha = txtSenha.Text;
+            banco = txtBanco.Text;
+
+            // QUANDO FOR INTANCIA
+            // Server=myServerName\myInstanceName;Database=myDataBase;User Id=myUsername;Password=myPassword;
+            // SERVIDOR noRMAL
+            // Server=myServerName,myPortNumber;Database=myDataBase;User Id=myUsername;Password=myPassword;
+
+            var server = new StringBuilder();
+            server.Append(servidor);
+
+            if (string.IsNullOrEmpty(instancia))
+            {
+                server.Append(",");
+                server.Append(porta);
+            }
+            else
+            {
+                server.Append(@"\");
+                    server.Append(instancia);
+            }
+
+            var connectionString = $@"Server={server}" + ";" +
+                                   "Database=" + banco + ";" +
+                                   "User ID=" + usuario + ";" +
+                                   $@"Password={senha}" +
                                    ";";
             }
             else
@@ -78,19 +122,23 @@ namespace MelFitnessAssinaturas
 
         private void btnSalvar_Click(object sender, EventArgs e)
         {
+            ConfigIniUtil.Write("SERVIDOR", "servidor", txtServidor.Text);
+            ConfigIniUtil.Write("SERVIDOR", "instancia", txtInstancia.Text);
+            ConfigIniUtil.Write("SERVIDOR", "porta", nupPorta.Text);
+            ConfigIniUtil.Write("SERVIDOR", "usuario", txtUsuario.Text);
+            ConfigIniUtil.Write("SERVIDOR", "senha", txtSenha.Text);
+            ConfigIniUtil.Write("SERVIDOR", "banco", txtBanco.Text);
+            ConfigIniUtil.Write("MUNDIPAGG", "basicAuthUserName", txtTokenApi.Text);
 
             var dadosConfig = ObterDadosConfiguracao();
 
-            
-
-
+            Close();
         }
 
         private void btnCancelar_Click(object sender, EventArgs e)
         {
             Close();
         }
-
 
         private Config ObterDadosConfiguracao()
         {
@@ -107,9 +155,6 @@ namespace MelFitnessAssinaturas
             return config;
 
         }
-
-
-        
 
     }
 }

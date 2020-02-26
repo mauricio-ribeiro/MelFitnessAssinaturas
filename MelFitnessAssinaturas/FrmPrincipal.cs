@@ -7,11 +7,8 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using MelFitnessAssinaturas.Controllers;
 using MelFitnessAssinaturas.Enums;
-using MelFitnessAssinaturas.DAL;
 using MelFitnessAssinaturas.Models;
 using MelFitnessAssinaturas.Util;
-using MundiAPI.PCL;
-using MundiAPI.PCL.Models;
 
 
 namespace MelFitnessAssinaturas
@@ -132,47 +129,7 @@ namespace MelFitnessAssinaturas
         }
 
 
-        private void ExecutarTarefas()
-        {
-
-            var interval = TimeSpan.FromSeconds(10);
-            var timer = new System.Timers.Timer(interval.TotalMilliseconds) { AutoReset = false };
-
-            timer.Elapsed += (sender, eventArgs) =>
-            {
-                var start = DateTime.Now;
-                try
-                {
-                    Task task1 = Task.Factory.StartNew(() => Tarefa1());
-                    Task task2 = Task.Factory.StartNew(() => Tarefa2());
-                    Task.WaitAll(task1, task2);
-                }
-                finally
-                {
-                    var elapsed = DateTime.Now - start;
-                    if (elapsed < interval)
-                        timer.Interval = (interval - elapsed).TotalMilliseconds;
-                    else
-                        timer.Interval = TimeSpan.FromSeconds(10).TotalMilliseconds;
-                    timer.Start();
-                }
-            };
-
-            timer.Start();
-
-        }
         
-
-        private async Task Tarefa1()
-        {
-            notifyIcon1.ShowBalloonTip(20, @"Atenção !!", @"Tarefa 1.", ToolTipIcon.Info);
-        }
-
-        private async Task Tarefa2()
-        {
-            notifyIcon1.ShowBalloonTip(20, @"Atenção !!", @"Tarefa 2.", ToolTipIcon.Info);
-        }
-
         private void CarregaComboTipo()
         {
 
@@ -190,123 +147,6 @@ namespace MelFitnessAssinaturas
                 .OrderBy(item => item.value)
                 .ToList();
 
-        }
-        
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            // Secret key fornecida pela Mundipagg
-            string basicAuthUserName = ConfigIniUtil.Read("MUNDIPAGG", "basicAuthUserName");
-
-            // Senha em branco. Passando apenas a secret key
-            string basicAuthPassword = "";
-
-            var client = new MundiAPIClient(basicAuthUserName, basicAuthPassword);
-
-            var clienteDAL = new ClienteDal();
-            var listaClientes = clienteDAL.ListaClientes("N");
-
-            foreach (var customer in listaClientes)
-            {
-                var response = client.Customers.CreateCustomer(customer);
-                Console.WriteLine($@"Cliente {response.Name} registrado");
-                clienteDAL.ClienteGravado(response.Code, response.Id);
-            }
-
-        }
-
-        private void button2_Click(object sender, EventArgs e)
-        {
-
-            // Secret key fornecida pela Mundipagg
-            string basicAuthUserName = "sk_test_J3xVZJPUBTWOnj6v";
-            // Senha em branco. Passando apenas a secret key
-            string basicAuthPassword = "";
-
-            var client = new MundiAPIClient(basicAuthUserName, basicAuthPassword);
-            string customerId = "cus_dVrMpGKURuao2qkA";
-
-            var response = client.Customers.GetCustomer(customerId);
-
-            Console.WriteLine(response.Name);
-
-            //return View();
-        }
-
-        private void button3_Click(object sender, EventArgs e)
-        {
-
-            // Secret key fornecida pela Mundipagg
-            string basicAuthUserName = ConfigIniUtil.Read("MUNDIPAGG","basicAuthUserName");
-            // Senha em branco. Passando apenas a secret key
-            string basicAuthPassword = "";
-
-            var client = new MundiAPIClient(basicAuthUserName, basicAuthPassword);
-
-            var response = client.Customers.GetCustomers();
-
-            foreach (GetCustomerResponse item in response.Data) {
-                Console.WriteLine(item.Name);
-            }
-
-        }
-
-        private void button4_Click(object sender, EventArgs e)
-        {
-            // Secret key fornecida pela Mundipagg
-            string basicAuthUserName = "sk_test_J3xVZJPUBTWOnj6v";
-            // Senha em branco. Passando apenas a secret key
-            string basicAuthPassword = "";
-
-            var client = new MundiAPIClient(basicAuthUserName, basicAuthPassword);
-
-            string customerId = "cus_dVrMpGKURuao2qkA";
-
-            var request = new CreateAccessTokenRequest
-            {
-                ExpiresIn = 30
-            };
-
-            var response = client.Customers.CreateAccessToken(customerId, request);
-
-            Console.WriteLine(response.Code);
-        }
-
-        private void button5_Click(object sender, EventArgs e)
-        {
-            // Secret key fornecida pela Mundipagg
-            string basicAuthUserName = "sk_test_J3xVZJPUBTWOnj6v";
-            // Senha em branco. Passando apenas a secret key
-            string basicAuthPassword = "";
-
-            var client = new MundiAPIClient(basicAuthUserName, basicAuthPassword);
-
-            string customerId = "cus_dVrMpGKURuao2qkA";
-
-            var response = client.Customers.GetAccessTokens(customerId);
-
-            foreach (GetAccessTokenResponse item in response.Data)
-            {
-                Console.WriteLine($@"Id: {item.Id} -- {item.Code}");
-            }
-        }
-
-        private void button6_Click(object sender, EventArgs e)
-        {
-            var clienteDAL = new ClienteDal();
-            var listaClientes = clienteDAL.ListaClientes("A");
-        }
-
-        private void button7_Click(object sender, EventArgs e)
-        {
-            Scheduler tarefa = new Scheduler(tempo =>
-           {
-               Console.WriteLine("Rodando...");
-           });
-
-            tarefa.ID = "xptoTeste";
-            tarefa.Frequencia = new TimeSpan(0, 0, 10);
-            tarefa.StartWithDelay(null, new TimeSpan(0, 0, 10));
         }
         
         private void btnPesquisaLog_Click(object sender, EventArgs e)
@@ -399,6 +239,17 @@ namespace MelFitnessAssinaturas
         private void menuItemConfiguracao_Click(object sender, EventArgs e)
         {
             new FrmConfigConexaoBanco().ShowDialog();
+        }
+
+        private void FrmPrincipal_Resize(object sender, EventArgs e)
+        {
+            if (this.WindowState == FormWindowState.Minimized)
+            {
+                this.Visible = false;
+                this.ShowInTaskbar = false;
+                this.WindowState = FormWindowState.Minimized;
+                notifyIcon1.Visible = true;
+            }
         }
     }
 }
