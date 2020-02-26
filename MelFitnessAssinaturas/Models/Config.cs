@@ -1,4 +1,6 @@
-﻿namespace MelFitnessAssinaturas.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace MelFitnessAssinaturas.Models
 {
     public class Config
     {
@@ -9,6 +11,8 @@
         public string Usuario { get; set; }
         public string Senha { get; set; }
         public string Banco { get; set; }
+        
+        [Required(ErrorMessage = "Token deve ser informado.")]
         public string TokenApi { get; set; }
 
         public Config()

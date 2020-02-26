@@ -81,7 +81,7 @@
             0});
             this.nupPorta.Name = "nupPorta";
             this.nupPorta.Size = new System.Drawing.Size(72, 21);
-            this.nupPorta.TabIndex = 2;
+            this.nupPorta.TabIndex = 4;
             // 
             // label3
             // 
@@ -100,7 +100,7 @@
             this.txtSenha.Name = "txtSenha";
             this.txtSenha.PasswordChar = '*';
             this.txtSenha.Size = new System.Drawing.Size(270, 21);
-            this.txtSenha.TabIndex = 4;
+            this.txtSenha.TabIndex = 6;
             // 
             // label4
             // 
@@ -165,7 +165,7 @@
             this.txtBanco.Location = new System.Drawing.Point(287, 63);
             this.txtBanco.Name = "txtBanco";
             this.txtBanco.Size = new System.Drawing.Size(215, 21);
-            this.txtBanco.TabIndex = 5;
+            this.txtBanco.TabIndex = 2;
             // 
             // label6
             // 
@@ -183,7 +183,7 @@
             this.txtServidor.Location = new System.Drawing.Point(15, 63);
             this.txtServidor.Name = "txtServidor";
             this.txtServidor.Size = new System.Drawing.Size(266, 21);
-            this.txtServidor.TabIndex = 95;
+            this.txtServidor.TabIndex = 1;
             // 
             // txtUsuario
             // 
@@ -191,7 +191,7 @@
             this.txtUsuario.Location = new System.Drawing.Point(15, 162);
             this.txtUsuario.Name = "txtUsuario";
             this.txtUsuario.Size = new System.Drawing.Size(211, 21);
-            this.txtUsuario.TabIndex = 101;
+            this.txtUsuario.TabIndex = 5;
             // 
             // label7
             // 
@@ -209,7 +209,7 @@
             this.txtInstancia.Location = new System.Drawing.Point(15, 113);
             this.txtInstancia.Name = "txtInstancia";
             this.txtInstancia.Size = new System.Drawing.Size(409, 21);
-            this.txtInstancia.TabIndex = 97;
+            this.txtInstancia.TabIndex = 3;
             // 
             // label8
             // 
@@ -228,7 +228,7 @@
             this.txtTokenApi.Location = new System.Drawing.Point(15, 252);
             this.txtTokenApi.Name = "txtTokenApi";
             this.txtTokenApi.Size = new System.Drawing.Size(487, 21);
-            this.txtTokenApi.TabIndex = 100;
+            this.txtTokenApi.TabIndex = 7;
             // 
             // label9
             // 

@@ -1,4 +1,5 @@
 ﻿using System;
+using MelFitnessAssinaturas.Singletons;
 using MelFitnessAssinaturas.Util;
 using System.IO;
 using System.Windows.Forms;

@@ -81,12 +81,7 @@ namespace MelFitnessAssinaturas
             UsuarioSingleton.Instancia.Id = _usuario.Id;
             UsuarioSingleton.Instancia.Nome = _usuario.Nome;
             UsuarioSingleton.Instancia.SenhaApi = _usuario.SenhaApi;
-            UsuarioSingleton.Instancia.EhUsuario = _usuario.EhUsuario;
-            UsuarioSingleton.Instancia.Ativo = _usuario.Ativo;
-            UsuarioSingleton.Instancia.Admin = _usuario.Admin;
-
             txtUsuario.Text = _usuario.Nome;
-
         }
 
         private bool SenhaValida()
