@@ -71,17 +71,6 @@ D:\Sistemas\MelFitnessAssinaturas\MelFitnessAssinaturas\obj\Debug\MelFitnessAssi
 D:\Sistemas\MelFitnessAssinaturas\MelFitnessAssinaturas\obj\Debug\MelFitnessAssinaturas.FrmConfigConexaoBanco.resources
 F:\Projetos Freela\MelFitnessAssinaturas\MelFitnessAssinaturas\obj\Debug\MelFitnessAssinaturas.FrmPrincipal.resources
 F:\Projetos Freela\MelFitnessAssinaturas\MelFitnessAssinaturas\obj\Debug\MelFitnessAssinaturas.FrmConfigConexaoBanco.resources
-F:\Projetos Freela\MelFitnessAssinaturas\MelFitnessAssinaturas\bin\Debug\Microsoft.SqlServer.ConnectionInfo.dll
-F:\Projetos Freela\MelFitnessAssinaturas\MelFitnessAssinaturas\bin\Debug\Microsoft.SqlServer.Management.Sdk.Sfc.dll
-F:\Projetos Freela\MelFitnessAssinaturas\MelFitnessAssinaturas\bin\Debug\Microsoft.SqlServer.Smo.dll
-F:\Projetos Freela\MelFitnessAssinaturas\MelFitnessAssinaturas\bin\Debug\Microsoft.SqlServer.SmoExtended.dll
-F:\Projetos Freela\MelFitnessAssinaturas\MelFitnessAssinaturas\bin\Debug\Microsoft.SqlServer.SqlEnum.dll
-F:\Projetos Freela\MelFitnessAssinaturas\MelFitnessAssinaturas\bin\Debug\Microsoft.SqlServer.Dmf.dll
-F:\Projetos Freela\MelFitnessAssinaturas\MelFitnessAssinaturas\bin\Debug\Microsoft.SqlServer.ServiceBrokerEnum.dll
-F:\Projetos Freela\MelFitnessAssinaturas\MelFitnessAssinaturas\bin\Debug\Microsoft.SqlServer.RegSvrEnum.dll
-F:\Projetos Freela\MelFitnessAssinaturas\MelFitnessAssinaturas\bin\Debug\pt\Microsoft.SqlServer.Management.Sdk.Sfc.resources.dll
-F:\Projetos Freela\MelFitnessAssinaturas\MelFitnessAssinaturas\bin\Debug\pt\Microsoft.SqlServer.Dmf.resources.dll
-F:\Projetos Freela\MelFitnessAssinaturas\MelFitnessAssinaturas\bin\Debug\pt\Microsoft.SqlServer.RegSvrEnum.resources.dll
 D:\Sistemas\MelFitnessAssinaturas\MelFitnessAssinaturas\bin\Debug\CryptoDll.dll
 D:\Sistemas\MelFitnessAssinaturas\MelFitnessAssinaturas\bin\Debug\CryptoDll.pdb
 D:\Sistemas\MelFitnessAssinaturas\MelFitnessAssinaturas\obj\Debug\MelFitnessAssinaturas.FrmLogin.resources
