@@ -8,14 +8,14 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using MelFitnessAssinaturas.Controllers;
+using MelFitnessAssinaturas.Models;
 
 
 namespace MelFitnessAssinaturas
 {
     public partial class FrmConfigConexaoBanco : Form
     {
-
-
+        
         public FrmConfigConexaoBanco()
         {
             InitializeComponent();
@@ -37,7 +37,7 @@ namespace MelFitnessAssinaturas
 
         private void FrmConfigConexaoBanco_Load(object sender, EventArgs e)
         {
-            CarregaComboUsuarios();
+
         }
         
 
@@ -45,24 +45,31 @@ namespace MelFitnessAssinaturas
         {
 
             var testeConnectionStringController = new TesteConnectionStringController();
-
-            var servidor = @"localhost\SQL2014"; // (string)cbServidores.SelectedValue;
-            var porta = nupPorta.Text;
-            var usuario = @"sa"; // cbUsuarios.SelectedText;
-            var senha = txtSenha.Text;
-            var banco = txtBanco.Text;
-
+            var connectionString = string.Empty;
+            var dadosConfig = ObterDadosConfiguracao();
+            
             // QUANDO FOR INTANCIA
             // Server=myServerName\myInstanceName;Database=myDataBase;User Id=myUsername;Password=myPassword;
-            // SERVIDOR noRMAL
-            // Server=myServerName,myPortNumber;Database=myDataBase;User Id=myUsername;Password=myPassword;
-
-            var connectionString = $@"Server={servidor}" +";" +
-                                   "Database=" + banco + ";" +
-                                   //"Integrated Security=true" + ";" +
-                                   "User ID=" + usuario + ";" +
-                                   $@"Password={senha}"+
+            if (dadosConfig.Porta == 0)
+            {
+                connectionString = $@"Server={dadosConfig.Servidor}" + ";" +
+                                   "Database=" + dadosConfig.Banco + ";" +
+                                   "User ID=" + dadosConfig.Usuario + ";" +
+                                   $@"Password={dadosConfig.Senha}" +
                                    ";";
+            }
+            else
+            {
+                // SERVIDOR noRMAL
+                // Server=myServerName,myPortNumber;Database=myDataBase;User Id=myUsername;Password=myPassword;     
+
+                connectionString = $@"Server={dadosConfig.Servidor},{dadosConfig.Porta.ToString()}" + ";" +
+                                   "Database=" + dadosConfig.Banco + ";" +
+                                   "User ID=" + dadosConfig.Usuario + ";" +
+                                   $@"Password={dadosConfig.Senha}" +
+                                   ";";
+            }
+
 
             MessageBox.Show(testeConnectionStringController.TestConnectionString(connectionString)
                 ? @"Conexão realizada com sucesso !!"
@@ -72,26 +79,37 @@ namespace MelFitnessAssinaturas
         private void btnSalvar_Click(object sender, EventArgs e)
         {
 
+            var dadosConfig = ObterDadosConfiguracao();
+
+            
+
+
         }
 
         private void btnCancelar_Click(object sender, EventArgs e)
         {
             Close();
         }
-        
-        private void CarregaComboUsuarios()
+
+
+        private Config ObterDadosConfiguracao()
         {
-            foreach (var s in Properties.Settings.Default.Usuario)
+            var config = new Config
             {
-                cbUsuarios.Items.Add(s);
-            }
+                Servidor = txtServidor.Text,
+                Porta = (int)nupPorta.Value,
+                Usuario = txtUsuario.Text,
+                Senha = txtSenha.Text,
+                Banco = txtBanco.Text,
+                TokenUserNameApi = txtTokenUserNameApi.Text
+            };
+
+            return config;
+
         }
 
 
-
-
-
-
+        
 
     }
 }

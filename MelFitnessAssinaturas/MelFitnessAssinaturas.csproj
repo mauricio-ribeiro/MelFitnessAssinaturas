@@ -80,6 +80,7 @@
     <Compile Include="Controllers\AcessoBaseController.cs" />
     <Compile Include="Controllers\AssinaturaController.cs" />
     <Compile Include="Controllers\ClienteController.cs" />
+    <Compile Include="Controllers\ConfigController.cs" />
     <Compile Include="Controllers\FaturaController.cs" />
     <Compile Include="Controllers\LogSyncController.cs" />
     <Compile Include="Controllers\TesteConnectionStringController.cs" />
@@ -124,6 +125,7 @@
     <Compile Include="Models\AssinaturaDb.cs" />
     <Compile Include="Models\AssinaturaItemDb.cs" />
     <Compile Include="Models\ClienteDb.cs" />
+    <Compile Include="Models\Config.cs" />
     <Compile Include="Models\EventoDb.cs" />
     <Compile Include="Models\LogSync.cs" />
     <Compile Include="Models\CartaoDb.cs" />

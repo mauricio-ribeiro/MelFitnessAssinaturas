@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             this.label1 = new System.Windows.Forms.Label();
-            this.cbServidores = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
             this.nupPorta = new System.Windows.Forms.NumericUpDown();
             this.label3 = new System.Windows.Forms.Label();
@@ -38,10 +37,13 @@
             this.btnTestarConexao = new System.Windows.Forms.Button();
             this.btnSalvar = new System.Windows.Forms.Button();
             this.btnCancelar = new System.Windows.Forms.Button();
-            this.cbUsuarios = new System.Windows.Forms.ComboBox();
             this.label5 = new System.Windows.Forms.Label();
             this.txtBanco = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
+            this.txtServidor = new System.Windows.Forms.TextBox();
+            this.txtUsuario = new System.Windows.Forms.TextBox();
+            this.txtTokenUserNameApi = new System.Windows.Forms.TextBox();
+            this.label7 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.nupPorta)).BeginInit();
             this.SuspendLayout();
             // 
@@ -54,15 +56,6 @@
             this.label1.Size = new System.Drawing.Size(55, 15);
             this.label1.TabIndex = 2;
             this.label1.Text = "Servidor:";
-            // 
-            // cbServidores
-            // 
-            this.cbServidores.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cbServidores.FormattingEnabled = true;
-            this.cbServidores.Location = new System.Drawing.Point(85, 53);
-            this.cbServidores.Name = "cbServidores";
-            this.cbServidores.Size = new System.Drawing.Size(356, 21);
-            this.cbServidores.TabIndex = 1;
             // 
             // label2
             // 
@@ -86,11 +79,6 @@
             this.nupPorta.Name = "nupPorta";
             this.nupPorta.Size = new System.Drawing.Size(356, 21);
             this.nupPorta.TabIndex = 2;
-            this.nupPorta.Value = new decimal(new int[] {
-            1433,
-            0,
-            0,
-            0});
             // 
             // label3
             // 
@@ -124,7 +112,7 @@
             // btnTestarConexao
             // 
             this.btnTestarConexao.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnTestarConexao.Location = new System.Drawing.Point(12, 235);
+            this.btnTestarConexao.Location = new System.Drawing.Point(12, 275);
             this.btnTestarConexao.Name = "btnTestarConexao";
             this.btnTestarConexao.Size = new System.Drawing.Size(111, 23);
             this.btnTestarConexao.TabIndex = 90;
@@ -135,7 +123,7 @@
             // btnSalvar
             // 
             this.btnSalvar.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSalvar.Location = new System.Drawing.Point(300, 236);
+            this.btnSalvar.Location = new System.Drawing.Point(300, 276);
             this.btnSalvar.Name = "btnSalvar";
             this.btnSalvar.Size = new System.Drawing.Size(62, 23);
             this.btnSalvar.TabIndex = 91;
@@ -146,22 +134,13 @@
             // btnCancelar
             // 
             this.btnCancelar.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnCancelar.Location = new System.Drawing.Point(368, 235);
+            this.btnCancelar.Location = new System.Drawing.Point(368, 275);
             this.btnCancelar.Name = "btnCancelar";
             this.btnCancelar.Size = new System.Drawing.Size(73, 23);
             this.btnCancelar.TabIndex = 92;
             this.btnCancelar.Text = "Cancelar";
             this.btnCancelar.UseVisualStyleBackColor = true;
             this.btnCancelar.Click += new System.EventHandler(this.btnCancelar_Click);
-            // 
-            // cbUsuarios
-            // 
-            this.cbUsuarios.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cbUsuarios.FormattingEnabled = true;
-            this.cbUsuarios.Location = new System.Drawing.Point(85, 119);
-            this.cbUsuarios.Name = "cbUsuarios";
-            this.cbUsuarios.Size = new System.Drawing.Size(356, 21);
-            this.cbUsuarios.TabIndex = 3;
             // 
             // label5
             // 
@@ -192,15 +171,52 @@
             this.label6.TabIndex = 94;
             this.label6.Text = "Banco:";
             // 
+            // txtServidor
+            // 
+            this.txtServidor.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtServidor.Location = new System.Drawing.Point(85, 53);
+            this.txtServidor.Name = "txtServidor";
+            this.txtServidor.Size = new System.Drawing.Size(356, 21);
+            this.txtServidor.TabIndex = 1;
+            // 
+            // txtUsuario
+            // 
+            this.txtUsuario.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtUsuario.Location = new System.Drawing.Point(85, 119);
+            this.txtUsuario.Name = "txtUsuario";
+            this.txtUsuario.Size = new System.Drawing.Size(356, 21);
+            this.txtUsuario.TabIndex = 3;
+            // 
+            // txtTokenUserNameApi
+            // 
+            this.txtTokenUserNameApi.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtTokenUserNameApi.Location = new System.Drawing.Point(85, 219);
+            this.txtTokenUserNameApi.Name = "txtTokenUserNameApi";
+            this.txtTokenUserNameApi.Size = new System.Drawing.Size(356, 21);
+            this.txtTokenUserNameApi.TabIndex = 6;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label7.Location = new System.Drawing.Point(12, 222);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(62, 15);
+            this.label7.TabIndex = 96;
+            this.label7.Text = "Token API";
+            // 
             // FrmConfigConexaoBanco
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(453, 270);
+            this.ClientSize = new System.Drawing.Size(453, 310);
+            this.Controls.Add(this.txtTokenUserNameApi);
+            this.Controls.Add(this.label7);
+            this.Controls.Add(this.txtUsuario);
+            this.Controls.Add(this.txtServidor);
             this.Controls.Add(this.txtBanco);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.label5);
-            this.Controls.Add(this.cbUsuarios);
             this.Controls.Add(this.btnCancelar);
             this.Controls.Add(this.btnSalvar);
             this.Controls.Add(this.btnTestarConexao);
@@ -209,7 +225,6 @@
             this.Controls.Add(this.label3);
             this.Controls.Add(this.nupPorta);
             this.Controls.Add(this.label2);
-            this.Controls.Add(this.cbServidores);
             this.Controls.Add(this.label1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.KeyPreview = true;
@@ -228,7 +243,6 @@
 
         #endregion
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.ComboBox cbServidores;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.NumericUpDown nupPorta;
         private System.Windows.Forms.Label label3;
@@ -237,9 +251,12 @@
         private System.Windows.Forms.Button btnTestarConexao;
         private System.Windows.Forms.Button btnSalvar;
         private System.Windows.Forms.Button btnCancelar;
-        private System.Windows.Forms.ComboBox cbUsuarios;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.TextBox txtBanco;
         private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.TextBox txtServidor;
+        private System.Windows.Forms.TextBox txtUsuario;
+        private System.Windows.Forms.TextBox txtTokenUserNameApi;
+        private System.Windows.Forms.Label label7;
     }
 }
