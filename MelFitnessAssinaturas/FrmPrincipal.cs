@@ -400,5 +400,16 @@ namespace MelFitnessAssinaturas
         {
             new FrmConfigConexaoBanco().ShowDialog();
         }
+
+        private void FrmPrincipal_Resize(object sender, EventArgs e)
+        {
+            if (this.WindowState == FormWindowState.Minimized)
+            {
+                this.Visible = false;
+                this.ShowInTaskbar = false;
+                this.WindowState = FormWindowState.Minimized;
+                notifyIcon1.Visible = true;
+            }
+        }
     }
 }

@@ -361,7 +361,7 @@
             // menuItemConfiguracao
             // 
             this.menuItemConfiguracao.Name = "menuItemConfiguracao";
-            this.menuItemConfiguracao.Size = new System.Drawing.Size(180, 22);
+            this.menuItemConfiguracao.Size = new System.Drawing.Size(146, 22);
             this.menuItemConfiguracao.Text = "Configuração";
             this.menuItemConfiguracao.Click += new System.EventHandler(this.menuItemConfiguracao_Click);
             // 
@@ -400,6 +400,7 @@
             this.Text = "Tela Principal";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Form1_KeyDown);
+            this.Resize += new System.EventHandler(this.FrmPrincipal_Resize);
             ((System.ComponentModel.ISupportInitialize)(this.dgvDadosLog)).EndInit();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
