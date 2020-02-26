@@ -8,13 +8,18 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using MelFitnessAssinaturas.Controllers;
-
+using MelFitnessAssinaturas.Util;
 
 namespace MelFitnessAssinaturas
 {
     public partial class FrmConfigConexaoBanco : Form
     {
-
+        private string servidor { get; set; }
+        private string instancia { get; set; }
+        private string porta { get; set; }
+        private string usuario { get; set; }
+        private string senha { get; set; }
+        private string banco { get; set; }
 
         public FrmConfigConexaoBanco()
         {
@@ -33,35 +38,55 @@ namespace MelFitnessAssinaturas
                     break;
             }
         }
-        
+
 
         private void FrmConfigConexaoBanco_Load(object sender, EventArgs e)
         {
-            CarregaComboUsuarios();
+            txtServidor.Text = ConfigIniUtil.Read("SERVIDOR", "servidor");
+            txtInstancia.Text = ConfigIniUtil.Read("SERVIDOR", "instancia");
+            nupPorta.Text = ConfigIniUtil.Read("SERVIDOR", "porta");
+            txtUsuario.Text = ConfigIniUtil.Read("SERVIDOR", "usuario");
+            txtSenha.Text = ConfigIniUtil.Read("SERVIDOR", "senha");
+            txtBanco.Text = ConfigIniUtil.Read("SERVIDOR", "banco");
+            txtTokenApi.Text = ConfigIniUtil.Read("MUNDIPAGG", "basicAuthUserName");
         }
-        
+
 
         private void btnTestarConexao_Click(object sender, EventArgs e)
         {
 
             var testeConnectionStringController = new TesteConnectionStringController();
 
-            var servidor = @"localhost\SQL2014"; // (string)cbServidores.SelectedValue;
-            var porta = nupPorta.Text;
-            var usuario = @"sa"; // cbUsuarios.SelectedText;
-            var senha = txtSenha.Text;
-            var banco = txtBanco.Text;
+            servidor = txtServidor.Text;
+            instancia = txtInstancia.Text;
+            porta = nupPorta.Text;
+            usuario = txtUsuario.Text;
+            senha = txtSenha.Text;
+            banco = txtBanco.Text;
 
             // QUANDO FOR INTANCIA
             // Server=myServerName\myInstanceName;Database=myDataBase;User Id=myUsername;Password=myPassword;
             // SERVIDOR noRMAL
             // Server=myServerName,myPortNumber;Database=myDataBase;User Id=myUsername;Password=myPassword;
 
-            var connectionString = $@"Server={servidor}" +";" +
+            var server = new StringBuilder();
+            server.Append(servidor);
+
+            if (string.IsNullOrEmpty(instancia))
+            {
+                server.Append(",");
+                server.Append(porta);
+            }
+            else
+            {
+                server.Append(@"\");
+                    server.Append(instancia);
+            }
+
+            var connectionString = $@"Server={server}" + ";" +
                                    "Database=" + banco + ";" +
-                                   //"Integrated Security=true" + ";" +
                                    "User ID=" + usuario + ";" +
-                                   $@"Password={senha}"+
+                                   $@"Password={senha}" +
                                    ";";
 
             MessageBox.Show(testeConnectionStringController.TestConnectionString(connectionString)
@@ -71,27 +96,21 @@ namespace MelFitnessAssinaturas
 
         private void btnSalvar_Click(object sender, EventArgs e)
         {
+            ConfigIniUtil.Write("SERVIDOR", "servidor", txtServidor.Text);
+            ConfigIniUtil.Write("SERVIDOR", "instancia", txtInstancia.Text);
+            ConfigIniUtil.Write("SERVIDOR", "porta", nupPorta.Text);
+            ConfigIniUtil.Write("SERVIDOR", "usuario", txtUsuario.Text);
+            ConfigIniUtil.Write("SERVIDOR", "senha", txtSenha.Text);
+            ConfigIniUtil.Write("SERVIDOR", "banco", txtBanco.Text);
+            ConfigIniUtil.Write("MUNDIPAGG", "basicAuthUserName", txtTokenApi.Text);
 
+            Close();
         }
 
         private void btnCancelar_Click(object sender, EventArgs e)
         {
             Close();
         }
-        
-        private void CarregaComboUsuarios()
-        {
-            foreach (var s in Properties.Settings.Default.Usuario)
-            {
-                cbUsuarios.Items.Add(s);
-            }
-        }
-
-
-
-
-
-
 
     }
 }
