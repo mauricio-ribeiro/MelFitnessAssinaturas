@@ -102,6 +102,7 @@
     <Compile Include="DTO\AssinaturaDTO.cs" />
     <Compile Include="DTO\CartaoDTO.cs" />
     <Compile Include="DTO\ClienteDTO.cs" />
+    <Compile Include="Enums\AcaoLoginEnum.cs" />
     <Compile Include="Enums\TipoEnum.cs" />
     <Compile Include="FrmConfigConexaoBanco.cs">
       <SubType>Form</SubType>

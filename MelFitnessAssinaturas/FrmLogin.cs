@@ -4,22 +4,32 @@ using MelFitnessAssinaturas.Models;
 using MelFitnessAssinaturas.Util;
 using System;
 using System.Windows.Forms;
+using MelFitnessAssinaturas.Enums;
 using MelFitnessAssinaturas.Singletons;
 
 namespace MelFitnessAssinaturas
 {
+    
     public partial class FrmLogin : Form
     {
-
+        
         public bool entrarOk;
         public bool sairOk;
         private Usuario _usuario;
+        private AcaoLoginEnum _acaoLogin;
 
         public FrmLogin()
         {
             InitializeComponent();
         }
-        
+
+        public FrmLogin(AcaoLoginEnum acaoLogin)
+        {
+            InitializeComponent();
+            _acaoLogin = acaoLogin;
+        }
+
+
         private void FrmLogin_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
@@ -30,9 +40,9 @@ namespace MelFitnessAssinaturas
 
         private void FrmLogin_Load(object sender, EventArgs e)
         {
-
+            VerificaAcaoBotoes();
         }
-
+        
         private void timer1_Tick(object sender, EventArgs e)
         {
             var data_hora = DateTime.Now;
@@ -46,6 +56,49 @@ namespace MelFitnessAssinaturas
                 LimparCampos();
             }
         }
+
+        private void txtCodUsuario_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+        {
+
+            if (e.KeyData == Keys.Enter || e.KeyData == Keys.Tab)
+            {
+                int id;
+                int.TryParse(txtCodUsuario.Text, out id);
+
+                if (id > 0)
+                {
+
+                    var usuarioController = new UsuarioController();
+
+                    try
+                    {
+
+                        _usuario = usuarioController.ObterUsuarioPorId(id);
+
+                        if (_usuario != null && _usuario.Id > 0)
+                        {
+                            PreencherDadosDoUsuario();
+                        }
+                        else
+                        {
+                            MessageBox.Show(@"Usuário não encontrado!", @"Usuário", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        }
+
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Data["MensagemCustomizada"] + Environment.NewLine + Environment.NewLine +
+                                        @"Mensagem original: " + ex.Message, @"Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+            }
+        }
+
+        private void txtCodUsuario_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            e.Handled = !char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar);
+        }
+        
 
         private void btnEntrar_Click(object sender, EventArgs e)
         {
@@ -112,47 +165,23 @@ namespace MelFitnessAssinaturas
             txtUsuario.ResetText();
             txtSenha.ResetText();
         }
+        
 
-        private void txtCodUsuario_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+        private void VerificaAcaoBotoes()
         {
-           
-            if (e.KeyData == Keys.Enter || e.KeyData == Keys.Tab)
+            if (_acaoLogin == AcaoLoginEnum.Entrar)
             {
-                int id;
-                int.TryParse(txtCodUsuario.Text, out id);
-
-                if (id > 0)
-                {
-
-                    var usuarioController = new UsuarioController();
-
-                    try
-                    {
-
-                        _usuario = usuarioController.ObterUsuarioPorId(id);
-
-                        if (_usuario != null && _usuario.Id > 0)
-                        {
-                            PreencherDadosDoUsuario();
-                        }
-                        else
-                        {
-                            MessageBox.Show(@"Usuário não encontrado!", @"Usuário", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        }
-
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show(ex.Data["MensagemCustomizada"] + Environment.NewLine + Environment.NewLine +
-                                        @"Mensagem original: " + ex.Message, @"Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
-                }
+                btnEntrar.Enabled = true;
+                btnFinalizar.Enabled = false;
+            }
+            else
+            {
+                btnEntrar.Enabled = false;
+                btnFinalizar.Enabled = true;
             }
         }
 
-        private void txtCodUsuario_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            e.Handled = !char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar);
-        }
+
+
     }
 }
