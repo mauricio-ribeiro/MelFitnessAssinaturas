@@ -280,7 +280,7 @@ namespace MelFitnessAssinaturas.DAL
 
                 var sql = new StringBuilder();
 
-                sql.Append("select i.id, i.id_assinatura, i.descricao, i.ciclos, i.quant, i.status, i.id_api ");
+                sql.Append("select i.id, i.id_assinatura, i.descricao, i.ciclos, i.quant, i.status, i.id_api, i.valor ");
                 sql.Append(" from rec_assinatura_item i ");
                 sql.Append("where i.status = 'A' and i.id_assinatura = @id");
 
@@ -303,7 +303,8 @@ namespace MelFitnessAssinaturas.DAL
                                     Quant = Convert.ToInt32(dr["quant"]),
                                     Status = dr["status"].ToString(),
                                     Id = Convert.ToInt32(dr["id"]),
-                                    Id_Api = dr["id_api"].ToString()
+                                    Id_Api = dr["id_api"].ToString(),
+                                    Valor = Convert.ToDouble(dr["valor"])
                                 };
 
                                 listaItens.Add(item);

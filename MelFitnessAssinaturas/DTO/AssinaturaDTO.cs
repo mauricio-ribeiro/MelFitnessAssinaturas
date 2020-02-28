@@ -34,13 +34,13 @@ namespace MelFitnessAssinaturas.DTO
                 };
 
                 // por enquanto não vai trabalhar com descontos
-                //var discounts = new List<CreateDiscountRequest>
-                //{
-                //    new CreateDiscountRequest
-                //    {
-                //        Cycles = assinatura.
-                //    }
-                //}
+                var discounts = new List<CreateDiscountRequest> {
+                new CreateDiscountRequest {
+                Cycles = 1,
+                Value = 0,
+                DiscountType = "percentage"
+                }
+            };
 
                 var items = new List<CreateSubscriptionItemRequest>();
 
@@ -55,6 +55,8 @@ namespace MelFitnessAssinaturas.DTO
                             Price = item.GetValor()
                         }
                     };
+
+                    items.Add(i);
                 }
 
                 var metadata = new Dictionary<string, string>
@@ -76,7 +78,7 @@ namespace MelFitnessAssinaturas.DTO
                         Email = assinatura.Cliente.Email
                     },
                     Card = card,
-                    Discounts = null,
+                    Discounts = discounts,
                     Items = items,
                     Metadata = metadata
                 };
