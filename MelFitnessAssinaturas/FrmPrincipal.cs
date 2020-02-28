@@ -102,7 +102,7 @@ namespace MelFitnessAssinaturas
 
         private void abrir_Click(object sender, EventArgs e)
         {
-            var frmLogin = new FrmLogin();
+            var frmLogin = new FrmLogin(AcaoLoginEnum.Entrar);
             frmLogin.ShowDialog();
 
             if (frmLogin.entrarOk)
@@ -117,7 +117,7 @@ namespace MelFitnessAssinaturas
 
         private void sair_Click(object sender, EventArgs e)
         {
-            var frmLogin = new FrmLogin();
+            var frmLogin = new FrmLogin(AcaoLoginEnum.Sair);
             frmLogin.ShowDialog();
 
             if (frmLogin.sairOk)
