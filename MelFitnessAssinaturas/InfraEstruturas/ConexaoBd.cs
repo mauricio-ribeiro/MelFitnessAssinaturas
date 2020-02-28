@@ -12,8 +12,11 @@ namespace MelFitnessAssinaturas.InfraEstruturas
         public static SqlConnection GetConnection()
         {
             var servidor = ConfigIniUtil.Read("SERVIDOR", "servidor");
+            var banco = ConfigIniUtil.Read("SERVIDOR", "banco");
             var instancia = ConfigIniUtil.Read("SERVIDOR", "instancia");
             var porta = ConfigIniUtil.Read("SERVIDOR", "porta");
+            var usuario = ConfigIniUtil.Read("SERVIDOR", "usuario");
+            var senha = ConfigIniUtil.Read("SERVIDOR", "senha");
 
             var dataSource = new StringBuilder();
             dataSource.Append(servidor);
@@ -30,7 +33,7 @@ namespace MelFitnessAssinaturas.InfraEstruturas
             }
 
             _connectionStringBuilder.DataSource = dataSource.ToString();
-            _connectionStringBuilder.InitialCatalog = ConfigIniUtil.Read("SERVIDOR", "banco");
+            _connectionStringBuilder.InitialCatalog = banco;
             _connectionStringBuilder.IntegratedSecurity = true;
 
             var conn = new SqlConnection(_connectionStringBuilder.ConnectionString);

@@ -11,6 +11,8 @@ namespace MelFitnessAssinaturas.Controllers
 
             if (!Directory.Exists(logerrorDir + @"\LogError"))
                 Directory.CreateDirectory(logerrorDir + @"\LogError");
+
+            ProximaVerificacao.ProcessaVerificacao();
             
         }
     }
