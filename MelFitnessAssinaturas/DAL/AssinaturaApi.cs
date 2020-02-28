@@ -1,11 +1,8 @@
 ﻿using MelFitnessAssinaturas.Models;
+using MelFitnessAssinaturas.Singletons;
 using MundiAPI.PCL;
 using MundiAPI.PCL.Models;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MelFitnessAssinaturas.DAL
 {
@@ -19,7 +16,7 @@ namespace MelFitnessAssinaturas.DAL
             try
             {
                 // Secret key fornecida pela Mundipagg
-                string basicAuthUserName = "sk_test_4tdVXpseumRmqbo";
+                string basicAuthUserName = SistemaSingleton.Instancia.TokenApi;
                 // Senha em branco. Passando apenas a secret key
                 string basicAuthPassword = "";
 
@@ -44,7 +41,7 @@ namespace MelFitnessAssinaturas.DAL
         public string GravaAssinaturaApi(CreateSubscriptionRequest assinaturaApi)
         {
             // Secret key fornecida pela Mundipagg
-            var basicAuthUserName = "sk_test_4tdVXpseumRmqbo";
+            var basicAuthUserName = SistemaSingleton.Instancia.TokenApi;
 
             // Senha em branco. Passando apenas a secret key
             var basicAuthPassword = "";
@@ -63,7 +60,7 @@ namespace MelFitnessAssinaturas.DAL
             try
             {
                 // Secret key fornecida pela Mundipagg
-                string basicAuthUserName = "sk_test_4tdVXpseumRmqbo";
+                string basicAuthUserName = SistemaSingleton.Instancia.TokenApi;
                 // Senha em branco. Passando apenas a secret key
                 string basicAuthPassword = "";
 
@@ -86,7 +83,7 @@ namespace MelFitnessAssinaturas.DAL
             {
 
                 // Secret key fornecida pela Mundipagg
-                string basicAuthUserName = "sk_test_4tdVXpseumRmqbo";
+                string basicAuthUserName = SistemaSingleton.Instancia.TokenApi;
                 // Senha em branco. Passando apenas a secret key
                 string basicAuthPassword = "";
 
@@ -114,7 +111,7 @@ namespace MelFitnessAssinaturas.DAL
             try
             {
                 // Secret key fornecida pela Mundipagg
-                string basicAuthUserName = "sk_test_4tdVXpseumRmqbo";
+                string basicAuthUserName = SistemaSingleton.Instancia.TokenApi;
                 // Senha em branco. Passando apenas a secret key
                 string basicAuthPassword = "";
 
@@ -141,7 +138,7 @@ namespace MelFitnessAssinaturas.DAL
             try
             {
                 // Secret key fornecida pela Mundipagg
-                string basicAuthUserName = "sk_test_4tdVXpseumRmqbo";
+                string basicAuthUserName = SistemaSingleton.Instancia.TokenApi;
                 // Senha em branco. Passando apenas a secret key
                 string basicAuthPassword = "";
 
@@ -165,7 +162,7 @@ namespace MelFitnessAssinaturas.DAL
             try
             {
                 // Secret key fornecida pela Mundipagg
-                string basicAuthUserName = "sk_test_4tdVXpseumRmqbo";
+                string basicAuthUserName = SistemaSingleton.Instancia.TokenApi;
                 // Senha em branco. Passando apenas a secret key
                 string basicAuthPassword = "";
 
@@ -187,7 +184,7 @@ namespace MelFitnessAssinaturas.DAL
             try
             {
                 // Secret key fornecida pela Mundipagg
-                string basicAuthUserName = "sk_test_4tdVXpseumRmqbo";
+                string basicAuthUserName = SistemaSingleton.Instancia.TokenApi;
                 // Senha em branco. Passando apenas a secret key
                 string basicAuthPassword = "";
 

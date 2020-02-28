@@ -8,23 +8,33 @@ namespace MelFitnessAssinaturas
     {
 
         private static readonly VerificaConfigIniController _verificaConfigIni = new VerificaConfigIniController();
-        private static readonly  VerificaDiretorioLogErrorController _verificaDiretorioLogError = new VerificaDiretorioLogErrorController();
-        private static readonly  VerificaAcessarApiController _verificaAcessarApi = new VerificaAcessarApiController();
-        
+        private static readonly VerificaDiretorioLogErrorController _verificaDiretorioLogError = new VerificaDiretorioLogErrorController();
+        private static readonly VerificaAcessarApiController _verificaAcessarApi = new VerificaAcessarApiController();
+
         /// <summary>
         /// Ponto de entrada principal para o aplicativo.
         /// </summary>
         [STAThread]
         static void Main()
         {
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
+            try
+            {
 
-            _verificaConfigIni.SetProximaVerificacao(_verificaDiretorioLogError);
-            _verificaDiretorioLogError.SetProximaVerificacao(_verificaAcessarApi);
-            _verificaConfigIni.ProcessaVerificacao();
-            
-            Application.Run(new FrmPrincipal());
+                Application.EnableVisualStyles();
+                Application.SetCompatibleTextRenderingDefault(false);
+
+                _verificaConfigIni.SetProximaVerificacao(_verificaDiretorioLogError);
+                _verificaDiretorioLogError.SetProximaVerificacao(_verificaAcessarApi);
+                _verificaConfigIni.ProcessaVerificacao();
+
+                new MainController().IniciaRelogioAssinatura();
+
+                Application.Run(new FrmPrincipal());
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
     }
 }

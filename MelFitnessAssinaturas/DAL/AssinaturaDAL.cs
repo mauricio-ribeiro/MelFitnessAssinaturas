@@ -53,14 +53,14 @@ namespace MelFitnessAssinaturas.DAL
 
                                 var assinatura = new AssinaturaDb
                                 {
-                                    Id = dr.GetInt32(dr.GetOrdinal("id")),
-                                    Dt_Inicio = dr.GetDateTime(dr.GetOrdinal("dt_inicio")),
+                                    Id = Convert.ToInt32(dr["id"]),
+                                    Dt_Inicio = Convert.ToDateTime(dr["dt_inicio"]),
                                     Intervalo = dr["intervalo"].ToString(),
-                                    Intervalo_Quantidade = dr.GetInt32(dr.GetOrdinal("intervalo_quantidade")),
-                                    Dia_Cobranca = dr.GetInt32(dr.GetOrdinal("dia_cobranca")),
-                                    Quant_Parcelas = dr.GetInt32(dr.GetOrdinal("quant_parcelas")),
+                                    Intervalo_Quantidade = Convert.ToInt32(dr["intervalo_quantidade"]),
+                                    Dia_Cobranca = Convert.ToInt32(dr["dia_cobranca"]),
+                                    Quant_Parcelas = Convert.ToInt32(dr["quant_parcelas"]),
                                     Texto_Fatura = dr["texto_fatura"].ToString(),
-                                    Valor_Minimo = dr.GetDouble(dr.GetOrdinal("valor_minimo")),
+                                    Valor_Minimo = Convert.ToInt32(dr["valor_minimo"]),
                                     Status = dr["status"].ToString(),
                                     Cliente = clienteDal.GetClienteDb(dr["id_cliente"].ToString()),
                                     MeioPagamento = meioPagamentoDal.GetCartaoDb(dr["id_cartao"].ToString())
@@ -191,7 +191,7 @@ namespace MelFitnessAssinaturas.DAL
 
                 var sql = new StringBuilder();
 
-                sql.Append("select a.id, a.dt_inicio, a.intervalo_quantidade,");
+                sql.Append("select a.id, a.dt_inicio, a.intervalo, a.intervalo_quantidade,");
                 sql.Append("a.dia_cobranca, a.quant_parcelas, a.texto_fatura, a.valor_minimo, a.status,");
                 sql.Append("a.id_cliente, a.id_cartao from rec_assinatura a ");
                 sql.Append("where a.id = @id;");
@@ -205,20 +205,23 @@ namespace MelFitnessAssinaturas.DAL
 
                         using (var dr = cmd.ExecuteReader())
                         {
-                            assinatura.Id = dr.GetInt32(dr.GetOrdinal("id"));
-                            assinatura.Dt_Inicio = dr.GetDateTime(dr.GetOrdinal("dt_inicio"));
-                            assinatura.Intervalo = dr["intervalo"].ToString();
-                            assinatura.Intervalo_Quantidade = dr.GetInt32(dr.GetOrdinal("intervalo_quantidade"));
-                            assinatura.Dia_Cobranca = dr.GetInt32(dr.GetOrdinal("dia_cobranca"));
-                            assinatura.Quant_Parcelas = dr.GetInt32(dr.GetOrdinal("quant_parcelas"));
-                            assinatura.Texto_Fatura = dr["texto_fatura"].ToString();
-                            assinatura.Valor_Minimo = dr.GetDouble(dr.GetOrdinal("valor_minimo"));
-                            assinatura.Status = dr["status"].ToString();
-                            assinatura.Cliente = clienteDal.GetClienteDb(dr["id_cliente"].ToString());
-                            assinatura.MeioPagamento = meioPagamentoDal.GetCartaoDb(dr["id_cartao"].ToString());
+                            while (dr.Read())
+                            {
+                                assinatura.Id = Convert.ToInt32(dr["id"]);
+                                assinatura.Dt_Inicio = dr.GetDateTime(dr.GetOrdinal("dt_inicio"));
+                                assinatura.Intervalo = dr["intervalo"].ToString();
+                                assinatura.Intervalo_Quantidade = Convert.ToInt32(dr["intervalo_quantidade"]);
+                                assinatura.Dia_Cobranca = Convert.ToInt32(dr["dia_cobranca"]);
+                                assinatura.Quant_Parcelas = Convert.ToInt32(dr["quant_parcelas"]);
+                                assinatura.Texto_Fatura = dr["texto_fatura"].ToString();
+                                assinatura.Valor_Minimo = Convert.ToDouble(dr["valor_minimo"]);
+                                assinatura.Status = dr["status"].ToString();
+                                assinatura.Cliente = clienteDal.GetClienteDb(dr["id_cliente"].ToString());
+                                assinatura.MeioPagamento = meioPagamentoDal.GetCartaoDb(dr["id_cartao"].ToString());
 
-                            // popular o model com os itens da assinatura . Pode colocar aqui ou em um método privado
-                            assinatura.ItensAssinatura = GetItensAssinatura(assinatura.Id);
+                                // popular o model com os itens da assinatura . Pode colocar aqui ou em um método privado
+                                assinatura.ItensAssinatura = GetItensAssinatura(assinatura.Id);
+                            }
                         }
 
                     }
@@ -277,7 +280,8 @@ namespace MelFitnessAssinaturas.DAL
 
                 var sql = new StringBuilder();
 
-                sql.Append("select i.id_assinatura, i.descricao, i.ciclos, i.quant, i.status from rec_assinatura_item i ");
+                sql.Append("select i.id, i.id_assinatura, i.descricao, i.ciclos, i.quant, i.status, i.id_api ");
+                sql.Append(" from rec_assinatura_item i ");
                 sql.Append("where i.status = 'A' and i.id_assinatura = @id");
 
                 using (var conn = ConexaoBd.GetConnection())
@@ -293,12 +297,12 @@ namespace MelFitnessAssinaturas.DAL
                             {
                                 var item = new AssinaturaItemDb
                                 {
-                                    Id_Assinatura = dr.GetInt32(dr.GetOrdinal("id_assinatura")),
+                                    Id_Assinatura = Convert.ToInt32(dr["id_assinatura"]),
                                     Descricao = dr["descricao"].ToString(),
-                                    Ciclos = dr.GetInt32(dr.GetOrdinal("ciclos")),
-                                    Quant = dr.GetInt32(dr.GetOrdinal("quant")),
+                                    Ciclos = Convert.ToInt32(dr["ciclos"]),
+                                    Quant = Convert.ToInt32(dr["quant"]),
                                     Status = dr["status"].ToString(),
-                                    Id = dr.GetInt32(dr.GetOrdinal("id")),
+                                    Id = Convert.ToInt32(dr["id"]),
                                     Id_Api = dr["id_api"].ToString()
                                 };
 

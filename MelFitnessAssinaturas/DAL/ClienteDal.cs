@@ -28,8 +28,8 @@ namespace MelFitnessAssinaturas.DAL
 
                 sql.Append("select cli.cod_cli, cli.nome, cli.email, cli.cpf,");
                 sql.Append("case when cli.sexo = 1 then 'male' else 'famale' end as sexo, cli.data_nasc,");
-                sql.Append("cli.endereco as address_1, cli.bairro as address_2, cli.cep, cid.cid_nome as cidade,");
-                sql.Append("cid.uf_sigla as uf, cli.fone1, cli.fone2, cli.id_api, cli.status_api from cad_clientes cli ");
+                sql.Append("cli.endereco as address_1, cli.bairro as address_2, cli.bairro, cli.cep, cid.cid_nome as cidade,");
+                sql.Append("cid.uf_sigla as uf, cli.fone1, cli.fone2, cli.id_api from cad_clientes cli ");
                 sql.Append("left join cad_cidade cid on cid.cid_codigo = cli.cid_codigo ");
                 sql.Append("where cli.cod_cli = @codCli");
 
@@ -60,8 +60,7 @@ namespace MelFitnessAssinaturas.DAL
                                     Uf = dr["uf"].ToString(),
                                     Fone1 = dr["fone1"].ToString(),
                                     Fone2 = dr["fone2"].ToString(),
-                                    Id_Api = dr["id_api"].ToString(),
-                                    Status_Api = dr["status_api"].ToString()
+                                    Id_Api = dr["id_api"].ToString()                                   
                                 };
 
                             }

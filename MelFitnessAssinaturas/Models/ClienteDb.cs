@@ -16,6 +16,5 @@
         public string Fone1 { get; set; }
         public string Fone2 { get; set; }
         public string Id_Api { get; set; }
-        public string Status_Api { get; set; }
     }
 }

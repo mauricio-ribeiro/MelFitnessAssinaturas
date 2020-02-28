@@ -68,36 +68,16 @@ namespace MelFitnessAssinaturas
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            dgvDadosLog.AutoGenerateColumns = false;
-            CarregaComboTipo();
-            _timer.Start();
-            
-            var logApiMundipaggController = new LogSyncController();
-
-            var logApiMundipagg = new LogSync
-            {
-                DtEvento = DateTime.Now,
-                Tipo = TipoLogEnum.Cl,
-                Descricao = "Novo cadastro de cliente",
-                NomeCliente = "Bianca Milena Maria Gomes",
-                IdApi = "xxxx",
-                Valor = 250.50M,
-                DtDocumento = DateTime.Now
-            };
-
             try
             {
-
-                logApiMundipaggController.Incluir(logApiMundipagg);
-
+                dgvDadosLog.AutoGenerateColumns = false;
+                CarregaComboTipo();
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Data["MensagemCustomizada"] + Environment.NewLine + Environment.NewLine +
                                 @"Mensagem original: " + ex.Message, @"Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-
-
         }
 
         private void abrir_Click(object sender, EventArgs e)
@@ -250,6 +230,11 @@ namespace MelFitnessAssinaturas
                 this.WindowState = FormWindowState.Minimized;
                 notifyIcon1.Visible = true;
             }
+        }
+
+        private void menuStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+
         }
     }
 }

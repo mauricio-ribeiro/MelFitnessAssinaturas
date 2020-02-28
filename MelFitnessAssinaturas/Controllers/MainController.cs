@@ -9,18 +9,20 @@ namespace MelFitnessAssinaturas.Controllers
         
         private AssinaturaController AssinaturaCtrl = new AssinaturaController();
         private ClienteController ClienteCtrl = new ClienteController();
+        private Scheduler tarefa_1;
 
         public void IniciaRelogioAssinatura()
         {
-            var tarefa_1 = new Scheduler(tempo =>
+            tarefa_1 = new Scheduler(tempo =>
             {
-                Console.WriteLine(@"Verificando evntos");
+                Console.WriteLine(@"Verificando eventos");
                 VerificaEventos();
             });
 
             tarefa_1.ID = "verificarEventos";
-            tarefa_1.Frequencia = new TimeSpan(0, 0, 30);
-            tarefa_1.StartWithDelay(null, new TimeSpan(0, 0, 30));
+            tarefa_1.Frequencia = new TimeSpan(0, 0, 10);
+            tarefa_1.StartWithDelay(null, new TimeSpan(0, 0, 5));
+            tarefa_1.MaxExec = 1;
         }
 
         private void VerificaEventos()

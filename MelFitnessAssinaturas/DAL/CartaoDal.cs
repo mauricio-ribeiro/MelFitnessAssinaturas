@@ -25,7 +25,7 @@ namespace MelFitnessAssinaturas.DAL
 
                 sql.Append("select c.cod_cli, c.numero_cartao, c.bandeira, c.cpf,");
                 sql.Append("c.cvc, c.val_mes, c.val_ano, c.status, c.id, c.id_api from cad_clientes_cartao c ");
-                sql.Append("where cli.cod_cli = @codCartao;");
+                sql.Append("where c.id = @codCartao;");
 
 
                 using (var conn = ConexaoBd.GetConnection())
@@ -41,15 +41,15 @@ namespace MelFitnessAssinaturas.DAL
                             {
                                 cartao = new CartaoDb
                                 {
-                                    Cod_Cli = dr.GetInt32(dr.GetOrdinal("cod_cli")),
+                                    Cod_Cli = Convert.ToInt32(dr["cod_cli"]),
                                     Numero_Cartao = dr["numero_cartao"].ToString(),
                                     Bandeira = dr["bandeira"].ToString(),
                                     Cpf = dr["cpf"].ToString(),
                                     Cvc = dr["cvc"].ToString(),
-                                    Val_Mes = dr.GetInt32(dr.GetOrdinal("val_mes")),
-                                    Val_Ano = dr.GetInt32(dr.GetOrdinal("val_ano")),
+                                    Val_Mes = Convert.ToInt32(dr["val_mes"]),
+                                    Val_Ano = Convert.ToInt32(dr["val_ano"]),
                                     Status = dr["status"].ToString(),
-                                    Id = dr.GetInt32(dr.GetOrdinal("id")),
+                                    Id = Convert.ToInt32(dr["id"]),
                                     Id_Api = dr["id_api"].ToString()
                                 };
                             }

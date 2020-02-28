@@ -1,0 +1,5 @@
+Exception: System.IndexOutOfRangeException: intervalo
+   em System.Data.ProviderBase.FieldNameLookup.GetOrdinal(String fieldName)
+   em System.Data.SqlClient.SqlDataReader.GetOrdinal(String name)
+   em System.Data.SqlClient.SqlDataReader.get_Item(String name)
+   em MelFitnessAssinaturas.DAL.AssinaturaDal.GetAssinaturaDb(String _id) na F:\Projetos Freela\MelFitnessAssinaturas\MelFitnessAssinaturas\DAL\AssinaturaDal.cs:linha 212

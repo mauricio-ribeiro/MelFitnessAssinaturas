@@ -1,4 +1,5 @@
 ﻿using MelFitnessAssinaturas.Models;
+using MelFitnessAssinaturas.Singletons;
 using MelFitnessAssinaturas.Util;
 using System;
 
@@ -23,8 +24,9 @@ namespace MelFitnessAssinaturas.Controllers
             };
 
             connectionString = connectionStringController.MontaConnectionString(config);
+            SistemaSingleton.Instancia.TokenApi = config.TokenApi;
 
-            if (!connectionStringController.TestConnectionString(connectionString))
+            if (!connectionStringController.TestConnectionString(connectionString) || String.IsNullOrEmpty(config.TokenApi))
             {
                 new FrmConfigConexaoBanco().ShowDialog();
                 Environment.Exit(0);

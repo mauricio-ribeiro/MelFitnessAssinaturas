@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using MelFitnessAssinaturas.Singletons;
 using MundiAPI.PCL;
 using MundiAPI.PCL.Models;
 
@@ -20,7 +17,7 @@ namespace MelFitnessAssinaturas.DAL
             try
             {
                 // Secret key fornecida pela Mundipagg
-                string basicAuthUserName = "sk_test_4tdVXpseumRmqbo";
+                string basicAuthUserName = SistemaSingleton.Instancia.TokenApi;
                 // Senha em branco. Passando apenas a secret key
                 string basicAuthPassword = "";
 
