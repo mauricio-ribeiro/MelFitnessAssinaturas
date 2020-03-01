@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Text;
 using MelFitnessAssinaturas.Util;
+using MundiAPI.PCL.Models;
 
 namespace MelFitnessAssinaturas.DAL
 {
@@ -113,9 +114,74 @@ namespace MelFitnessAssinaturas.DAL
             }
         }
 
+        public void GravaIdApiListaItens(List<GetSubscriptionItemResponse> items, string _idAssinatura)
+        {
+            const string metodo = "GravaIdApiListaItens";
+
+            try
+            {
+
+                var sql = new StringBuilder();
+
+                sql.Append(" select id from rec_assinatura_item where descricao = @_nome and id_assinatura = @_id_assinatura");
+
+                foreach (var item in items)
+                {
+                    using (var conn = ConexaoBd.GetConnection())
+                    {
+                        using (var cmd = new SqlCommand(sql.ToString(), conn))
+                        {
+                            cmd.Parameters.Clear();
+                            cmd.Parameters.AddWithValue("@_nome", item.Description.Trim());
+                            cmd.Parameters.AddWithValue("@_id_assinatura", _idAssinatura);
+
+                            using (var dr = cmd.ExecuteReader())
+                            {
+                                while (dr.Read())
+                                {
+                                    ItemAssinaturaGravadaNaApiAtualizaBanco(dr["id"].ToString(), item.Id);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            catch (SqlException sqlException)
+            {
+
+                string strMensagem = "";
+                strMensagem = LogDatabaseErrorUtil.CreateErrorDatabaseMessage(sqlException);
+                LogDatabaseErrorUtil.LogFileWrite(strMensagem, metodo);
+
+                sqlException.Data["MensagemCustomizada"] = LogDatabaseErrorUtil.ValidateDataBaseErrorNumber(sqlException.Number);
+                sqlException.Data["Metodo"] = metodo;
+                sqlException.Data["Classe"] = Camada;
+                sqlException.Data["Hora"] = DateTime.Now;
+
+                throw;
+
+            }
+            catch (Exception ex)
+            {
+
+                string strMensagem = "";
+
+                strMensagem = LogDatabaseErrorUtil.CreateErrorMessage(ex);
+                LogDatabaseErrorUtil.LogFileWrite(strMensagem, metodo);
+
+                ex.Data["MensagemCustomizada"] = "Ocorreu um erro ao tentar executar a operação.";
+                ex.Data["Metodo"] = metodo;
+                ex.Data["Classe"] = Camada;
+                ex.Data["Hora"] = DateTime.Now;
+
+                throw;
+
+            }
+        }
+
         public int ItemAssinaturaGravadaNaApiAtualizaBanco(string _code, string _id_api)
         {
-            const string metodo = "GetItensAssinatura";
+            const string metodo = "ItemAssinaturaGravadaNaApiAtualizaBanco";
 
             try
             {
@@ -131,7 +197,7 @@ namespace MelFitnessAssinaturas.DAL
                     {
                         cmd.Parameters.Clear();
                         cmd.Parameters.AddWithValue("@id", _code);
-                        cmd.Parameters.AddWithValue("@_id_api", _code);
+                        cmd.Parameters.AddWithValue("@_id_api", _id_api);
                         rowsAffected = cmd.ExecuteNonQuery();
                     }
                 }
@@ -366,7 +432,7 @@ namespace MelFitnessAssinaturas.DAL
 
                 var sql = new StringBuilder();
 
-                sql.Append("select i.id, i.id_assinatura, i.descricao, i.ciclos, i.quant, i.status, i.id_api from rec_assinatura_item i ");
+                sql.Append("select i.id, i.id_assinatura, i.descricao, i.ciclos, i.quant, i.valor, i.status, i.id_api from rec_assinatura_item i ");
                 sql.Append("where i.id = @id");
 
                 using (var conn = ConexaoBd.GetConnection())
@@ -378,13 +444,17 @@ namespace MelFitnessAssinaturas.DAL
 
                         using (var dr = cmd.ExecuteReader())
                         {
-                            item.Id = dr.GetInt32(dr.GetOrdinal("id"));
-                            item.Id_Assinatura = dr.GetInt32(dr.GetOrdinal("id_assinatura"));
-                            item.Descricao = dr["descricao"].ToString();
-                            item.Ciclos = dr.GetInt32(dr.GetOrdinal("ciclos"));
-                            item.Quant = dr.GetInt32(dr.GetOrdinal("quant"));
-                            item.Status = dr["status"].ToString();
-                            item.Id_Api = dr["id_api"].ToString();
+                            while (dr.Read())
+                            {
+                                item.Id = Convert.ToInt32(dr["id"]);
+                                item.Id_Assinatura = Convert.ToInt32(dr["id_assinatura"]);
+                                item.Descricao = dr["descricao"].ToString();
+                                item.Ciclos = Convert.ToInt32(dr["ciclos"]);
+                                item.Quant = Convert.ToInt32(dr["quant"]);
+                                item.Status = dr["status"].ToString();
+                                item.Id_Api = dr["id_api"].ToString();
+                                item.Valor = Convert.ToDouble(dr["valor"]);
+                            }
                         }
                     }
                 }

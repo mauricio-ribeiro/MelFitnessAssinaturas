@@ -52,6 +52,8 @@ namespace MelFitnessAssinaturas.DAL
 
             assinaturaDal.AssinaturaGravadaNaApiAtualizaBanco(assinaturaApi.Metadata["id"], response.Id);
 
+            assinaturaDal.GravaIdApiListaItens(response.Items, assinaturaApi.Metadata["id"]);
+
             return response.Id;
         }
 
@@ -133,7 +135,7 @@ namespace MelFitnessAssinaturas.DAL
             throw new NotImplementedException();
         }
 
-        public void AlteraDataFaturamentoAssinatura(string id_Api, int dias)
+        public void AlteraDataFaturamentoAssinatura(AssinaturaDb assinatura)
         {
             try
             {
@@ -146,10 +148,10 @@ namespace MelFitnessAssinaturas.DAL
 
                 var request = new UpdateSubscriptionBillingDateRequest
                 {
-                    NextBillingAt = DateTime.UtcNow.AddDays(dias)
+                    NextBillingAt = Convert.ToDateTime(assinatura.Dia_Cobranca)
                 };
 
-                client.Subscriptions.UpdateSubscriptionBillingDate(id_Api, request);
+                client.Subscriptions.UpdateSubscriptionBillingDate(assinatura.Id_Api, request);
             }
             catch (Exception ex)
             {

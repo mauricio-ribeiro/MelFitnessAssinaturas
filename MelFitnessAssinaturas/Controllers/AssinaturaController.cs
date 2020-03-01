@@ -25,14 +25,14 @@ namespace MelFitnessAssinaturas.Controllers
                 var id_api = assinaturaApi.GravaAssinaturaApi(assinaturaModelApi);
 
                 var log = new LogSyncController();
-                //log.Incluir(new LogSync()
-                //{
-                //    Descricao = $"Assinatura {NovaAssinatura.Texto_Fatura} gravada",
-                //    DtEvento = DateTime.Now,
-                //    NomeCliente = NovaAssinatura.Cliente.Nome,
-                //    Tipo = Enums.TipoLogEnum.As,
-                //    IdApi = id_api
-                //});
+                log.Incluir(new LogSync()
+                {
+                    Descricao = $"Assinatura {NovaAssinatura.Texto_Fatura} gravada",
+                    DtEvento = DateTime.Now,
+                    NomeCliente = NovaAssinatura.Cliente.Nome,
+                    Tipo = Enums.TipoLogEnum.As,
+                    IdApi = id_api
+                });
 
                 return true;
 
@@ -73,12 +73,12 @@ namespace MelFitnessAssinaturas.Controllers
             }
         }
 
-        public void AlterarDataFaturameto(string idTabela, int dias)
+        public void AlterarDataFaturameto(string idTabela)
         {
             try
             {
                 var assinaturaDb = assinaturaDal.GetAssinaturaDb(idTabela);
-                assinaturaApi.AlteraDataFaturamentoAssinatura(assinaturaDb.Id_Api, dias);
+                assinaturaApi.AlteraDataFaturamentoAssinatura(assinaturaDb);
             }
             catch (Exception ex)
             {
