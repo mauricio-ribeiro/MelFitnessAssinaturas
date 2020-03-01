@@ -191,10 +191,11 @@ namespace MelFitnessAssinaturas.DAL
 
                 var sql = new StringBuilder();
 
-                sql.Append("select a.id, a.dt_inicio, a.intervalo, a.intervalo_quantidade,");
-                sql.Append("a.dia_cobranca, a.quant_parcelas, a.texto_fatura, a.valor_minimo, a.status,");
-                sql.Append("a.id_cliente, a.id_cartao from rec_assinatura a ");
-                sql.Append("where a.id = @id;");
+                sql.Append(" select a.id, a.dt_inicio, a.intervalo, a.intervalo_quantidade, ");
+                sql.Append(" a.dia_cobranca, a.quant_parcelas, a.texto_fatura, a.valor_minimo, a.status, ");
+                sql.Append(" a.id_cliente, a.id_cartao, a.id_api ");
+                sql.Append(" from rec_assinatura a ");
+                sql.Append(" where a.id = @id ");
 
                 using (var conn = ConexaoBd.GetConnection())
                 {
@@ -218,6 +219,7 @@ namespace MelFitnessAssinaturas.DAL
                                 assinatura.Status = dr["status"].ToString();
                                 assinatura.Cliente = clienteDal.GetClienteDb(dr["id_cliente"].ToString());
                                 assinatura.MeioPagamento = meioPagamentoDal.GetCartaoDb(dr["id_cartao"].ToString());
+                                assinatura.Id_Api = dr["id_api"].ToString();
 
                                 // popular o model com os itens da assinatura . Pode colocar aqui ou em um método privado
                                 assinatura.ItensAssinatura = GetItensAssinatura(assinatura.Id);
@@ -448,7 +450,7 @@ namespace MelFitnessAssinaturas.DAL
                     {
                         cmd.Parameters.Clear();
                         cmd.Parameters.AddWithValue("@id", _code);
-                        cmd.Parameters.AddWithValue("@_id_api", _code);
+                        cmd.Parameters.AddWithValue("@_id_api", _id_api);
                         rowsAffected = cmd.ExecuteNonQuery();
                     }
                 }

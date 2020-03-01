@@ -25,8 +25,8 @@ namespace MelFitnessAssinaturas.DAL
 
                 var sql = new StringBuilder();
 
-                sql.Append("INSERT INTO rec_log_sync (dt_evento,tipo,descricao,cliente,id_api,valor,dt_documento) VALUES ");
-                sql.Append("(@dt_evento,@tipo,@descricao,@cliente,@id_api,@valor,@dt_documento);");
+                sql.Append("INSERT INTO rec_log_sync (dt_evento,tipo,descricao,cliente,id_api,valor) VALUES ");
+                sql.Append("(@dt_evento,@tipo,@descricao,@cliente,@id_api,@valor);");
                 
                 using (var conn = ConexaoBd.GetConnection())
                 {
@@ -39,7 +39,6 @@ namespace MelFitnessAssinaturas.DAL
                         cmd.Parameters.AddWithValue("@cliente", entidade.NomeCliente);
                         cmd.Parameters.AddWithValue("@id_api", entidade.IdApi);
                         cmd.Parameters.AddWithValue("@valor", entidade.Valor);
-                        cmd.Parameters.AddWithValue("@dt_documento", entidade.DtDocumento);
                         cmd.ExecuteNonQuery();
                     }
                 }
@@ -95,7 +94,7 @@ namespace MelFitnessAssinaturas.DAL
 
                 var sql = new StringBuilder();
 
-                sql.Append("SELECT dt_evento,tipo,descricao,cliente,id_api,valor,dt_documento FROM rec_log_sync ");
+                sql.Append("SELECT dt_evento,tipo,descricao,cliente,id_api,valor FROM rec_log_sync ");
                 sql.Append("WHERE CAST(dt_evento as date) BETWEEN @strDtInicial AND @strDtFinal AND cliente LIKE @cliente AND tipo LIKE @tipo;");
 
 
@@ -123,8 +122,7 @@ namespace MelFitnessAssinaturas.DAL
                                         Descricao = Convert.ToString(dr["descricao"]),
                                         NomeCliente = Convert.ToString(dr["cliente"]),
                                         IdApi = Convert.ToString(dr["id_api"]),
-                                        Valor = Convert.ToDecimal(dr["valor"]),
-                                        DtDocumento = Convert.ToDateTime(dr["dt_documento"])
+                                        Valor = Convert.ToDecimal(dr["valor"])
                                     };
 
                                     listaLogApi.Add(logApiMundipagg);

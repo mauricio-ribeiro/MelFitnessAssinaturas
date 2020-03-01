@@ -32,13 +32,6 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmPrincipal));
             this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
             this.dgvDadosLog = new System.Windows.Forms.DataGridView();
-            this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column7 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dtInicial = new System.Windows.Forms.DateTimePicker();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
@@ -51,6 +44,12 @@
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.menuSistema = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItemConfiguracao = new System.Windows.Forms.ToolStripMenuItem();
+            this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dgvDadosLog)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -73,8 +72,7 @@
             this.Column2,
             this.Column3,
             this.Column5,
-            this.Column6,
-            this.Column7});
+            this.Column6});
             this.dgvDadosLog.Location = new System.Drawing.Point(12, 84);
             this.dgvDadosLog.MultiSelect = false;
             this.dgvDadosLog.Name = "dgvDadosLog";
@@ -84,59 +82,6 @@
             this.dgvDadosLog.Size = new System.Drawing.Size(907, 377);
             this.dgvDadosLog.TabIndex = 11;
             this.dgvDadosLog.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dgvDadosLog_CellFormatting);
-            // 
-            // Column4
-            // 
-            this.Column4.DataPropertyName = "NomeCliente";
-            this.Column4.HeaderText = "Cliente";
-            this.Column4.Name = "Column4";
-            this.Column4.ReadOnly = true;
-            this.Column4.Width = 150;
-            // 
-            // Column1
-            // 
-            this.Column1.DataPropertyName = "DtEvento";
-            this.Column1.HeaderText = "Dt.Evento";
-            this.Column1.Name = "Column1";
-            this.Column1.ReadOnly = true;
-            this.Column1.Width = 80;
-            // 
-            // Column2
-            // 
-            this.Column2.DataPropertyName = "DescricaoTipo";
-            this.Column2.HeaderText = "Tipo";
-            this.Column2.Name = "Column2";
-            this.Column2.ReadOnly = true;
-            // 
-            // Column3
-            // 
-            this.Column3.DataPropertyName = "Descricao";
-            this.Column3.HeaderText = "Descrição";
-            this.Column3.Name = "Column3";
-            this.Column3.ReadOnly = true;
-            this.Column3.Width = 250;
-            // 
-            // Column5
-            // 
-            this.Column5.DataPropertyName = "IdApi";
-            this.Column5.HeaderText = "Cód.API";
-            this.Column5.Name = "Column5";
-            this.Column5.ReadOnly = true;
-            // 
-            // Column6
-            // 
-            this.Column6.DataPropertyName = "Valor";
-            this.Column6.HeaderText = "Valor (R$)";
-            this.Column6.Name = "Column6";
-            this.Column6.ReadOnly = true;
-            // 
-            // Column7
-            // 
-            this.Column7.DataPropertyName = "DtDocumento";
-            this.Column7.HeaderText = "Dt.Documento";
-            this.Column7.Name = "Column7";
-            this.Column7.ReadOnly = true;
-            this.Column7.Width = 80;
             // 
             // dtInicial
             // 
@@ -249,6 +194,51 @@
             this.menuItemConfiguracao.Text = "Configuração";
             this.menuItemConfiguracao.Click += new System.EventHandler(this.menuItemConfiguracao_Click);
             // 
+            // Column4
+            // 
+            this.Column4.DataPropertyName = "NomeCliente";
+            this.Column4.HeaderText = "Cliente";
+            this.Column4.Name = "Column4";
+            this.Column4.ReadOnly = true;
+            this.Column4.Width = 150;
+            // 
+            // Column1
+            // 
+            this.Column1.DataPropertyName = "DtEvento";
+            this.Column1.HeaderText = "Dt.Evento";
+            this.Column1.Name = "Column1";
+            this.Column1.ReadOnly = true;
+            this.Column1.Width = 80;
+            // 
+            // Column2
+            // 
+            this.Column2.DataPropertyName = "DescricaoTipo";
+            this.Column2.HeaderText = "Tipo";
+            this.Column2.Name = "Column2";
+            this.Column2.ReadOnly = true;
+            // 
+            // Column3
+            // 
+            this.Column3.DataPropertyName = "Descricao";
+            this.Column3.HeaderText = "Descrição";
+            this.Column3.Name = "Column3";
+            this.Column3.ReadOnly = true;
+            this.Column3.Width = 250;
+            // 
+            // Column5
+            // 
+            this.Column5.DataPropertyName = "IdApi";
+            this.Column5.HeaderText = "Cód.API";
+            this.Column5.Name = "Column5";
+            this.Column5.ReadOnly = true;
+            // 
+            // Column6
+            // 
+            this.Column6.DataPropertyName = "Valor";
+            this.Column6.HeaderText = "Valor (R$)";
+            this.Column6.Name = "Column6";
+            this.Column6.ReadOnly = true;
+            // 
             // FrmPrincipal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -294,16 +284,15 @@
         private System.Windows.Forms.Button btnPesquisaLog;
         private System.Windows.Forms.TextBox txtNomeCliente;
         private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.MenuStrip menuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem menuSistema;
+        private System.Windows.Forms.ToolStripMenuItem menuItemConfiguracao;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column4;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column3;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column5;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column6;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column7;
-        private System.Windows.Forms.MenuStrip menuStrip1;
-        private System.Windows.Forms.ToolStripMenuItem menuSistema;
-        private System.Windows.Forms.ToolStripMenuItem menuItemConfiguracao;
     }
 }
 

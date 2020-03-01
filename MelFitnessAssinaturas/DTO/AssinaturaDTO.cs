@@ -34,13 +34,13 @@ namespace MelFitnessAssinaturas.DTO
                 };
 
                 // por enquanto não vai trabalhar com descontos
-                var discounts = new List<CreateDiscountRequest> {
-                new CreateDiscountRequest {
-                Cycles = 1,
-                Value = 0,
-                DiscountType = "percentage"
-                }
-            };
+                //var discounts = new List<CreateDiscountRequest> {
+                //new CreateDiscountRequest {
+                //Cycles = 1,
+                //Value = 0,
+                //DiscountType = "percentage"
+                //}
+            //};
 
                 var items = new List<CreateSubscriptionItemRequest>();
 
@@ -70,7 +70,8 @@ namespace MelFitnessAssinaturas.DTO
                     Currency = "BRL",
                     Interval = assinatura.Intervalo,
                     IntervalCount = assinatura.Intervalo_Quantidade,
-                    BillingType = "prepaid",
+                    BillingType = "exact_day",
+                    BillingDay = assinatura.Dia_Cobranca,
                     Installments = assinatura.Quant_Parcelas,
                     Customer = new CreateCustomerRequest
                     {
@@ -78,7 +79,7 @@ namespace MelFitnessAssinaturas.DTO
                         Email = assinatura.Cliente.Email
                     },
                     Card = card,
-                    Discounts = discounts,
+                   // Discounts = discounts,
                     Items = items,
                     Metadata = metadata
                 };

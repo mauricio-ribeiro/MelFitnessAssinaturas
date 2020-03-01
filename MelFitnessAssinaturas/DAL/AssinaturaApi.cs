@@ -50,7 +50,7 @@ namespace MelFitnessAssinaturas.DAL
 
             var response = client.Subscriptions.CreateSubscription(assinaturaApi);
 
-            assinaturaDal.AssinaturaGravadaNaApiAtualizaBanco(assinaturaApi.Metadata["Id"], response.Id);
+            assinaturaDal.AssinaturaGravadaNaApiAtualizaBanco(assinaturaApi.Metadata["id"], response.Id);
 
             return response.Id;
         }

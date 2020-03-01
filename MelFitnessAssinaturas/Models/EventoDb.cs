@@ -10,5 +10,6 @@ namespace MelFitnessAssinaturas.Models
         public string IdTabela { get; set; }
         public string CodAux1 { get; set; }
         public string CodAux2 { get; set; }
+        public string Id_Guid { get; set; }
     }
 }
