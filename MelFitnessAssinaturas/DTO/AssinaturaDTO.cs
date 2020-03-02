@@ -129,7 +129,8 @@ namespace MelFitnessAssinaturas.DTO
                     PricingScheme = new UpdatePricingSchemeRequest
                     {
                         Price = assinaturaItem.GetValor()
-                    }
+                    },
+                    Status = assinaturaItem.Status == "A" ? "active" : "inactive"
                 };
 
                 return item;

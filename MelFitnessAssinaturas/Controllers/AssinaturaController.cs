@@ -165,7 +165,7 @@ namespace MelFitnessAssinaturas.Controllers
                 var assinaturaItem = assinaturaDal.GetItemAssinatura(idTabela);
                 var assinatura = assinaturaDal.GetAssinaturaDb(assinaturaItem.Id_Assinatura.ToString());
 
-                assinaturaApi.ItemRemoverNaAssinatura(assinatura.Id_Api, assinaturaItem.Id_Api);
+                assinaturaApi.ItemRemoverNaAssinatura(assinatura.Id_Api, assinaturaItem);
 
                 var log = new LogSyncController();
                 log.Incluir(new LogSync()

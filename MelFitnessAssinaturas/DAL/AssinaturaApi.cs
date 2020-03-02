@@ -170,7 +170,7 @@ namespace MelFitnessAssinaturas.DAL
 
                 var client = new MundiAPIClient(basicAuthUserName, basicAuthPassword);
 
-                var response = client.Subscriptions.UpdateSubscriptionItem(assinaturaDb.Id_Api, assinaturaItemDb.Id.ToString(), assinaturaItemApi);
+                var response = client.Subscriptions.UpdateSubscriptionItem(assinaturaDb.Id_Api, assinaturaItemDb.Id_Api, assinaturaItemApi);
 
                 assinaturaDal.ItemAssinaturaGravadaNaApiAtualizaBanco(assinaturaItemDb.Id.ToString(), response.Id);
 
@@ -181,7 +181,7 @@ namespace MelFitnessAssinaturas.DAL
             }
         }
 
-        public void ItemRemoverNaAssinatura(string assinaturaId_api, string itemAssinatudaId_api)
+        public void ItemRemoverNaAssinatura(string assinaturaId_api, AssinaturaItemDb itemAssinatura)
         {
             try
             {
@@ -192,7 +192,9 @@ namespace MelFitnessAssinaturas.DAL
 
                 var client = new MundiAPIClient(basicAuthUserName, basicAuthPassword);
 
-                var response = client.Subscriptions.DeleteSubscriptionItem(assinaturaId_api, itemAssinatudaId_api);
+                var response = client.Subscriptions.DeleteSubscriptionItem(assinaturaId_api, itemAssinatura.Id_Api);
+
+                assinaturaDal.IntivaItemDeAssinaturaRemovido(itemAssinatura.Id.ToString());
             }
             catch (Exception ex)
             {

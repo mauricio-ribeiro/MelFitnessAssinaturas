@@ -189,7 +189,7 @@ namespace MelFitnessAssinaturas.DAL
                 var sql = new StringBuilder();
                 int rowsAffected;
 
-                sql.Append("update rec_assinatura_item set status = 'F', id_api = @_id_api where id = @id;");
+                sql.Append("update rec_assinatura_item set status = 'A', id_api = @_id_api where id = @id;");
 
                 using (var conn = ConexaoBd.GetConnection())
                 {
@@ -198,6 +198,64 @@ namespace MelFitnessAssinaturas.DAL
                         cmd.Parameters.Clear();
                         cmd.Parameters.AddWithValue("@id", _code);
                         cmd.Parameters.AddWithValue("@_id_api", _id_api);
+                        rowsAffected = cmd.ExecuteNonQuery();
+                    }
+                }
+
+                return rowsAffected;
+
+            }
+            catch (SqlException sqlException)
+            {
+
+                string strMensagem = "";
+                strMensagem = LogDatabaseErrorUtil.CreateErrorDatabaseMessage(sqlException);
+                LogDatabaseErrorUtil.LogFileWrite(strMensagem, metodo);
+
+                sqlException.Data["MensagemCustomizada"] = LogDatabaseErrorUtil.ValidateDataBaseErrorNumber(sqlException.Number);
+                sqlException.Data["Metodo"] = metodo;
+                sqlException.Data["Classe"] = Camada;
+                sqlException.Data["Hora"] = DateTime.Now;
+
+                throw;
+
+            }
+            catch (Exception ex)
+            {
+
+                string strMensagem = "";
+
+                strMensagem = LogDatabaseErrorUtil.CreateErrorMessage(ex);
+                LogDatabaseErrorUtil.LogFileWrite(strMensagem, metodo);
+
+                ex.Data["MensagemCustomizada"] = "Ocorreu um erro ao tentar executar a operação.";
+                ex.Data["Metodo"] = metodo;
+                ex.Data["Classe"] = Camada;
+                ex.Data["Hora"] = DateTime.Now;
+
+                throw;
+
+            }
+        }
+
+        public int IntivaItemDeAssinaturaRemovido(string _code)
+        {
+            const string metodo = "IntivaItemDeAssinaturaRemovido";
+
+            try
+            {
+
+                var sql = new StringBuilder();
+                int rowsAffected;
+
+                sql.Append("update rec_assinatura_item set status = 'I' where id = @id;");
+
+                using (var conn = ConexaoBd.GetConnection())
+                {
+                    using (var cmd = new SqlCommand(sql.ToString(), conn))
+                    {
+                        cmd.Parameters.Clear();
+                        cmd.Parameters.AddWithValue("@id", _code);
                         rowsAffected = cmd.ExecuteNonQuery();
                     }
                 }
