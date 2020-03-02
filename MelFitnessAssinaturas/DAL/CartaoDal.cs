@@ -33,7 +33,7 @@ namespace MelFitnessAssinaturas.DAL
                     using (var cmd = new SqlCommand(sql.ToString(), conn))
                     {
                         cmd.Parameters.Clear();
-                        cmd.Parameters.AddWithValue("@codCartao",id);
+                        cmd.Parameters.AddWithValue("@codCartao", id);
 
                         using (var dr = cmd.ExecuteReader())
                         {
@@ -92,72 +92,139 @@ namespace MelFitnessAssinaturas.DAL
             }
         }
 
-            /// <summary>
-            /// Ao gravar/atualizar uma assinatura na API atualizar o status e a referência do id da API no banco de dados
-            /// </summary>
-            /// <param name="_code">codigo ID do cartao no banco</param>
-            /// <param name="_id_api">Código de identificação devolvido pela API</param>
-            /// <returns>Número de linha atualizada</returns>
+        public string getCardByIdAssinatura(string _id)
+        {
+            const string metodo = "getCardByIdAssinatura";
+
+            try
+            {
+                var sql = new StringBuilder();
+                string idCartao = "";
+
+                sql.Append(" select id_cartao from rec_assinatura where id = @_id");
+
+                using (var conn = ConexaoBd.GetConnection())
+                {
+                    using (var cmd = new SqlCommand(sql.ToString(), conn))
+                    {
+                        cmd.Parameters.Clear();
+                        cmd.Parameters.AddWithValue("@_id", _id);
+
+                        using (var dr = cmd.ExecuteReader())
+                        {
+                            while (dr.Read())
+                            {
+                                idCartao = dr["id_cartao"].ToString();
+                            }
+                        }
+                    }
+                }
+
+                if (String.IsNullOrEmpty(idCartao))
+                {
+                    throw new Exception("Cartão não encontrado");
+                }
+
+                return idCartao;
+            }
+            catch (SqlException sqlException)
+            {
+
+                string strMensagem = "";
+                strMensagem = LogDatabaseErrorUtil.CreateErrorDatabaseMessage(sqlException);
+                LogDatabaseErrorUtil.LogFileWrite(strMensagem, metodo);
+
+                sqlException.Data["MensagemCustomizada"] = LogDatabaseErrorUtil.ValidateDataBaseErrorNumber(sqlException.Number);
+                sqlException.Data["Metodo"] = metodo;
+                sqlException.Data["Classe"] = Camada;
+                sqlException.Data["Hora"] = DateTime.Now;
+
+                throw;
+
+            }
+            catch (Exception ex)
+            {
+
+                string strMensagem = "";
+
+                strMensagem = LogDatabaseErrorUtil.CreateErrorMessage(ex);
+                LogDatabaseErrorUtil.LogFileWrite(strMensagem, metodo);
+
+                ex.Data["MensagemCustomizada"] = "Ocorreu um erro ao tentar executar a operação.";
+                ex.Data["Metodo"] = metodo;
+                ex.Data["Classe"] = Camada;
+                ex.Data["Hora"] = DateTime.Now;
+
+                throw;
+
+            }
+        }
+
+        /// <summary>
+        /// Ao gravar/atualizar uma assinatura na API atualizar o status e a referência do id da API no banco de dados
+        /// </summary>
+        /// <param name="_code">codigo ID do cartao no banco</param>
+        /// <param name="_id_api">Código de identificação devolvido pela API</param>
+        /// <returns>Número de linha atualizada</returns>
         public int CartaoGravadoNaApiAtualizaBanco(string _code, string _id_api)
         {
 
-                const string metodo = "CartaoGravadoNaApiAtualizaBanco";
+            const string metodo = "CartaoGravadoNaApiAtualizaBanco";
 
-                try
+            try
+            {
+
+                var sql = new StringBuilder();
+                int rowsAffected;
+
+                sql.Append("update cad_clientes_cartao set id_api = @_id_api where id = @id;");
+
+                using (var conn = ConexaoBd.GetConnection())
                 {
-
-                    var sql = new StringBuilder();
-                    int rowsAffected;
-
-                    sql.Append("update cad_clientes_cartao set id_api = @_id_api where id = @id;");
-
-                    using (var conn = ConexaoBd.GetConnection())
+                    using (var cmd = new SqlCommand(sql.ToString(), conn))
                     {
-                        using (var cmd = new SqlCommand(sql.ToString(), conn))
-                        {
-                            cmd.Parameters.Clear();
-                            cmd.Parameters.AddWithValue("@id", _code);
-                            cmd.Parameters.AddWithValue("@_id_api", _id_api);
-                            cmd.Parameters.AddWithValue("@_id_api", _id_api);
-                            rowsAffected = cmd.ExecuteNonQuery();
-                        }
+                        cmd.Parameters.Clear();
+                        cmd.Parameters.AddWithValue("@id", _code);
+                        cmd.Parameters.AddWithValue("@_id_api", _id_api);
+                        rowsAffected = cmd.ExecuteNonQuery();
                     }
-
-                    return rowsAffected;
-
                 }
-                catch (SqlException sqlException)
-                {
 
-                    string strMensagem = "";
-                    strMensagem = LogDatabaseErrorUtil.CreateErrorDatabaseMessage(sqlException);
-                    LogDatabaseErrorUtil.LogFileWrite(strMensagem, metodo);
+                return rowsAffected;
 
-                    sqlException.Data["MensagemCustomizada"] = LogDatabaseErrorUtil.ValidateDataBaseErrorNumber(sqlException.Number);
-                    sqlException.Data["Metodo"] = metodo;
-                    sqlException.Data["Classe"] = Camada;
-                    sqlException.Data["Hora"] = DateTime.Now;
+            }
+            catch (SqlException sqlException)
+            {
 
-                    throw;
+                string strMensagem = "";
+                strMensagem = LogDatabaseErrorUtil.CreateErrorDatabaseMessage(sqlException);
+                LogDatabaseErrorUtil.LogFileWrite(strMensagem, metodo);
 
-                }
-                catch (Exception ex)
-                {
+                sqlException.Data["MensagemCustomizada"] = LogDatabaseErrorUtil.ValidateDataBaseErrorNumber(sqlException.Number);
+                sqlException.Data["Metodo"] = metodo;
+                sqlException.Data["Classe"] = Camada;
+                sqlException.Data["Hora"] = DateTime.Now;
 
-                    string strMensagem = "";
+                throw;
 
-                    strMensagem = LogDatabaseErrorUtil.CreateErrorMessage(ex);
-                    LogDatabaseErrorUtil.LogFileWrite(strMensagem, metodo);
+            }
+            catch (Exception ex)
+            {
 
-                    ex.Data["MensagemCustomizada"] = "Ocorreu um erro ao tentar executar a operação.";
-                    ex.Data["Metodo"] = metodo;
-                    ex.Data["Classe"] = Camada;
-                    ex.Data["Hora"] = DateTime.Now;
+                string strMensagem = "";
 
-                    throw;
+                strMensagem = LogDatabaseErrorUtil.CreateErrorMessage(ex);
+                LogDatabaseErrorUtil.LogFileWrite(strMensagem, metodo);
 
-                }
-            
+                ex.Data["MensagemCustomizada"] = "Ocorreu um erro ao tentar executar a operação.";
+                ex.Data["Metodo"] = metodo;
+                ex.Data["Classe"] = Camada;
+                ex.Data["Hora"] = DateTime.Now;
+
+                throw;
+
+            }
+
         }
     }
 }

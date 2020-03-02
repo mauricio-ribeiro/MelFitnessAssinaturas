@@ -30,6 +30,8 @@ namespace MelFitnessAssinaturas.DAL
                 };
 
                 var response = client.Subscriptions.CancelSubscription(subscrptionId, request);
+
+                assinaturaDal.AssinaturaCanceladaAtualizaStatus(response.Metadata["id"]);
             }
             catch (Exception ex)
             {
@@ -53,6 +55,10 @@ namespace MelFitnessAssinaturas.DAL
             assinaturaDal.AssinaturaGravadaNaApiAtualizaBanco(assinaturaApi.Metadata["id"], response.Id);
 
             assinaturaDal.GravaIdApiListaItens(response.Items, assinaturaApi.Metadata["id"]);
+
+            var cartaoDal = new CartaoDal();
+            var codCard = cartaoDal.getCardByIdAssinatura(assinaturaApi.Metadata["id"]);
+            cartaoDal.CartaoGravadoNaApiAtualizaBanco(codCard, response.Id);
 
             return response.Id;
         }
