@@ -105,6 +105,74 @@ namespace MelFitnessAssinaturas.DAL
 
         }
 
+        public string GetClienteByAssinatura(string _id)
+        {
+            const string metodo = "GetClienteByAssinatura";
+
+            try
+            {
+                var sql = new StringBuilder();
+                string idCliente = "";
+
+                sql.Append(" select id_cliente from rec_assinatura where id = @_id");
+
+                using (var conn = ConexaoBd.GetConnection())
+                {
+                    using (var cmd = new SqlCommand(sql.ToString(), conn))
+                    {
+                        cmd.Parameters.Clear();
+                        cmd.Parameters.AddWithValue("@_id", _id);
+
+                        using (var dr = cmd.ExecuteReader())
+                        {
+                            while (dr.Read())
+                            {
+                                idCliente = dr["id_cliente"].ToString();
+                            }
+                        }
+                    }
+                }
+
+                if (String.IsNullOrEmpty(idCliente))
+                {
+                    throw new Exception("Cliente não encontrado");
+                }
+
+                return idCliente;
+            }
+            catch (SqlException sqlException)
+            {
+
+                string strMensagem = "";
+                strMensagem = LogDatabaseErrorUtil.CreateErrorDatabaseMessage(sqlException);
+                LogDatabaseErrorUtil.LogFileWrite(strMensagem, metodo);
+
+                sqlException.Data["MensagemCustomizada"] = LogDatabaseErrorUtil.ValidateDataBaseErrorNumber(sqlException.Number);
+                sqlException.Data["Metodo"] = metodo;
+                sqlException.Data["Classe"] = Camada;
+                sqlException.Data["Hora"] = DateTime.Now;
+
+                throw;
+
+            }
+            catch (Exception ex)
+            {
+
+                string strMensagem = "";
+
+                strMensagem = LogDatabaseErrorUtil.CreateErrorMessage(ex);
+                LogDatabaseErrorUtil.LogFileWrite(strMensagem, metodo);
+
+                ex.Data["MensagemCustomizada"] = "Ocorreu um erro ao tentar executar a operação.";
+                ex.Data["Metodo"] = metodo;
+                ex.Data["Classe"] = Camada;
+                ex.Data["Hora"] = DateTime.Now;
+
+                throw;
+
+            }
+        }
+
         public List<CreateCustomerRequest> ListaClientes(string _statusCli)
         {
 
@@ -237,7 +305,7 @@ namespace MelFitnessAssinaturas.DAL
                 int rowsAffected;
                 var sql = new StringBuilder();
 
-                sql.Append("update cad_clientes set status_api = 'F', id_api = @_id_api ");
+                sql.Append("update cad_clientes set id_api = @_id_api ");
                 sql.Append("where cod_cli = @codigo ");
 
 

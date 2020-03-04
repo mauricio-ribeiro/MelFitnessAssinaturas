@@ -23,7 +23,7 @@ namespace MelFitnessAssinaturas.Controllers
             tarefa_1.ID = "verificarEventos";
             tarefa_1.Frequencia = new TimeSpan(0, 0, 10);
             tarefa_1.StartWithDelay(null, new TimeSpan(0, 0, 5));
-            tarefa_1.MaxExec = 1;
+            tarefa_1.MaxExec = 1;// em produção deve REMOVER essa linha
         }
 
         private void VerificaEventos()

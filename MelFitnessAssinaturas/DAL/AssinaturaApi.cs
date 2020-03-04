@@ -53,12 +53,16 @@ namespace MelFitnessAssinaturas.DAL
             var response = client.Subscriptions.CreateSubscription(assinaturaApi);
 
             assinaturaDal.AssinaturaGravadaNaApiAtualizaBanco(assinaturaApi.Metadata["id"], response.Id);
-
+            
             assinaturaDal.GravaIdApiListaItens(response.Items, assinaturaApi.Metadata["id"]);
+
+            var clienteDal = new ClienteDal();
+            var codCliente = clienteDal.GetClienteByAssinatura(assinaturaApi.Metadata["id"]);
+            clienteDal.ClienteGravado(codCliente, response.Customer.Id);
 
             var cartaoDal = new CartaoDal();
             var codCard = cartaoDal.getCardByIdAssinatura(assinaturaApi.Metadata["id"]);
-            cartaoDal.CartaoGravadoNaApiAtualizaBanco(codCard, response.Id);
+            cartaoDal.CartaoGravadoNaApiAtualizaBanco(codCard, response.Card.Id);
 
             return response.Id;
         }

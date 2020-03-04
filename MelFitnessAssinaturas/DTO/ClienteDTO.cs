@@ -2,9 +2,6 @@
 using MundiAPI.PCL.Models;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MelFitnessAssinaturas.DTO
 {
@@ -20,7 +17,32 @@ namespace MelFitnessAssinaturas.DTO
                     Code = clienteDb.Codigo,
                     Document = clienteDb.Documento,
                     Email = clienteDb.Email,
-                    Gender = clienteDb.Sexo
+                    Gender = clienteDb.Sexo,
+                    Type = "individual",
+                    Address = new CreateAddressRequest
+                    {
+                        Line1 = clienteDb.Endereco_1,
+                        Line2 = clienteDb.Endereco_2,
+                        ZipCode = clienteDb.Cep,
+                        City = clienteDb.Cidade,
+                        State = clienteDb.Uf,
+                        Country = "BR"
+                    },
+                    Phones = new CreatePhonesRequest
+                    {
+                        HomePhone = new CreatePhoneRequest
+                        {
+                            AreaCode = clienteDb.Fone1.Substring(0, 2),
+                            CountryCode = "55",
+                            Number = clienteDb.Fone1.Substring(3, clienteDb.Fone1.Length - 3)
+                        },
+                        MobilePhone = new CreatePhoneRequest
+                        {
+                            AreaCode = clienteDb.Fone2.Substring(0, 2),
+                            CountryCode = "55",
+                            Number = clienteDb.Fone2.Substring(3, clienteDb.Fone2.Length - 3)
+                        },
+                    }
                 };
                 return updateCustomer;
             }

@@ -24,6 +24,7 @@ namespace MelFitnessAssinaturas.DAL
                 var client = new MundiAPIClient(basicAuthUserName, basicAuthPassword);
 
                 var response = client.Customers.UpdateCustomer(id_api, cliApi);
+
             }
             catch (Exception ex)
             {
