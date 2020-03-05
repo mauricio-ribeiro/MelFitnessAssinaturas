@@ -81,7 +81,7 @@ namespace MelFitnessAssinaturas.Controllers
                             ClienteCtrl.AtualizaClienteApi(evento.IdTabela);
                             EventoDAL.MarcaRegistroProcessadoComo("P", evento.Id_Guid);
                             break;
-                        // Um item ( atividade ) foi INCLUÍDO na assinatura. Deve atualiar a API.
+                        // Um item ( atividade ) vai ser INCLUÍDO na assinatura. Deve atualiar a API.
                         case "IA_I":
                             Console.WriteLine(@"Incluindo um item na assinatura do cliente");
                             AssinaturaCtrl.IncluirItemApi(evento.IdTabela);
