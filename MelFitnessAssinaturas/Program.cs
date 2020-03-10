@@ -1,4 +1,5 @@
 ﻿using MelFitnessAssinaturas.Controllers;
+using MelFitnessAssinaturas.DAL;
 using System;
 using System.Windows.Forms;
 
@@ -27,7 +28,10 @@ namespace MelFitnessAssinaturas
                 _verificaDiretorioLogError.SetProximaVerificacao(_verificaAcessarApi);
                 _verificaConfigIni.ProcessaVerificacao();
 
-                new MainController().IniciaRelogioAssinatura();
+                new EventoDal().ConfigSql();
+                MainController mainCtrl = new MainController();
+                mainCtrl.StarFileWatch();
+                //mainCtrl.IniciaRelogioAssinatura();
 
                 Application.Run(new FrmPrincipal());
             }

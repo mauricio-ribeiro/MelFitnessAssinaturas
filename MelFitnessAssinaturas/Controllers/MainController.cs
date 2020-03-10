@@ -1,6 +1,8 @@
 ﻿using MelFitnessAssinaturas.DAL;
 using MelFitnessAssinaturas.Util;
 using System;
+using System.IO;
+using System.Windows.Forms;
 
 namespace MelFitnessAssinaturas.Controllers
 {
@@ -11,6 +13,7 @@ namespace MelFitnessAssinaturas.Controllers
         private ClienteController ClienteCtrl = new ClienteController();
         private EventoDal EventoDAL = new EventoDal();
         private Scheduler tarefa_1;
+        private readonly string fileTrigger = "_sync.gat";
 
         public void IniciaRelogioAssinatura()
         {
@@ -25,6 +28,23 @@ namespace MelFitnessAssinaturas.Controllers
             tarefa_1.StartWithDelay(null, new TimeSpan(0, 0, 5));
             tarefa_1.MaxExec = 1;// em produção deve REMOVER essa linha
         }
+
+        public void StarFileWatch()
+        {
+            FileSystemWatcher fsw = new FileSystemWatcher();
+            fsw.Path = Application.StartupPath;
+            fsw.Filter = fileTrigger;
+            fsw.Created += FileSystemWatcher_Created;
+            fsw.EnableRaisingEvents = true;
+
+        }
+
+        private void FileSystemWatcher_Created(object sender, FileSystemEventArgs e)
+        {
+            VerificaEventos();
+            File.Delete(Application.StartupPath + "\\" + fileTrigger);
+        }
+
 
         private void VerificaEventos()
         {

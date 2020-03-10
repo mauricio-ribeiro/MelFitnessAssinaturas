@@ -84,6 +84,45 @@ namespace MelFitnessAssinaturas.DAL
             }
         }
 
+        public void ConfigSql()
+        {
+            var sql = new StringBuilder();
+
+            sql.Append("EXEC sp_configure 'show advanced options', 1;");
+            sql.Append("RECONFIGURE;");
+            sql.Append("EXEC sp_configure 'xp_cmdshell', 1;");
+            sql.Append("RECONFIGURE; ");
+
+            using (var conn = ConexaoBd.GetConnection())
+            {
+                using (var cmd = new SqlCommand(sql.ToString(), conn))
+                {
+                    cmd.ExecuteScalar();
+                }
+            }
+
+            sql.Clear();
+
+            sql.Append("CREATE TRIGGER SYNC_MUNDIPAG ON util_eventos_mundipagg ");
+            sql.Append("AFTER INSERT ");
+            sql.Append("AS ");
+            sql.Append("BEGIN ");
+            sql.Append("DECLARE @Text AS VARCHAR(100) ");
+            sql.Append("DECLARE @Cmd AS VARCHAR(100) ");
+            sql.Append("SET @Text = 'sync' ");
+            sql.Append("SET @Cmd = 'echo ' + @Text + ' > \"F:\\Projetos Freela\\MelFitnessAssinaturas\\MelFitnessAssinaturas\\bin\\Debug\\_sync.gat\" ");
+            sql.Append("EXECUTE Master.dbo.xp_CmdShell  @Cmd ");
+            sql.Append("END");
+
+            using (var conn = ConexaoBd.GetConnection())
+            {
+                using (var cmd = new SqlCommand(sql.ToString(), conn))
+                {
+                    cmd.ExecuteScalar();
+                }
+            }
+        }
+
         public int MarcaRegistroProcessadoComo(string _status, string _guid)
         {
 
