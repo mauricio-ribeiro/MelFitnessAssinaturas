@@ -32,6 +32,12 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmPrincipal));
             this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
             this.dgvDadosLog = new System.Windows.Forms.DataGridView();
+            this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dtInicial = new System.Windows.Forms.DateTimePicker();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
@@ -44,12 +50,8 @@
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.menuSistema = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItemConfiguracao = new System.Windows.Forms.ToolStripMenuItem();
-            this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.label1 = new System.Windows.Forms.Label();
+            this.lblTotalRegistros = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dgvDadosLog)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -65,6 +67,9 @@
             this.dgvDadosLog.AllowUserToAddRows = false;
             this.dgvDadosLog.AllowUserToDeleteRows = false;
             this.dgvDadosLog.AllowUserToResizeRows = false;
+            this.dgvDadosLog.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.dgvDadosLog.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvDadosLog.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Column4,
@@ -73,126 +78,15 @@
             this.Column3,
             this.Column5,
             this.Column6});
-            this.dgvDadosLog.Location = new System.Drawing.Point(12, 84);
+            this.dgvDadosLog.Location = new System.Drawing.Point(12, 69);
             this.dgvDadosLog.MultiSelect = false;
             this.dgvDadosLog.Name = "dgvDadosLog";
             this.dgvDadosLog.ReadOnly = true;
             this.dgvDadosLog.RowHeadersVisible = false;
             this.dgvDadosLog.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvDadosLog.Size = new System.Drawing.Size(907, 377);
+            this.dgvDadosLog.Size = new System.Drawing.Size(907, 368);
             this.dgvDadosLog.TabIndex = 11;
             this.dgvDadosLog.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dgvDadosLog_CellFormatting);
-            // 
-            // dtInicial
-            // 
-            this.dtInicial.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dtInicial.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtInicial.Location = new System.Drawing.Point(457, 42);
-            this.dtInicial.Name = "dtInicial";
-            this.dtInicial.Size = new System.Drawing.Size(104, 21);
-            this.dtInicial.TabIndex = 12;
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(454, 24);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(54, 15);
-            this.label3.TabIndex = 13;
-            this.label3.Text = "Dt.Inicial";
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(564, 24);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(49, 15);
-            this.label4.TabIndex = 15;
-            this.label4.Text = "Dt.Final";
-            // 
-            // dtFinal
-            // 
-            this.dtFinal.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dtFinal.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtFinal.Location = new System.Drawing.Point(567, 42);
-            this.dtFinal.Name = "dtFinal";
-            this.dtFinal.Size = new System.Drawing.Size(104, 21);
-            this.dtFinal.TabIndex = 14;
-            // 
-            // cbTipo
-            // 
-            this.cbTipo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbTipo.FormattingEnabled = true;
-            this.cbTipo.Location = new System.Drawing.Point(677, 42);
-            this.cbTipo.Name = "cbTipo";
-            this.cbTipo.Size = new System.Drawing.Size(164, 21);
-            this.cbTipo.TabIndex = 16;
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(674, 24);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(31, 15);
-            this.label5.TabIndex = 17;
-            this.label5.Text = "Tipo";
-            // 
-            // btnPesquisaLog
-            // 
-            this.btnPesquisaLog.Location = new System.Drawing.Point(847, 40);
-            this.btnPesquisaLog.Name = "btnPesquisaLog";
-            this.btnPesquisaLog.Size = new System.Drawing.Size(72, 23);
-            this.btnPesquisaLog.TabIndex = 18;
-            this.btnPesquisaLog.Text = "Pesquisar";
-            this.btnPesquisaLog.UseVisualStyleBackColor = true;
-            this.btnPesquisaLog.Click += new System.EventHandler(this.btnPesquisaLog_Click);
-            // 
-            // txtNomeCliente
-            // 
-            this.txtNomeCliente.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtNomeCliente.Location = new System.Drawing.Point(12, 42);
-            this.txtNomeCliente.Name = "txtNomeCliente";
-            this.txtNomeCliente.Size = new System.Drawing.Size(439, 21);
-            this.txtNomeCliente.TabIndex = 19;
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.Location = new System.Drawing.Point(12, 24);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(228, 15);
-            this.label6.TabIndex = 20;
-            this.label6.Text = "Inform o nome do cliente para pesquisar";
-            // 
-            // menuStrip1
-            // 
-            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.menuSistema});
-            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
-            this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(931, 24);
-            this.menuStrip1.TabIndex = 21;
-            this.menuStrip1.Text = "menuStrip1";
-            this.menuStrip1.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.menuStrip1_ItemClicked);
-            // 
-            // menuSistema
-            // 
-            this.menuSistema.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.menuItemConfiguracao});
-            this.menuSistema.Name = "menuSistema";
-            this.menuSistema.Size = new System.Drawing.Size(60, 20);
-            this.menuSistema.Text = "Sistema";
-            // 
-            // menuItemConfiguracao
-            // 
-            this.menuItemConfiguracao.Name = "menuItemConfiguracao";
-            this.menuItemConfiguracao.Size = new System.Drawing.Size(146, 22);
-            this.menuItemConfiguracao.Text = "Configuração";
-            this.menuItemConfiguracao.Click += new System.EventHandler(this.menuItemConfiguracao_Click);
             // 
             // Column4
             // 
@@ -239,11 +133,150 @@
             this.Column6.Name = "Column6";
             this.Column6.ReadOnly = true;
             // 
+            // dtInicial
+            // 
+            this.dtInicial.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.dtInicial.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dtInicial.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.dtInicial.Location = new System.Drawing.Point(457, 42);
+            this.dtInicial.Name = "dtInicial";
+            this.dtInicial.Size = new System.Drawing.Size(104, 21);
+            this.dtInicial.TabIndex = 12;
+            // 
+            // label3
+            // 
+            this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.Location = new System.Drawing.Point(454, 24);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(54, 15);
+            this.label3.TabIndex = 13;
+            this.label3.Text = "Dt.Inicial";
+            // 
+            // label4
+            // 
+            this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label4.Location = new System.Drawing.Point(564, 24);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(49, 15);
+            this.label4.TabIndex = 15;
+            this.label4.Text = "Dt.Final";
+            // 
+            // dtFinal
+            // 
+            this.dtFinal.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.dtFinal.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dtFinal.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.dtFinal.Location = new System.Drawing.Point(567, 42);
+            this.dtFinal.Name = "dtFinal";
+            this.dtFinal.Size = new System.Drawing.Size(104, 21);
+            this.dtFinal.TabIndex = 14;
+            // 
+            // cbTipo
+            // 
+            this.cbTipo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.cbTipo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbTipo.FormattingEnabled = true;
+            this.cbTipo.Location = new System.Drawing.Point(677, 42);
+            this.cbTipo.Name = "cbTipo";
+            this.cbTipo.Size = new System.Drawing.Size(164, 21);
+            this.cbTipo.TabIndex = 16;
+            // 
+            // label5
+            // 
+            this.label5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.label5.AutoSize = true;
+            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label5.Location = new System.Drawing.Point(674, 24);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(31, 15);
+            this.label5.TabIndex = 17;
+            this.label5.Text = "Tipo";
+            // 
+            // btnPesquisaLog
+            // 
+            this.btnPesquisaLog.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnPesquisaLog.Location = new System.Drawing.Point(847, 40);
+            this.btnPesquisaLog.Name = "btnPesquisaLog";
+            this.btnPesquisaLog.Size = new System.Drawing.Size(72, 23);
+            this.btnPesquisaLog.TabIndex = 18;
+            this.btnPesquisaLog.Text = "Pesquisar";
+            this.btnPesquisaLog.UseVisualStyleBackColor = true;
+            this.btnPesquisaLog.Click += new System.EventHandler(this.btnPesquisaLog_Click);
+            // 
+            // txtNomeCliente
+            // 
+            this.txtNomeCliente.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtNomeCliente.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtNomeCliente.Location = new System.Drawing.Point(12, 42);
+            this.txtNomeCliente.Name = "txtNomeCliente";
+            this.txtNomeCliente.Size = new System.Drawing.Size(439, 21);
+            this.txtNomeCliente.TabIndex = 19;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label6.Location = new System.Drawing.Point(12, 24);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(235, 15);
+            this.label6.TabIndex = 20;
+            this.label6.Text = "Informe o nome do cliente para pesquisar";
+            // 
+            // menuStrip1
+            // 
+            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menuSistema});
+            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip1.Name = "menuStrip1";
+            this.menuStrip1.Size = new System.Drawing.Size(931, 24);
+            this.menuStrip1.TabIndex = 21;
+            this.menuStrip1.Text = "menuStrip1";
+            // 
+            // menuSistema
+            // 
+            this.menuSistema.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menuItemConfiguracao});
+            this.menuSistema.Name = "menuSistema";
+            this.menuSistema.Size = new System.Drawing.Size(60, 20);
+            this.menuSistema.Text = "Sistema";
+            // 
+            // menuItemConfiguracao
+            // 
+            this.menuItemConfiguracao.Name = "menuItemConfiguracao";
+            this.menuItemConfiguracao.Size = new System.Drawing.Size(180, 22);
+            this.menuItemConfiguracao.Text = "Configuração";
+            this.menuItemConfiguracao.Click += new System.EventHandler(this.menuItemConfiguracao_Click);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(12, 440);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(109, 15);
+            this.label1.TabIndex = 22;
+            this.label1.Text = "Total de Registros:";
+            // 
+            // lblTotalRegistros
+            // 
+            this.lblTotalRegistros.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTotalRegistros.Location = new System.Drawing.Point(123, 442);
+            this.lblTotalRegistros.Name = "lblTotalRegistros";
+            this.lblTotalRegistros.Size = new System.Drawing.Size(109, 15);
+            this.lblTotalRegistros.TabIndex = 23;
+            // 
             // FrmPrincipal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(931, 473);
+            this.Controls.Add(this.lblTotalRegistros);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.txtNomeCliente);
             this.Controls.Add(this.btnPesquisaLog);
@@ -293,6 +326,8 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Column3;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column5;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column6;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label lblTotalRegistros;
     }
 }
 

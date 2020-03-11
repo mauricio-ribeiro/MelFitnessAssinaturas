@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Text;
+using System.Windows.Forms;
 
 namespace MelFitnessAssinaturas.DAL
 {
@@ -86,40 +87,77 @@ namespace MelFitnessAssinaturas.DAL
 
         public void ConfigSql()
         {
-            var sql = new StringBuilder();
-
-            sql.Append("EXEC sp_configure 'show advanced options', 1;");
-            sql.Append("RECONFIGURE;");
-            sql.Append("EXEC sp_configure 'xp_cmdshell', 1;");
-            sql.Append("RECONFIGURE; ");
-
-            using (var conn = ConexaoBd.GetConnection())
+            const string metodo = "ConfigSql";
+            
+            try
             {
-                using (var cmd = new SqlCommand(sql.ToString(), conn))
+                var sql = new StringBuilder();
+
+                sql.Append("EXEC sp_configure 'show advanced options', 1;");
+                sql.Append("RECONFIGURE;");
+                sql.Append("EXEC sp_configure 'xp_cmdshell', 1;");
+                sql.Append("RECONFIGURE; ");
+
+                using (var conn = ConexaoBd.GetConnection())
                 {
-                    cmd.ExecuteScalar();
+                    using (var cmd = new SqlCommand(sql.ToString(), conn))
+                    {
+                        cmd.ExecuteScalar();
+                    }
+                }
+
+                sql.Clear();
+
+                sql.Append("CREATE TRIGGER SYNC_MUNDIPAG ON util_eventos_mundipagg ");
+                sql.Append("AFTER INSERT ");
+                sql.Append("AS ");
+                sql.Append("BEGIN ");
+                sql.Append("DECLARE @Text AS VARCHAR(100) ");
+                sql.Append("DECLARE @Cmd AS VARCHAR(100) ");
+                sql.Append("SET @Text = 'sync' ");
+                //sql.Append("SET @Cmd = 'echo ' + @Text + ' > \"" + Application.StartupPath + "\\Projetos Freela\\MelFitnessAssinaturas\\MelFitnessAssinaturas\\bin\\Debug\\_sync.gat\"' ");
+                sql.Append("SET @Cmd = 'echo ' + @Text + ' > " + Application.StartupPath + "\\_sync.gat\"' ");
+                sql.Append("EXECUTE Master.dbo.xp_CmdShell  @Cmd ");
+                sql.Append("END");
+
+                using (var conn = ConexaoBd.GetConnection())
+                {
+                    using (var cmd = new SqlCommand(sql.ToString(), conn))
+                    {
+                        cmd.ExecuteScalar();
+                    }
                 }
             }
-
-            sql.Clear();
-
-            sql.Append("CREATE TRIGGER SYNC_MUNDIPAG ON util_eventos_mundipagg ");
-            sql.Append("AFTER INSERT ");
-            sql.Append("AS ");
-            sql.Append("BEGIN ");
-            sql.Append("DECLARE @Text AS VARCHAR(100) ");
-            sql.Append("DECLARE @Cmd AS VARCHAR(100) ");
-            sql.Append("SET @Text = 'sync' ");
-            sql.Append("SET @Cmd = 'echo ' + @Text + ' > \"F:\\Projetos Freela\\MelFitnessAssinaturas\\MelFitnessAssinaturas\\bin\\Debug\\_sync.gat\" ");
-            sql.Append("EXECUTE Master.dbo.xp_CmdShell  @Cmd ");
-            sql.Append("END");
-
-            using (var conn = ConexaoBd.GetConnection())
+            catch (SqlException sqlException)
             {
-                using (var cmd = new SqlCommand(sql.ToString(), conn))
-                {
-                    cmd.ExecuteScalar();
-                }
+
+                string strMensagem = "";
+                strMensagem = LogDatabaseErrorUtil.CreateErrorDatabaseMessage(sqlException);
+                LogDatabaseErrorUtil.LogFileWrite(strMensagem, metodo);
+
+                sqlException.Data["MensagemCustomizada"] = LogDatabaseErrorUtil.ValidateDataBaseErrorNumber(sqlException.Number);
+                sqlException.Data["Metodo"] = metodo;
+                sqlException.Data["Classe"] = Camada;
+                sqlException.Data["Hora"] = DateTime.Now;
+
+                throw;
+
+            }
+            catch (Exception ex)
+            {
+
+                string strMensagem = "";
+
+                strMensagem = LogDatabaseErrorUtil.CreateErrorMessage(ex);
+                LogDatabaseErrorUtil.LogFileWrite(strMensagem, metodo);
+
+                ex.Data["MensagemCustomizada"] = "Ocorreu um erro ao tentar executar a operação.";
+                ex.Data["Metodo"] = metodo;
+                ex.Data["Classe"] = Camada;
+                ex.Data["Hora"] = DateTime.Now;
+
+                throw;
+
             }
         }
 

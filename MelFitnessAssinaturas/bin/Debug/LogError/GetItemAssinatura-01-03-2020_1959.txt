@@ -1,5 +1,0 @@
-Exception: System.InvalidOperationException: Tentativa inválida de leitura quando não existem dados.
-   em System.Data.SqlClient.SqlDataReader.CheckDataIsReady(Int32 columnIndex, Boolean allowPartiallyReadColumn, Boolean permitAsync, String methodName)
-   em System.Data.SqlClient.SqlDataReader.TryReadColumn(Int32 i, Boolean setTimeout, Boolean allowPartiallyReadColumn)
-   em System.Data.SqlClient.SqlDataReader.GetInt32(Int32 i)
-   em MelFitnessAssinaturas.DAL.AssinaturaDal.GetItemAssinatura(String id) na F:\Projetos Freela\MelFitnessAssinaturas\MelFitnessAssinaturas\DAL\AssinaturaDal.cs:linha 381
