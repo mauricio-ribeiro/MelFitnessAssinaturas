@@ -108,6 +108,19 @@ namespace MelFitnessAssinaturas.DAL
 
                 sql.Clear();
 
+                sql.Append("IF EXISTS (SELECT * FROM sys.objects WHERE [type] = 'TR' AND [name] = 'SYNC_MUNDIPAG') ");
+                sql.Append("DROP TRIGGER SYNC_MUNDIPAG;");
+
+                using (var conn = ConexaoBd.GetConnection())
+                {
+                    using (var cmd = new SqlCommand(sql.ToString(), conn))
+                    {
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+                
+                sql.Clear();
+
                 sql.Append("CREATE TRIGGER SYNC_MUNDIPAG ON util_eventos_mundipagg ");
                 sql.Append("AFTER INSERT ");
                 sql.Append("AS ");
