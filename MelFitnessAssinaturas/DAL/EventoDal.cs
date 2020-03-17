@@ -129,7 +129,7 @@ namespace MelFitnessAssinaturas.DAL
                 sql.Append("DECLARE @Cmd AS VARCHAR(100) ");
                 sql.Append("SET @Text = 'sync' ");
                 //sql.Append("SET @Cmd = 'echo ' + @Text + ' > \"" + Application.StartupPath + "\\Projetos Freela\\MelFitnessAssinaturas\\MelFitnessAssinaturas\\bin\\Debug\\_sync.gat\"' ");
-                sql.Append("SET @Cmd = 'echo ' + @Text + ' > " + Application.StartupPath + "\\_sync.gat\"' ");
+                sql.Append("SET @Cmd = 'echo ' + @Text + ' > " + Application.StartupPath + "\\_sync.gat' ");
                 sql.Append("EXECUTE Master.dbo.xp_CmdShell  @Cmd ");
                 sql.Append("END");
 

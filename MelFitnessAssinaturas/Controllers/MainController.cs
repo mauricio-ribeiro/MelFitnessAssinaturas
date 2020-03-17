@@ -11,6 +11,7 @@ namespace MelFitnessAssinaturas.Controllers
 
         private AssinaturaController AssinaturaCtrl = new AssinaturaController();
         private ClienteController ClienteCtrl = new ClienteController();
+        private FaturaController FaturaCtrl = new FaturaController();
         private EventoDal EventoDAL = new EventoDal();
         private Scheduler tarefa_1;
         private readonly string fileTrigger = "_sync.gat";
@@ -117,6 +118,17 @@ namespace MelFitnessAssinaturas.Controllers
                         case "IA_R":
                             Console.WriteLine(@"Removendo um item na assinatura do cliente");
                             AssinaturaCtrl.RemoverItemApi(evento.IdTabela);
+                            EventoDAL.MarcaRegistroProcessadoComo("P", evento.Id_Guid);
+                            break;
+                        // Usuário que atualizar as informações de fatura de uma assinatura
+                        case "F_AA":
+                            Console.WriteLine(@"Atualizando faturas de uma assinatura");
+                            FaturaCtrl.AtualizarPorAssinatura(evento.IdTabela);
+                            EventoDAL.MarcaRegistroProcessadoComo("P", evento.Id_Guid);
+                            break;
+                        case "F_C":
+                            Console.WriteLine(@"Listando faturas de um cliente");
+                            FaturaCtrl.CancelarFatura(evento.IdTabela);
                             EventoDAL.MarcaRegistroProcessadoComo("P", evento.Id_Guid);
                             break;
                         default:

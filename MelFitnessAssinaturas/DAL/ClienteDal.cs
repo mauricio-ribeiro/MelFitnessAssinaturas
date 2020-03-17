@@ -16,6 +16,92 @@ namespace MelFitnessAssinaturas.DAL
         private CreateCustomerRequest cliApi;
         private const string Camada = "ClienteDal";
 
+        public ClienteDb GetClienteByIdApi(string idApi)
+        {
+            const string metodo = "GetClienteDb";
+
+            try
+            {
+                ClienteDb cliente = null;
+                var sql = new StringBuilder();
+
+                sql.Append("select cli.cod_cli, cli.nome, cli.email, cli.cpf,");
+                sql.Append("case when cli.sexo = 1 then 'male' else 'famale' end as sexo, cli.data_nasc,");
+                sql.Append("cli.endereco as address_1, cli.bairro as address_2, cli.bairro, cli.cep, cid.cid_nome as cidade,");
+                sql.Append("cid.uf_sigla as uf, cli.fone1, cli.fone2, cli.id_api from cad_clientes cli ");
+                sql.Append("left join cad_cidade cid on cid.cid_codigo = cli.cid_codigo ");
+                sql.Append("where cli.id_api = @idApi");
+
+
+                using (var conn = ConexaoBd.GetConnection())
+                {
+                    using (var cmd = new SqlCommand(sql.ToString(), conn))
+                    {
+                        cmd.Parameters.Clear();
+                        cmd.Parameters.AddWithValue("@idApi", idApi);
+
+                        using (var dr = cmd.ExecuteReader())
+                        {
+                            while (dr.Read())
+                            {
+                                cliente = new ClienteDb
+                                {
+                                    Codigo = dr["cod_cli"].ToString(),
+                                    Nome = dr["nome"].ToString(),
+                                    Email = dr["email"].ToString(),
+                                    Documento = dr["cpf"].ToString(),
+                                    Sexo = dr["sexo"].ToString(),
+                                    Dt_Nascimento = dr["data_nasc"].ToString(),
+                                    Endereco_1 = dr["address_1"].ToString(),
+                                    Endereco_2 = dr["bairro"].ToString(),
+                                    Cep = dr["cep"].ToString(),
+                                    Cidade = dr["cidade"].ToString(),
+                                    Uf = dr["uf"].ToString(),
+                                    Fone1 = dr["fone1"].ToString(),
+                                    Fone2 = dr["fone2"].ToString(),
+                                    Id_Api = dr["id_api"].ToString()
+                                };
+
+                            }
+                        }
+                    }
+                }
+
+                return cliente;
+
+            }
+            catch (SqlException sqlException)
+            {
+
+                string strMensagem = "";
+                strMensagem = LogDatabaseErrorUtil.CreateErrorDatabaseMessage(sqlException);
+                LogDatabaseErrorUtil.LogFileWrite(strMensagem, metodo);
+
+                sqlException.Data["MensagemCustomizada"] = LogDatabaseErrorUtil.ValidateDataBaseErrorNumber(sqlException.Number);
+                sqlException.Data["Metodo"] = metodo;
+                sqlException.Data["Classe"] = Camada;
+                sqlException.Data["Hora"] = DateTime.Now;
+
+                throw;
+
+            }
+            catch (Exception ex)
+            {
+
+                string strMensagem = "";
+
+                strMensagem = LogDatabaseErrorUtil.CreateErrorMessage(ex);
+                LogDatabaseErrorUtil.LogFileWrite(strMensagem, metodo);
+
+                ex.Data["MensagemCustomizada"] = "Ocorreu um erro ao tentar executar a operação.";
+                ex.Data["Metodo"] = metodo;
+                ex.Data["Classe"] = Camada;
+                ex.Data["Hora"] = DateTime.Now;
+
+                throw;
+
+            }
+        }
 
         public ClienteDb GetClienteDb(string codCli)
         {

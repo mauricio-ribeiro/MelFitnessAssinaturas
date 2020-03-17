@@ -1,13 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using MelFitnessAssinaturas.DAL;
 using MelFitnessAssinaturas.DTO;
 using MelFitnessAssinaturas.Models;
-using MundiAPI.PCL;
-using MundiAPI.PCL.Models;
 
 namespace MelFitnessAssinaturas.Controllers
 {

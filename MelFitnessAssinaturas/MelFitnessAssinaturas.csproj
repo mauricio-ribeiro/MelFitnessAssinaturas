@@ -97,12 +97,16 @@
     <Compile Include="DAL\ClienteApi.cs" />
     <Compile Include="DAL\ClienteDal.cs" />
     <Compile Include="DAL\EventoDal.cs" />
+    <Compile Include="DAL\FaturaApi.cs" />
+    <Compile Include="DAL\FaturaDal.cs" />
     <Compile Include="DAL\LogSyncDal.cs" />
     <Compile Include="DAL\UsuarioDal.cs" />
     <Compile Include="DTO\AssinaturaDTO.cs" />
     <Compile Include="DTO\CartaoDTO.cs" />
     <Compile Include="DTO\ClienteDTO.cs" />
+    <Compile Include="DTO\FaturaDTO.cs" />
     <Compile Include="Enums\AcaoLoginEnum.cs" />
+    <Compile Include="Enums\FaturaStatusEnum.cs" />
     <Compile Include="Enums\TipoEnum.cs" />
     <Compile Include="FrmConfigConexaoBanco.cs">
       <SubType>Form</SubType>
@@ -130,6 +134,7 @@
     <Compile Include="Models\ClienteDb.cs" />
     <Compile Include="Models\Config.cs" />
     <Compile Include="Models\EventoDb.cs" />
+    <Compile Include="Models\FaturaDb.cs" />
     <Compile Include="Models\LogSync.cs" />
     <Compile Include="Models\CartaoDb.cs" />
     <Compile Include="Models\Usuario.cs" />
