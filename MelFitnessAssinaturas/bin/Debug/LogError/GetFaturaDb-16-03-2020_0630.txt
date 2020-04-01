@@ -1,5 +1,0 @@
-Exception: System.IndexOutOfRangeException: sexo
-   em System.Data.ProviderBase.FieldNameLookup.GetOrdinal(String fieldName)
-   em System.Data.SqlClient.SqlDataReader.GetOrdinal(String name)
-   em System.Data.SqlClient.SqlDataReader.get_Item(String name)
-   em MelFitnessAssinaturas.DAL.FaturaDal.GetFaturaDbByIdApi(String idApi) na F:\Projetos Freela\MelFitnessAssinaturas\MelFitnessAssinaturas\DAL\FaturaDal.cs:linha 128
