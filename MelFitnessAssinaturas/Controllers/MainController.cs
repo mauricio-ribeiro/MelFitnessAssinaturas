@@ -137,6 +137,9 @@ namespace MelFitnessAssinaturas.Controllers
                 }
                 catch (Exception)
                 {
+                    if (File.Exists(Application.StartupPath + "\\" + fileTrigger))
+                        File.Delete(Application.StartupPath + "\\" + fileTrigger);
+
                     EventoDAL.MarcaRegistroProcessadoComo("E", evento.Id_Guid);
                 }
             }
