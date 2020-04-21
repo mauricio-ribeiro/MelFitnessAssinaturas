@@ -76,7 +76,9 @@ namespace MelFitnessAssinaturas.DTO
                     Customer = new CreateCustomerRequest
                     {
                         Name = assinatura.Cliente.Nome,
-                        Email = assinatura.Cliente.Email
+                        //Email = assinatura.Cliente.Email,
+                        Document = assinatura.Cliente.Documento,
+                        Code = assinatura.Cliente.Codigo
                     },
                     Card = card,
                    // Discounts = discounts,
