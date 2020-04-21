@@ -185,7 +185,7 @@ namespace MelFitnessAssinaturas.DAL
 
                 if (!"N;P;E".Contains(_status))
                 {
-                    throw new Exception(String.Format("Status {0} inválido para o evento {1}",_status, _guid));
+                    throw new Exception(string.Format("Status {0} inválido para o evento {1}",_status, _guid));
                 }
 
                 int rowsAffected;

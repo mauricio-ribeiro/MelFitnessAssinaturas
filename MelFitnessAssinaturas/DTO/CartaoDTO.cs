@@ -1,10 +1,7 @@
 ﻿using MelFitnessAssinaturas.Models;
 using MundiAPI.PCL.Models;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using CryptoDll;
 
 namespace MelFitnessAssinaturas.DTO
 {
@@ -22,11 +19,11 @@ namespace MelFitnessAssinaturas.DTO
             {
                 var createCartao = new CreateCardRequest
                 {
-                    Number = cartao.Numero_Cartao,
-                    HolderName = cartao.Nome_Cartao,
-                    ExpMonth = cartao.Val_Mes,
-                    ExpYear = cartao.Val_Ano,
-                    Cvv = cartao.Cvc,
+                    Number = Crypto.Decifra(cartao.Numero_Cartao),
+                    HolderName = Crypto.Decifra(cartao.Nome_Cartao),
+                    ExpMonth =  Convert.ToInt32(Crypto.Decifra(cartao.Val_Mes.ToString())),
+                    ExpYear = Convert.ToInt32(Crypto.Decifra(cartao.Val_Ano.ToString())),
+                    Cvv = Crypto.Decifra(cartao.Cvc),
                     BillingAddress = new CreateAddressRequest
                     {
                         Line1 = cliente.Endereco_1,

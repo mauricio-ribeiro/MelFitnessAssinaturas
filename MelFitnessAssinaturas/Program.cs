@@ -1,6 +1,7 @@
 ﻿using MelFitnessAssinaturas.Controllers;
 using MelFitnessAssinaturas.DAL;
 using System;
+using System.IO;
 using System.Windows.Forms;
 
 namespace MelFitnessAssinaturas
@@ -18,6 +19,8 @@ namespace MelFitnessAssinaturas
         [STAThread]
         static void Main()
         {
+             const string fileTrigger = "_sync.gat";
+
             try
             {
 
@@ -28,8 +31,11 @@ namespace MelFitnessAssinaturas
                 _verificaDiretorioLogError.SetProximaVerificacao(_verificaAcessarApi);
                 _verificaConfigIni.ProcessaVerificacao();
 
+                if (File.Exists(Application.StartupPath + "\\" + fileTrigger))
+                    File.Delete(Application.StartupPath + "\\" + fileTrigger);
+
                 new EventoDal().ConfigSql();
-                MainController mainCtrl = new MainController();
+                var mainCtrl = new MainController();
                 mainCtrl.StarFileWatch();
                 //mainCtrl.IniciaRelogioAssinatura();
 
