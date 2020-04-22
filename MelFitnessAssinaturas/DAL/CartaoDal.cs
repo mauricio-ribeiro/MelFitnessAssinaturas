@@ -4,6 +4,7 @@ using System.Text;
 using MelFitnessAssinaturas.InfraEstruturas;
 using MelFitnessAssinaturas.Models;
 using MelFitnessAssinaturas.Util;
+using CryptoDll;
 
 namespace MelFitnessAssinaturas.DAL
 {
@@ -42,12 +43,13 @@ namespace MelFitnessAssinaturas.DAL
                                 cartao = new CartaoDb
                                 {
                                     Cod_Cli = Convert.ToInt32(dr["cod_cli"]),
-                                    Numero_Cartao = dr["numero_cartao"].ToString(),
+                                    Nome_Cartao = Crypto.Decifra(dr["nome_cartao"].ToString()),
+                                    Numero_Cartao = Crypto.Decifra(dr["numero_cartao"].ToString()),
                                     Bandeira = dr["bandeira"].ToString(),
                                     Cpf = dr["cpf"].ToString(),
-                                    Cvc = dr["cvc"].ToString(),
-                                    Val_Mes = Convert.ToInt32(dr["val_mes"]),
-                                    Val_Ano = Convert.ToInt32(dr["val_ano"]),
+                                    Cvc = Crypto.Decifra(dr["cvc"].ToString()),
+                                    Val_Mes = Convert.ToInt32(Crypto.Decifra(dr["val_mes"].ToString())),
+                                    Val_Ano = Convert.ToInt32(Crypto.Decifra(dr["val_ano"].ToString())),
                                     Status = dr["status"].ToString(),
                                     Id = Convert.ToInt32(dr["id"]),
                                     Id_Api = dr["id_api"].ToString()

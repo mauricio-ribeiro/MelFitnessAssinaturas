@@ -1,0 +1,5 @@
+Exception: System.IndexOutOfRangeException: nome_cartao
+   em System.Data.ProviderBase.FieldNameLookup.GetOrdinal(String fieldName)
+   em System.Data.SqlClient.SqlDataReader.GetOrdinal(String name)
+   em System.Data.SqlClient.SqlDataReader.get_Item(String name)
+   em MelFitnessAssinaturas.DAL.CartaoDal.GetCartaoDb(String id) na F:\Projetos Freela\MelFitnessAssinaturas\MelFitnessAssinaturas\DAL\CartaoDal.cs:linha 43
