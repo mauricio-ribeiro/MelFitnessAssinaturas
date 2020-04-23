@@ -47,7 +47,6 @@ D:\Sistemas\MelFitnessAssinaturas\MelFitnessAssinaturas\obj\Debug\MelFitnessAssi
 D:\Sistemas\MelFitnessAssinaturas\MelFitnessAssinaturas\obj\Debug\MelFitnessAssinaturas.FrmPrincipal.resources
 D:\Sistemas\MelFitnessAssinaturas\MelFitnessAssinaturas\obj\Debug\MelFitnessAssinaturas.FrmConfigConexaoBanco.resources
 D:\Sistemas\MelFitnessAssinaturas\MelFitnessAssinaturas\bin\Debug\CryptoDll.dll
-D:\Sistemas\MelFitnessAssinaturas\MelFitnessAssinaturas\bin\Debug\CryptoDll.pdb
 D:\Sistemas\MelFitnessAssinaturas\MelFitnessAssinaturas\obj\Debug\MelFitnessAssinaturas.FrmLogin.resources
 F:\Projetos Freela\MelFitnessAssinaturas\MelFitnessAssinaturas\bin\Debug\MelFitnessAssinaturas.exe.config
 F:\Projetos Freela\MelFitnessAssinaturas\MelFitnessAssinaturas\bin\Debug\MelFitnessAssinaturas.exe

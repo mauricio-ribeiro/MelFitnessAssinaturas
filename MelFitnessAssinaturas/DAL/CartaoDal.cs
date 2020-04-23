@@ -24,7 +24,7 @@ namespace MelFitnessAssinaturas.DAL
                 CartaoDb cartao = null;
                 var sql = new StringBuilder();
 
-                sql.Append("select c.cod_cli, c.numero_cartao, c.bandeira, c.cpf,");
+                sql.Append("select c.cod_cli, c.nome_cartao, c.numero_cartao, c.bandeira, c.cpf,");
                 sql.Append("c.cvc, c.val_mes, c.val_ano, c.status, c.id, c.id_api from cad_clientes_cartao c ");
                 sql.Append("where c.id = @codCartao;");
 
