@@ -63,10 +63,6 @@ namespace MelFitnessAssinaturas.Controllers
                             AssinaturaCtrl.CadastraNovaAssinaturaApi(evento.IdTabela);
                             EventoDAL.MarcaRegistroProcessadoComo("P", evento.Id_Guid);
                             break;
-                        //  Essa assinatura existe, foi editada no banco e precisa ser atualizada na API
-                        case "A_E":
-
-                            break;
                         // Um cartão foi alterado para ser usado em uma assinatura.
                         case "A_ECT":
                             Console.WriteLine(@"Buscando assinatura e o novo cartão para alterar");
@@ -74,11 +70,11 @@ namespace MelFitnessAssinaturas.Controllers
                             EventoDAL.MarcaRegistroProcessadoComo("P", evento.Id_Guid);
                             break;
                         // Foi alterada a data de pagamento da assinatura  
-                        case "A_EDP ":
-                            Console.WriteLine(@"Alterando a data de faturamento da assinatura");  // Não foi testado por completo.
-                            AssinaturaCtrl.AlterarDataFaturameto(evento.IdTabela);
-                            EventoDAL.MarcaRegistroProcessadoComo("P", evento.Id_Guid);
-                            break;
+                        //case "A_EDP ":
+                        //    Console.WriteLine(@"Alterando a data de faturamento da assinatura");  // Não foi testado por completo.
+                        //    AssinaturaCtrl.AlterarDataFaturameto(evento.IdTabela);
+                        //    EventoDAL.MarcaRegistroProcessadoComo("P", evento.Id_Guid);
+                        //    break;
                         // Assinatura cancelada. Deve ser cancelada na API também.
                         case "A_C":
                             Console.WriteLine(@"Buscando e registrando assinatura cancelada");
@@ -93,9 +89,7 @@ namespace MelFitnessAssinaturas.Controllers
                         //    EventoDAL.MarcaRegistroProcessadoComo("P", evento.Id_Guid);
                         //    break;
                         //  Foi soliticado renovação do ciclo de assinatura. Reportar a API.
-                        case "A_RC":
-
-                            break;
+                       
                         // Cliente foi editado. Deve verificar se é um cliente que usa a API e atualizar seus dados lá também.
                         case "CLI_E":
                             Console.WriteLine(@"Atualizando cadastro do cliente {0}", evento.IdTabela);

@@ -78,7 +78,8 @@ namespace MelFitnessAssinaturas.DTO
                         Name = assinatura.Cliente.Nome,
                         //Email = assinatura.Cliente.Email,
                         Document = assinatura.Cliente.Documento,
-                        Code = assinatura.Cliente.Codigo
+                        Code = assinatura.Cliente.Codigo,
+                        Type = "individual"
                     },
                     Card = card,
                    // Discounts = discounts,
